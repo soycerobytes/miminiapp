@@ -1,0 +1,71 @@
+{
+  "name": "miminiapp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "packageManager": "npm@11.19.1",
+  "engines": {
+    "node": "24.22.2",
+    "npm": "11.19.1"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1 --port 4321 --ignore-lock",
+    "preview": "astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "check": "astro check",
+    "lint": "eslint . --max-warnings 0",
+    "format:check": "prettier --check \"src/**/*.{astro,ts,tsx,css}\" \"tests/**/*.{ts,tsx}\" \"scripts/**/*.{ts,mjs}\" \".github/**/*.{yml,json}\" \"deploy/**/*.{json,jsonc}\" \"*.{json,mjs,ts}\"",
+    "test:unit": "vitest run --project unit",
+    "test:components": "vitest run --project components",
+    "build": "astro build",
+    "test:e2e": "npm run build && playwright test",
+    "test:a11y": "npm run build && playwright test tests/e2e/a11y.spec.ts",
+    "verify": "npm run check && npm run lint && npm run format:check && npm run validate:hosting && npm run test:unit && npm run test:components && npm run test:e2e && npm run test:integration",
+    "capture:review": "npm run build && node tests/visual/capture.ts",
+    "test:integration": "node tests/integration/modular-build.ts",
+    "test:remote": "playwright test --config playwright.remote.config.ts",
+    "release:pack": "node scripts/release/cli.ts pack dist .local/release",
+    "release:verify": "node scripts/release/cli.ts verify .local/release",
+    "validate:hosting": "node scripts/validate-hosting.ts"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@astrojs/react": "7.1.2",
+    "@axe-core/playwright": "4.14.0",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/vite": "4.3.4",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@typescript-eslint/parser": "8.72.1",
+    "@vitejs/plugin-react": "6.2.1",
+    "astro": "7.4.5",
+    "axe-core": "4.14.0",
+    "eslint": "10.14.0",
+    "eslint-plugin-astro": "3.2.1",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.14.0",
+    "jsdom": "30.1.3",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "tailwindcss": "4.3.4",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vite": "8.3.5",
+    "vitest": "5.1.0",
+    "wrangler": "4.158.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261104.1": true
+  }
+}

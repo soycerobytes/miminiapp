@@ -1,0 +1,100 @@
+{
+  "purpose": "CP-01 iteration 2 real build evidence; no deployed candidate",
+  "files": [
+    {
+      "file": "comparison-desktop-en.png",
+      "bytes": 159935,
+      "sha256": "780e45d970248cf30125aab936f6a2c6615fa9d1f6b47d4074942f8d35cc67b4"
+    },
+    {
+      "file": "comparison-desktop-es.png",
+      "bytes": 171049,
+      "sha256": "91e0eecb8066e163c84272c8ab3d479a020b589f826e350782f641bf51afb3a6"
+    },
+    {
+      "file": "comparison-mobile-en.png",
+      "bytes": 266298,
+      "sha256": "3f6f34de8314dbe326d30b31465daba83d241a84af66237f1a308e83144786b2"
+    },
+    {
+      "file": "comparison-mobile-es.png",
+      "bytes": 284329,
+      "sha256": "8c18a535eb1a55a6251e697fd2574a91921bf2a8444c0b2a13325d940fda9f40"
+    },
+    {
+      "file": "desktop-en.png",
+      "bytes": 107702,
+      "sha256": "7e5b2941ed366fd879c3e19ff8479c0479b84db9008ef2aafb94cdd6c5945cdd"
+    },
+    {
+      "file": "desktop-es.png",
+      "bytes": 109258,
+      "sha256": "d9d06bc4ee990ebb96f6b6f45b984b66c6941d8e5608e978dc347775f0283714"
+    },
+    {
+      "file": "desktop-motion.mp4",
+      "bytes": 705958,
+      "sha256": "d80d5b7dfb6ce37363da4a5be57780634def6174f0e35bac5f2b97c2385082e4"
+    },
+    {
+      "file": "desktop-motion.png",
+      "bytes": 113231,
+      "sha256": "41126d46e409ed3131d0cfbea21b0f9b8312d3b36df2990442022e89fd8f3b4c"
+    },
+    {
+      "file": "hero-detail.mp4",
+      "bytes": 734779,
+      "sha256": "e9c9c280ecce05d77e644545a5d79980ec217581e92e248938245ecd56b3035e"
+    },
+    {
+      "file": "mobile-9x16-motion.mp4",
+      "bytes": 2145438,
+      "sha256": "6fcc47363dc15e55af036f632a50a70e198f9d7149806b602b0b3fc98f329216"
+    },
+    {
+      "file": "mobile-9x16-motion.png",
+      "bytes": 40031,
+      "sha256": "4b2c7f80639a9fb957a99b7b434f7b200991fdc39871c7bb05e03ae9394d531c"
+    },
+    {
+      "file": "mobile-en.png",
+      "bytes": 66861,
+      "sha256": "5291d77f796f28d04b9800e32d5379492f4d14af7517635a76b0f95bcd747394"
+    },
+    {
+      "file": "mobile-es.png",
+      "bytes": 69516,
+      "sha256": "3ac6bf32d5f7dbbefcfb15bc104617d81823ad4cc08b6a53b35190c2b5bceaf1"
+    },
+    {
+      "file": "native-visibility.json",
+      "bytes": 2618,
+      "sha256": "27f4d596f054e668677a386e95c988f9a4f1caea5de0aa7477390654a887718a"
+    },
+    {
+      "file": "performance.json",
+      "bytes": 487,
+      "sha256": "19ec05c98e30286dbe929db813cc013e5f5c943511c5486b9c61059d3b100460"
+    },
+    {
+      "file": "resource-budget.json",
+      "bytes": 406,
+      "sha256": "6a8acb647c023b6730e44b6f43c7fe147d7d607b910d381cb1f6833debbf4207"
+    },
+    {
+      "file": "vertical-9x16-catalogue.png",
+      "bytes": 105578,
+      "sha256": "f1267ec4548555e66dbc3a3d850ec6bbc7141cf193d4f5801a05c98af9cf4a7b"
+    },
+    {
+      "file": "vertical-9x16-home.png",
+      "bytes": 120379,
+      "sha256": "8c27441bede4acd415cf2b8f89a4e543d2017914b3603c03aaf890c607eb7898"
+    },
+    {
+      "file": "wordmark-detail.mp4",
+      "bytes": 64131,
+      "sha256": "05d0f49783d5741c02fa77e0737f8ba388588bb304cb1de568a52d3268e247b8"
+    }
+  ]
+}

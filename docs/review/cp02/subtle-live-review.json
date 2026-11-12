@@ -1,0 +1,120 @@
+[
+  {
+    "scheme": "light",
+    "rect": {
+      "x": 327,
+      "y": 116,
+      "width": 44,
+      "height": 144,
+      "top": 116,
+      "right": 371,
+      "bottom": 260,
+      "left": 327
+    },
+    "background": "color(srgb 0.968627 0.960784 0.941176 / 0.94)",
+    "border": "0px",
+    "buttons": [
+      {
+        "rect": {
+          "x": 325,
+          "y": 116,
+          "width": 48,
+          "height": 48,
+          "top": 116,
+          "right": 373,
+          "bottom": 164,
+          "left": 325
+        },
+        "icon": "16px",
+        "fill": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "rect": {
+          "x": 325,
+          "y": 164,
+          "width": 48,
+          "height": 48,
+          "top": 164,
+          "right": 373,
+          "bottom": 212,
+          "left": 325
+        },
+        "icon": "16px",
+        "fill": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "rect": {
+          "x": 325,
+          "y": 212,
+          "width": 48,
+          "height": 48,
+          "top": 212,
+          "right": 373,
+          "bottom": 260,
+          "left": 325
+        },
+        "icon": "16px",
+        "fill": "rgba(0, 0, 0, 0)"
+      }
+    ]
+  },
+  {
+    "scheme": "dark",
+    "rect": {
+      "x": 327,
+      "y": 116,
+      "width": 44,
+      "height": 144,
+      "top": 116,
+      "right": 371,
+      "bottom": 260,
+      "left": 327
+    },
+    "background": "color(srgb 0.0901961 0.0784314 0.129412 / 0.94)",
+    "border": "0px",
+    "buttons": [
+      {
+        "rect": {
+          "x": 325,
+          "y": 116,
+          "width": 48,
+          "height": 48,
+          "top": 116,
+          "right": 373,
+          "bottom": 164,
+          "left": 325
+        },
+        "icon": "16px",
+        "fill": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "rect": {
+          "x": 325,
+          "y": 164,
+          "width": 48,
+          "height": 48,
+          "top": 164,
+          "right": 373,
+          "bottom": 212,
+          "left": 325
+        },
+        "icon": "16px",
+        "fill": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "rect": {
+          "x": 325,
+          "y": 212,
+          "width": 48,
+          "height": 48,
+          "top": 212,
+          "right": 373,
+          "bottom": 260,
+          "left": 325
+        },
+        "icon": "16px",
+        "fill": "rgba(0, 0, 0, 0)"
+      }
+    ]
+  }
+]

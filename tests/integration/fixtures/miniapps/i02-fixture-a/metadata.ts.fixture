@@ -1,0 +1,11 @@
+import type { MiniappDescriptor } from '../../lib/miniapp-registry';
+
+export const metadata = {
+  id: 'i02-fixture-a',
+  slug: 'i02-fixture-a',
+  status: 'published',
+  copy: {
+    es: { title: 'Módulo sintético A', description: 'Fixture aislada para comprobar el contrato modular.' },
+    en: { title: 'Synthetic module A', description: 'An isolated fixture for testing the modular contract.' },
+  },
+} as const satisfies MiniappDescriptor;

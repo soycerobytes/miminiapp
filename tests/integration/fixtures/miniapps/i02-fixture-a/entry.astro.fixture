@@ -1,0 +1,22 @@
+---
+import EnvironmentFixture from '../../components/EnvironmentFixture';
+import type { Locale } from '../../lib/locales';
+import { validateTranslationParity } from '../../i18n/validation';
+import { calculate } from './domain/calculate';
+import { es } from './i18n/es';
+import { en } from './i18n/en';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+validateTranslationParity(es, es);
+validateTranslationParity(es, en);
+const copy = { es, en }[locale];
+---
+<section aria-labelledby="fixture-a-title" data-fixture="I02_FIXTURE_A_UI">
+  <h2 id="fixture-a-title">{copy.title}</h2>
+  <p>{copy.description}</p>
+  <output aria-label={copy.output}>{calculate(2, 3)}</output>
+  <section lang="es" aria-label="Regresión técnica aislada de I-01">
+    <EnvironmentFixture client:load />
+  </section>
+</section>

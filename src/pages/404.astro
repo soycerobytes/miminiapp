@@ -1,0 +1,60 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { getCommon } from '../i18n/common';
+
+const es = getCommon('es').errors;
+const en = getCommon('en').errors;
+---
+
+<SiteLayout
+  locale="es"
+  title="MiMiniApp · 404"
+  description={`${es.description} ${en.description}`}
+>
+  <div class="not-found">
+    <p class="error-code" aria-hidden="true">
+      404
+    </p>
+    <section lang="es" aria-labelledby="missing-es">
+      <h1 id="missing-es">{es.heading}</h1>
+      <p>{es.message}</p>
+      <a class="primary-action" href="/es/">
+        {es.home}
+      </a>
+    </section>
+    <section lang="en" aria-labelledby="missing-en">
+      <h2 id="missing-en">{en.heading}</h2>
+      <p>{en.message}</p>
+      <a class="primary-action" href="/en/">
+        {en.home}
+      </a>
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .not-found {
+    padding-block: 3rem 4rem;
+  }
+  .error-code {
+    color: var(--color-brand);
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  section {
+    max-width: 44rem;
+    margin-top: 2rem;
+  }
+  h1,
+  h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    line-height: 1.2;
+  }
+  section p {
+    margin-block: 1rem 1.5rem;
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,22 @@
+<!-- Before stylesheet/first paint; only explicit user choices are ever saved. -->
+<script is:inline>
+  (() => {
+    let preference = 'system';
+    try {
+      const saved = localStorage.getItem('miminiapp.appearance');
+      if (saved === 'light' || saved === 'dark' || saved === 'system')
+        preference = saved;
+    } catch {
+      /* Use the system fallback. */
+    }
+    let dark = false;
+    try {
+      dark = matchMedia('(prefers-color-scheme: dark)').matches;
+    } catch {
+      /* Media APIs may be unavailable. */
+    }
+    document.documentElement.dataset.appearance = preference;
+    document.documentElement.dataset.theme =
+      preference === 'system' ? (dark ? 'dark' : 'light') : preference;
+  })();
+</script>

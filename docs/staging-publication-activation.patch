@@ -1,0 +1,52 @@
+--- a/.github/deployment-policy.json
++++ b/.github/deployment-policy.json
+@@ -1,7 +1,7 @@
+ {
+   "schemaVersion": 1,
+-  "phase": "A",
+-  "deploymentsEnabled": false,
++  "phase": "B",
++  "deploymentsEnabled": true,
+   "repository": "aalexlpez/miminiapp",
+   "repositoryId": "1445849027",
+   "owner": "aalexlpez",
+@@ -10,7 +10,7 @@
+       "branch": "staging",
+       "worker": "miminiapp-staging",
+       "url": "https://miminiapp-staging.miminiapp-lab.workers.dev",
+-      "deploymentsEnabled": false
++      "deploymentsEnabled": true
+     },
+     "production": {
+       "branch": "main",
+--- a/.github/workflows/staging.yml
++++ b/.github/workflows/staging.yml
+@@ -17,7 +17,7 @@
+ jobs:
+   prepare:
+     # Phase A: activation requires an explicitly authorized code change.
+-    if: ${{ false }}
++    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' && github.repository == 'aalexlpez/miminiapp' && vars.I03_STAGING_PUBLICATION_AUTHORIZED == 'true' }}
+     runs-on: ubuntu-24.04
+     timeout-minutes: 30
+     outputs:
+@@ -59,7 +59,7 @@
+   remote-test:
+     name: remote-test
+     # Both this literal lock and the committed policy deny publication in Phase A.
+-    if: ${{ false }}
++    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' && github.repository == 'aalexlpez/miminiapp' && vars.I03_STAGING_PUBLICATION_AUTHORIZED == 'true' && needs.prepare.result == 'success' }}
+     needs: prepare
+     runs-on: ubuntu-24.04
+     timeout-minutes: 25
+--- a/tests/unit/workflow-safety.test.ts
++++ b/tests/unit/workflow-safety.test.ts
+@@ -21,7 +21,7 @@
+ }
+
+ // This explicit test expectation changes only in the owner-approved activation patch.
+-const stagingPublicationApproved = false;
++const stagingPublicationApproved = true;
+ const stagingPrepareCondition =
+   "${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' && github.repository == 'aalexlpez/miminiapp' && vars.I03_STAGING_PUBLICATION_AUTHORIZED == 'true' }}";
+ const stagingPublishCondition =

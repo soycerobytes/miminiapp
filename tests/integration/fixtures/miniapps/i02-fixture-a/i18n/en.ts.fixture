@@ -1,0 +1,7 @@
+import type { es } from './es';
+
+export const en: typeof es = {
+  title: 'Isolated test A',
+  description: 'This sample does not belong to the public catalogue.',
+  output: 'Synthetic result',
+};

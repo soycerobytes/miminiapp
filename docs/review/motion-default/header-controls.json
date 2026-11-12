@@ -1,0 +1,41 @@
+{
+  "browser": "156.0.8078.4",
+  "results": [
+    {
+      "device": "desktop",
+      "theme": "light",
+      "pausedLabel": "Reanudar animaciones",
+      "dropdown": false,
+      "languageFont": "13px",
+      "languageWidth": 105,
+      "buttons": 96
+    },
+    {
+      "device": "desktop",
+      "theme": "dark",
+      "pausedLabel": "Reanudar animaciones",
+      "dropdown": false,
+      "languageFont": "13px",
+      "languageWidth": 105,
+      "buttons": 96
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "pausedLabel": "Reanudar animaciones",
+      "dropdown": false,
+      "languageFont": "13px",
+      "languageWidth": 105,
+      "buttons": 96
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "pausedLabel": "Reanudar animaciones",
+      "dropdown": false,
+      "languageFont": "13px",
+      "languageWidth": 105,
+      "buttons": 96
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "browser": "156.0.8078.4",
+  "results": [
+    {
+      "locale": "es",
+      "device": "desktop",
+      "theme": "light",
+      "colors": {
+        "text": "rgb(36, 33, 54)",
+        "canvas": "rgb(247, 245, 240)",
+        "muted": "rgb(96, 91, 112)",
+        "panel": "rgb(251, 250, 248)",
+        "buttonText": "rgb(255, 255, 255)",
+        "button": "rgb(121, 80, 242)",
+        "control": "rgb(255, 255, 255)",
+        "border": "rgb(139, 130, 155)",
+        "selectedText": "rgb(255, 255, 255)",
+        "selected": "rgb(101, 58, 203)",
+        "focus": "#653acb"
+      },
+      "contrasts": {
+        "textCanvas": 14.321368001297202,
+        "textPanel": 14.958525615514832,
+        "mutedCanvas": 5.971331635428686,
+        "mutedPanel": 6.236996159808436,
+        "action": 4.949777615279459,
+        "selected": 6.951519871468617,
+        "border": 3.643203543985156,
+        "focusCanvas": 6.380187232505684,
+        "focusSurface": 6.951519871468617
+      }
+    },
+    {
+      "locale": "es",
+      "device": "desktop",
+      "theme": "dark",
+      "colors": {
+        "text": "rgb(247, 243, 255)",
+        "canvas": "rgb(23, 20, 33)",
+        "muted": "rgb(192, 183, 208)",
+        "panel": "rgb(36, 32, 51)",
+        "buttonText": "rgb(23, 20, 33)",
+        "button": "rgb(166, 138, 255)",
+        "control": "rgb(36, 32, 51)",
+        "border": "rgb(147, 133, 170)",
+        "selectedText": "rgb(23, 20, 33)",
+        "selected": "rgb(166, 138, 255)",
+        "focus": "#b9f65a"
+      },
+      "contrasts": {
+        "textCanvas": 16.5902571423438,
+        "textPanel": 14.456714125857445,
+        "mutedCanvas": 9.431095969567433,
+        "mutedPanel": 8.218236592461933,
+        "action": 6.647464952532497,
+        "selected": 6.647464952532497,
+        "border": 4.6456866562136385,
+        "focusCanvas": 14.150571141007525,
+        "focusSurface": 12.330777030635787
+      }
+    },
+    {
+      "locale": "es",
+      "device": "mobile",
+      "theme": "light",
+      "colors": {
+        "text": "rgb(36, 33, 54)",
+        "canvas": "rgb(247, 245, 240)",
+        "muted": "rgb(96, 91, 112)",
+        "panel": "rgb(251, 250, 248)",
+        "buttonText": "rgb(255, 255, 255)",
+        "button": "rgb(121, 80, 242)",
+        "control": "rgb(255, 255, 255)",
+        "border": "rgb(139, 130, 155)",
+        "selectedText": "rgb(255, 255, 255)",
+        "selected": "rgb(101, 58, 203)",
+        "focus": "#653acb"
+      },
+      "contrasts": {
+        "textCanvas": 14.321368001297202,
+        "textPanel": 14.958525615514832,
+        "mutedCanvas": 5.971331635428686,
+        "mutedPanel": 6.236996159808436,
+        "action": 4.949777615279459,
+        "selected": 6.951519871468617,
+        "border": 3.643203543985156,
+        "focusCanvas": 6.380187232505684,
+        "focusSurface": 6.951519871468617
+      }
+    },
+    {
+      "locale": "es",
+      "device": "mobile",
+      "theme": "dark",
+      "colors": {
+        "text": "rgb(247, 243, 255)",
+        "canvas": "rgb(23, 20, 33)",
+        "muted": "rgb(192, 183, 208)",
+        "panel": "rgb(36, 32, 51)",
+        "buttonText": "rgb(23, 20, 33)",
+        "button": "rgb(166, 138, 255)",
+        "control": "rgb(36, 32, 51)",
+        "border": "rgb(147, 133, 170)",
+        "selectedText": "rgb(23, 20, 33)",
+        "selected": "rgb(166, 138, 255)",
+        "focus": "#b9f65a"
+      },
+      "contrasts": {
+        "textCanvas": 16.5902571423438,
+        "textPanel": 14.456714125857445,
+        "mutedCanvas": 9.431095969567433,
+        "mutedPanel": 8.218236592461933,
+        "action": 6.647464952532497,
+        "selected": 6.647464952532497,
+        "border": 4.6456866562136385,
+        "focusCanvas": 14.150571141007525,
+        "focusSurface": 12.330777030635787
+      }
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "theme": "light",
+      "colors": {
+        "text": "rgb(36, 33, 54)",
+        "canvas": "rgb(247, 245, 240)",
+        "muted": "rgb(96, 91, 112)",
+        "panel": "rgb(251, 250, 248)",
+        "buttonText": "rgb(255, 255, 255)",
+        "button": "rgb(121, 80, 242)",
+        "control": "rgb(255, 255, 255)",
+        "border": "rgb(139, 130, 155)",
+        "selectedText": "rgb(255, 255, 255)",
+        "selected": "rgb(101, 58, 203)",
+        "focus": "#653acb"
+      },
+      "contrasts": {
+        "textCanvas": 14.321368001297202,
+        "textPanel": 14.958525615514832,
+        "mutedCanvas": 5.971331635428686,
+        "mutedPanel": 6.236996159808436,
+        "action": 4.949777615279459,
+        "selected": 6.951519871468617,
+        "border": 3.643203543985156,
+        "focusCanvas": 6.380187232505684,
+        "focusSurface": 6.951519871468617
+      }
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "theme": "dark",
+      "colors": {
+        "text": "rgb(247, 243, 255)",
+        "canvas": "rgb(23, 20, 33)",
+        "muted": "rgb(192, 183, 208)",
+        "panel": "rgb(36, 32, 51)",
+        "buttonText": "rgb(23, 20, 33)",
+        "button": "rgb(166, 138, 255)",
+        "control": "rgb(36, 32, 51)",
+        "border": "rgb(147, 133, 170)",
+        "selectedText": "rgb(23, 20, 33)",
+        "selected": "rgb(166, 138, 255)",
+        "focus": "#b9f65a"
+      },
+      "contrasts": {
+        "textCanvas": 16.5902571423438,
+        "textPanel": 14.456714125857445,
+        "mutedCanvas": 9.431095969567433,
+        "mutedPanel": 8.218236592461933,
+        "action": 6.647464952532497,
+        "selected": 6.647464952532497,
+        "border": 4.6456866562136385,
+        "focusCanvas": 14.150571141007525,
+        "focusSurface": 12.330777030635787
+      }
+    },
+    {
+      "locale": "en",
+      "device": "mobile",
+      "theme": "light",
+      "colors": {
+        "text": "rgb(36, 33, 54)",
+        "canvas": "rgb(247, 245, 240)",
+        "muted": "rgb(96, 91, 112)",
+        "panel": "rgb(251, 250, 248)",
+        "buttonText": "rgb(255, 255, 255)",
+        "button": "rgb(121, 80, 242)",
+        "control": "rgb(255, 255, 255)",
+        "border": "rgb(139, 130, 155)",
+        "selectedText": "rgb(255, 255, 255)",
+        "selected": "rgb(101, 58, 203)",
+        "focus": "#653acb"
+      },
+      "contrasts": {
+        "textCanvas": 14.321368001297202,
+        "textPanel": 14.958525615514832,
+        "mutedCanvas": 5.971331635428686,
+        "mutedPanel": 6.236996159808436,
+        "action": 4.949777615279459,
+        "selected": 6.951519871468617,
+        "border": 3.643203543985156,
+        "focusCanvas": 6.380187232505684,
+        "focusSurface": 6.951519871468617
+      }
+    },
+    {
+      "locale": "en",
+      "device": "mobile",
+      "theme": "dark",
+      "colors": {
+        "text": "rgb(247, 243, 255)",
+        "canvas": "rgb(23, 20, 33)",
+        "muted": "rgb(192, 183, 208)",
+        "panel": "rgb(36, 32, 51)",
+        "buttonText": "rgb(23, 20, 33)",
+        "button": "rgb(166, 138, 255)",
+        "control": "rgb(36, 32, 51)",
+        "border": "rgb(147, 133, 170)",
+        "selectedText": "rgb(23, 20, 33)",
+        "selected": "rgb(166, 138, 255)",
+        "focus": "#b9f65a"
+      },
+      "contrasts": {
+        "textCanvas": 16.5902571423438,
+        "textPanel": 14.456714125857445,
+        "mutedCanvas": 9.431095969567433,
+        "mutedPanel": 8.218236592461933,
+        "action": 6.647464952532497,
+        "selected": 6.647464952532497,
+        "border": 4.6456866562136385,
+        "focusCanvas": 14.150571141007525,
+        "focusSurface": 12.330777030635787
+      }
+    },
+    {
+      "coldNavigation": {
+        "frames": 4,
+        "cpuThrottle": 4,
+        "networkLatency": 100,
+        "stored": "dark",
+        "system": "light"
+      }
+    },
+    {
+      "rootNavigation": {
+        "frames": 5,
+        "theme": "dark",
+        "url": "http://127.0.0.1:4326/es/"
+      }
+    }
+  ],
+  "budgets": {
+    "initGzip": 306,
+    "motionJSGzip": 1232,
+    "motionCSSGzip": 1878
+  }
+}

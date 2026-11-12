@@ -1,0 +1,216 @@
+{
+  "purpose": "Current CP-02 header: single crossed animation icon, appearance icon and compact ES/EN; older video and measurements remain historical",
+  "manifest": [
+    {
+      "filename": "bfcache.json",
+      "bytes": 379,
+      "sha256": "0c0c4f5e75931ddc210abbd40b089e785a5dc0f73d6bc4772d709005e3a6c321"
+    },
+    {
+      "filename": "desktop-en-dark.png",
+      "bytes": 107338,
+      "sha256": "2288c0f2f1e7afa264ddd170c519a23c09710b18a78f865daa7dc36f2ed72297"
+    },
+    {
+      "filename": "desktop-en-light.png",
+      "bytes": 106175,
+      "sha256": "6f93dc6e6a50b2b297ecb065beb1c854b798db7af0b27399db7e70e14d8ebcdd"
+    },
+    {
+      "filename": "desktop-es-dark.png",
+      "bytes": 108101,
+      "sha256": "e3c4c6eac78ad60b32237688f24cb47aa418c847a07b5a6a36ed710854667924"
+    },
+    {
+      "filename": "desktop-es-light.png",
+      "bytes": 106768,
+      "sha256": "9a52ffc2878c2f8ea2dc663cb02ea4210097aa00e9c9f6308740d84db044d484"
+    },
+    {
+      "filename": "filmstrip/000.png",
+      "bytes": 8314,
+      "sha256": "210e7bc9a4199a242ac3869b7b4725a3dcef3dfb6b688c69c753e2aa495f37fa"
+    },
+    {
+      "filename": "filmstrip/001.png",
+      "bytes": 70642,
+      "sha256": "4274d2cb36fdd2422c3595e3ed85e861d54d01badd14f85d1bf13d81351eac17"
+    },
+    {
+      "filename": "filmstrip/002.png",
+      "bytes": 67063,
+      "sha256": "22346318fa38f1aba9554107dd362ba1d61686943a6013f1ad7d18e594e4908d"
+    },
+    {
+      "filename": "filmstrip/003.png",
+      "bytes": 62164,
+      "sha256": "0ec8c10abf188d93b87fc6700f88b0bf22c9f1276f9e34fca2f0e404fe0c9420"
+    },
+    {
+      "filename": "forced-colors-focus.png",
+      "bytes": 112954,
+      "sha256": "94fd9ff440f808027e6982e8fbc25539197196a59fd1c247f14857446add662f"
+    },
+    {
+      "filename": "header-controls.json",
+      "bytes": 895,
+      "sha256": "71c8c915c0bb8c54a2be966d7ef8b25c10589d82daca97879454273ff0e3a82d"
+    },
+    {
+      "filename": "header-desktop-dark-paused.png",
+      "bytes": 9120,
+      "sha256": "fed858bd7b570884bbb3bd236e2927ed2677c80b6b033f3f644d57d9723037ae"
+    },
+    {
+      "filename": "header-desktop-dark-playing.png",
+      "bytes": 8440,
+      "sha256": "54d33bdc054d71f9c106fbf8cf3e79627b33fca6b0c9569242ecdfbeed767f46"
+    },
+    {
+      "filename": "header-desktop-light-paused.png",
+      "bytes": 9205,
+      "sha256": "c094dbd6ead1ad32059168899b9a3b73bf91260bf68f8bd120e2d2e039eea639"
+    },
+    {
+      "filename": "header-desktop-light-playing.png",
+      "bytes": 8582,
+      "sha256": "9adf06d5e0e0cb44c4f2cccacb5f77b5ad593167a36377aed68d9cef6d1b8739"
+    },
+    {
+      "filename": "header-mobile-dark-paused.png",
+      "bytes": 8586,
+      "sha256": "9970499eb9ae454457c1fce3b55bfbbf0ec5a63abf70c42cae63d6cf1324c3cc"
+    },
+    {
+      "filename": "header-mobile-dark-playing.png",
+      "bytes": 7830,
+      "sha256": "040141fbd8fcacb1d39bd59f1577e1570b45083b8c3bd81c6ae8cf4ff431c9b1"
+    },
+    {
+      "filename": "header-mobile-light-paused.png",
+      "bytes": 8601,
+      "sha256": "2fb626a90be736e1826308c0796ca624b957dc00be3a648854ecaf15e7a38b65"
+    },
+    {
+      "filename": "header-mobile-light-playing.png",
+      "bytes": 7950,
+      "sha256": "96d0ebbc6a2aed7745f88775993914d79693f27a3d948f375e761b5d9af856ab"
+    },
+    {
+      "filename": "hero-theme-and-pause.webm",
+      "bytes": 4756140,
+      "sha256": "7939f1f46dab8510f59c5bf20eeb8e19880693b17a933a7a92b7f0ff81e39d18"
+    },
+    {
+      "filename": "mobile-en-dark.png",
+      "bytes": 66336,
+      "sha256": "484a69f399c516f6cf306631629c83fba2097f6781ae914c39e4ef8eb1a34634"
+    },
+    {
+      "filename": "mobile-en-light.png",
+      "bytes": 65172,
+      "sha256": "0ee94a54245b63a9fdee62218e4c1ae946b59bdd9a4bcaf8d24d8bf2fed53972"
+    },
+    {
+      "filename": "mobile-es-dark.png",
+      "bytes": 68617,
+      "sha256": "5ece66c4ef89a0480f936160cc308316acecaab6647aea0016310b5f19bbbbe6"
+    },
+    {
+      "filename": "mobile-es-light.png",
+      "bytes": 67579,
+      "sha256": "3c4663f40f4ed2946f1733e5e3c50ac809c2218d1fec6d1350ca33767647f68a"
+    },
+    {
+      "filename": "popover-desktop-dark.png",
+      "bytes": 117182,
+      "sha256": "75fe9f9a9b3833dcded7c81db886a39ceb42b2e3252d5d2787406707d8636bb9"
+    },
+    {
+      "filename": "popover-desktop-light.png",
+      "bytes": 114696,
+      "sha256": "7110d2b28af89e31bfaebbeeccacb4d0ca2999b3802e96f1fb2786c5c69444e7"
+    },
+    {
+      "filename": "popover-mobile-dark.png",
+      "bytes": 58534,
+      "sha256": "058e214b8f6c1610073bcb50b9cf7c93fb4eefea098164065e060999a13175d0"
+    },
+    {
+      "filename": "popover-mobile-light.png",
+      "bytes": 56880,
+      "sha256": "f0fb078bfc1403c86ff8f1198b176718e8283477fdfb1506b6144b597f713584"
+    },
+    {
+      "filename": "results.json",
+      "bytes": 7893,
+      "sha256": "61f6faa70bd12273bd20eb26b0c34f3863cf8798af51b95a8018c1ee90c714b9"
+    },
+    {
+      "filename": "review.html",
+      "bytes": 3353,
+      "sha256": "32be0e6495dcd4297923a60ec5a1fcdc7f9febcde91f22ef3825de4a8d0bda50"
+    },
+    {
+      "filename": "root-filmstrip/000.png",
+      "bytes": 62164,
+      "sha256": "0ec8c10abf188d93b87fc6700f88b0bf22c9f1276f9e34fca2f0e404fe0c9420"
+    },
+    {
+      "filename": "root-filmstrip/001.png",
+      "bytes": 13372,
+      "sha256": "74e2e24c0693575518812edc081fc8b4300659303bbc66b43d5f9ece1fe9cccc"
+    },
+    {
+      "filename": "root-filmstrip/002.png",
+      "bytes": 70642,
+      "sha256": "4274d2cb36fdd2422c3595e3ed85e861d54d01badd14f85d1bf13d81351eac17"
+    },
+    {
+      "filename": "root-filmstrip/003.png",
+      "bytes": 67063,
+      "sha256": "22346318fa38f1aba9554107dd362ba1d61686943a6013f1ad7d18e594e4908d"
+    },
+    {
+      "filename": "root-filmstrip/004.png",
+      "bytes": 62164,
+      "sha256": "0ec8c10abf188d93b87fc6700f88b0bf22c9f1276f9e34fca2f0e404fe0c9420"
+    },
+    {
+      "filename": "subtle-live-review.json",
+      "bytes": 2337,
+      "sha256": "9d39b84aaaa3b2fc7d296201992da719b818acd53e8dd1d56a6ec80fdcb147fd"
+    },
+    {
+      "filename": "vertical-9x16-dark.png",
+      "bytes": 124285,
+      "sha256": "93bc40a1d9ccd6c6103fdfda42010dd65177a75343d5392bf8603284b73d7f70"
+    },
+    {
+      "filename": "zoom-200-en.png",
+      "bytes": 74004,
+      "sha256": "7f0d2c5c0a2ccb2851222fb69b974b9992f5910f2b6a9f4a332633e3e0031fca"
+    },
+    {
+      "filename": "zoom-200-es.png",
+      "bytes": 77546,
+      "sha256": "a69e36be710504514edaa7454d0775cbfad5d8d3062b37b3d5feeb3884c71d74"
+    },
+    {
+      "filename": "zoom.json",
+      "bytes": 1209,
+      "sha256": "666f8f22203170700f89cc27d659bafa5af995dcfa6dfaf1860f6af6ec12201f"
+    }
+  ],
+  "baseSha": "f26d97bb0b6dc1e65cfbb429ec302a45753f8b6f",
+  "verification": {
+    "fullVerify": {
+      "exit": 0,
+      "unit": 326,
+      "components": 9,
+      "e2e": 78,
+      "modularIntegration": "passed"
+    },
+    "finalDesktopGap": "check/build + interactive header capture passed"
+  }
+}

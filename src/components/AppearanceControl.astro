@@ -1,0 +1,53 @@
+---
+import { getCommon } from '../i18n/common';
+import type { Locale } from '../lib/locales';
+import AppearanceIcon from './AppearanceIcon.astro';
+interface Props {
+  locale: Locale;
+}
+const copy = getCommon(Astro.props.locale).appearance;
+const modes = ['light', 'dark', 'system'] as const;
+---
+
+<div class="appearance-control" role="group" aria-label={copy.label}>
+  <button
+    type="button"
+    class="appearance-trigger"
+    data-appearance-trigger
+    data-label={copy.label}
+    data-light={copy.light}
+    data-dark={copy.dark}
+    data-system={copy.system}
+    aria-label={`${copy.label} · ${copy.system}`}
+    title={`${copy.label} · ${copy.system}`}
+    popovertarget="appearance-options"
+    aria-controls="appearance-options"
+    disabled
+  >
+    {modes.map((mode) => (
+      <AppearanceIcon mode={mode} />
+    ))}
+  </button>
+  <div
+    id="appearance-options"
+    class="appearance-options"
+    popover="auto"
+    role="group"
+    aria-label={copy.label}
+  >
+    {modes.map((mode) => (
+      <button
+        type="button"
+        class="appearance-option"
+        data-appearance-option={mode}
+        aria-label={copy[mode]}
+        aria-pressed="false"
+        title={copy[mode]}
+        disabled
+      >
+        <AppearanceIcon mode={mode} />
+        <span class="appearance-indicator" aria-hidden="true"></span>
+      </button>
+    ))}
+  </div>
+</div>

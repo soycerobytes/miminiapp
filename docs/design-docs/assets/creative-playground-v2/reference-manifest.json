@@ -1,0 +1,92 @@
+{
+  "recordedOn": "2026-11-08",
+  "purpose": "Approval reference only; not application assets or implementation evidence",
+  "files": [
+    {
+      "file": "wordmark-compact.svg",
+      "source": ".local/creative-playground-v2/wordmark-compact.svg",
+      "bytes": 4710,
+      "sha256": "964d92e68c1966351883c1aba73d8b2c99f294ab3eec922e633f6be9797f3e4a"
+    },
+    {
+      "file": "wordmark-compact-dark.svg",
+      "source": ".local/creative-playground-v2/wordmark-compact-dark.svg",
+      "bytes": 4710,
+      "sha256": "5fed474e74da2838fd63cce2fe1296341c3ce56837cf32299e49d6ff30238af0"
+    },
+    {
+      "file": "wordmark-editorial.svg",
+      "source": ".local/creative-playground-v2/wordmark-editorial.svg",
+      "bytes": 5011,
+      "sha256": "bf48b80949bd90151ded4eda4ecdfb378934a8b78b30cf9fa5ef97509e7b0429"
+    },
+    {
+      "file": "wordmark-editorial-dark.svg",
+      "source": ".local/creative-playground-v2/wordmark-editorial-dark.svg",
+      "bytes": 5011,
+      "sha256": "4ea29ea25179d5a2fcbc8502dc7fb170978abfa4f6bd24932206c25e539b0d27"
+    },
+    {
+      "file": "M-isotype.svg",
+      "source": ".local/creative-playground-v2/M-isotype.svg",
+      "bytes": 427,
+      "sha256": "ecd694054d3a6c197349ed345f5fc5a1866229d6a98cae51c6ffac19d2c56b51"
+    },
+    {
+      "file": "M-isotype-dark.svg",
+      "source": ".local/creative-playground-v2/M-isotype-dark.svg",
+      "bytes": 427,
+      "sha256": "bcd66afee1657856c6d019a07cc7b6c7246db61de59186b6c8a5255434de2e3d"
+    },
+    {
+      "file": "wordmarks-comparison.png",
+      "source": ".local/creative-playground-v2/captures/wordmarks-comparison.png",
+      "bytes": 91831,
+      "sha256": "0ce1d3fb7f5b6262f1a3abd65f0f7a77690cd3dd75e7d22f4f9bbf4f47d08bd1"
+    },
+    {
+      "file": "compact-desktop.png",
+      "source": ".local/creative-playground-v2/captures/compact-desktop.png",
+      "bytes": 117555,
+      "sha256": "7fb66c9ffe4b3a1d32bdeba899fffaf639efa15b685c7445e9cab32f913cb842"
+    },
+    {
+      "file": "compact-mobile.png",
+      "source": ".local/creative-playground-v2/captures/compact-mobile.png",
+      "bytes": 68414,
+      "sha256": "567da93e36e72b68963b2004b8767bb9604ea76b35a4cb15c28689e1be966646"
+    },
+    {
+      "file": "joint-9x16.mp4",
+      "source": ".local/creative-playground-v2/captures/joint-9x16.mp4",
+      "bytes": 438371,
+      "sha256": "1971911efa545e1c0277c368938027377a31050e8b34a62725050fc743e79c27"
+    },
+    {
+      "file": "wordmark-assembly.mp4",
+      "source": ".local/creative-playground-v2/captures/wordmark-assembly.mp4",
+      "bytes": 299372,
+      "sha256": "76cb33e3c92de784a1beab083b3278f180d2fa0921bbe8ba83cb5e3a63f8a66a"
+    },
+    {
+      "referenceOnly": ".local/creative-playground-v2/index.html",
+      "bytes": 599363,
+      "sha256": "f8530e3f6e4f8964bb6b83d31d91746d3deb68a9be456d565f66cbc87ee3b438"
+    },
+    {
+      "referenceOnly": ".local/creative-playground-v2/runtime.js",
+      "bytes": 6503,
+      "sha256": "80f8dfe65f527e3d22d08f8d8bc1b987bddcf55d8e3ae85e666f3e8fc9078322"
+    },
+    {
+      "referenceOnly": ".local/creative-playground-v2/styles.css",
+      "bytes": 511973,
+      "sha256": "951a5b919bf787c7f0bdee3d049b6281b55e534e3997f7dbddf67982f1c990a3"
+    },
+    {
+      "referenceOnly": ".local/creative-playground-v2/MiMiniApp-Creative-Playground-02.zip",
+      "bytes": 13902781,
+      "sha256": "0a0497852c67bcffd2e9584cb0700eab02e99fb22292bb41cfa83d219b757f65"
+    }
+  ]
+}

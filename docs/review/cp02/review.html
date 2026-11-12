@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width"
+  /><title>CP-02 · Implementación</title
+  ><style>
+    body {
+      font: 16px system-ui;
+      background: #eee;
+      color: #242136;
+      max-width: 1500px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+    section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    img,
+    video {
+      max-width: 100%;
+      height: auto;
+    }
+    figure {
+      margin: 0;
+    }
+    figcaption {
+      padding: 12px 0;
+    }
+    @media (max-width: 600px) {
+      section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <h1>CP-02 · Implementación para revisión</h1>
+  <p>
+    Build real en rama feature. Tarjeta/M originales en ambos temas. Capturas en
+    movimiento reducido, vídeo con animación normal.
+  </p>
+  <h2>desktop · ES</h2>
+  <section>
+    <figure>
+      <figcaption>light</figcaption>
+      <a href="desktop-es-light.png"
+        ><img src="desktop-es-light.png" alt="desktop es light"
+      /></a>
+    </figure>
+    <figure>
+      <figcaption>dark</figcaption>
+      <a href="desktop-es-dark.png"
+        ><img src="desktop-es-dark.png" alt="desktop es dark"
+      /></a>
+    </figure>
+  </section>
+  <h2>desktop · EN</h2>
+  <section>
+    <figure>
+      <figcaption>light</figcaption>
+      <a href="desktop-en-light.png"
+        ><img src="desktop-en-light.png" alt="desktop en light"
+      /></a>
+    </figure>
+    <figure>
+      <figcaption>dark</figcaption>
+      <a href="desktop-en-dark.png"
+        ><img src="desktop-en-dark.png" alt="desktop en dark"
+      /></a>
+    </figure>
+  </section>
+  <h2>mobile · ES</h2>
+  <section>
+    <figure>
+      <figcaption>light</figcaption>
+      <a href="mobile-es-light.png"
+        ><img src="mobile-es-light.png" alt="mobile es light"
+      /></a>
+    </figure>
+    <figure>
+      <figcaption>dark</figcaption>
+      <a href="mobile-es-dark.png"
+        ><img src="mobile-es-dark.png" alt="mobile es dark"
+      /></a>
+    </figure>
+  </section>
+  <h2>mobile · EN</h2>
+  <section>
+    <figure>
+      <figcaption>light</figcaption>
+      <a href="mobile-en-light.png"
+        ><img src="mobile-en-light.png" alt="mobile en light"
+      /></a>
+    </figure>
+    <figure>
+      <figcaption>dark</figcaption>
+      <a href="mobile-en-dark.png"
+        ><img src="mobile-en-dark.png" alt="mobile en dark"
+      /></a>
+    </figure>
+  </section>
+  <h2>Bucles, tema, giro y pausa — revisión anterior horizontal</h2>
+  <video controls src="hero-theme-and-pause.webm"></video>
+  <h2>Selector vertical centrado — versión actual</h2>
+  <section>
+    <img
+      src="popover-desktop-dark.png"
+      alt="Selector desplegado en escritorio"
+    /><img src="popover-mobile-dark.png" alt="Selector desplegado en móvil" />
+  </section>
+  <h2>Control de animaciones en cabecera — sin desplegable</h2>
+  <section>
+    <figure>
+      <figcaption>Animaciones activas</figcaption>
+      <img
+        src="header-mobile-light-playing.png"
+        alt="Icono de animaciones activo"
+      />
+    </figure>
+    <figure>
+      <figcaption>Animaciones pausadas</figcaption>
+      <img
+        src="header-mobile-light-paused.png"
+        alt="El mismo icono con una raya diagonal"
+      />
+    </figure>
+  </section>
+</html>

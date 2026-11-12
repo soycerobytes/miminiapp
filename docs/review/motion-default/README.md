@@ -1,0 +1,9 @@
+# Movimiento activo por defecto — 2026-11-10
+
+Petición expresa del propietario: movimiento decorativo activo en cada carga, incluso si el dispositivo indica movimiento reducido. El icono de ondas (18 px, diana de 48 px) pausa/reanuda directamente, con raya diagonal al pausar; teclado Enter/Espacio, nombres y estado ES/EN. No tiene desplegable. La elección solo dura en el documento y recargar vuelve a activar. Las suspensiones de pestaña oculta/fuera de pantalla ahorran recursos sin cambiar la elección manual. La rotación del selector de apariencia sigue respetando reduced-motion.
+
+Capturas del build real en Chromium fijado, generadas con `node tests/visual/header-controls.ts`: ocho portadas, ES/EN × claro/oscuro × móvil/escritorio; cabecera en marcha/pausada y popover de apariencia. Las portadas se capturan después de pausar explícitamente mediante el icono, no mediante la preferencia del sistema. `header-controls.json` registra medidas y nombres accesibles. Evidencia histórica de CP-01/CP-02 se conserva en sus carpetas originales.
+
+Revisión visual: icono compacto junto al tema, raya visible al pausar; idioma compacto y tarjeta M original conservados.
+
+Verificación final: `npm run verify` completo satisfactorio (tipos sin diagnósticos, lint, Prettier, hosting offline, 326 unitarias, 9 componentes, 78 E2E móvil/escritorio e integración modular). El nuevo test comprueba los siete bucles reales, teclado, cambios dinámicos de preferencia y recarga; excluye los puntos estáticos del recuento de bucles. Se mantienen las pruebas existentes de congelación/reanudación, fallback sin JS, geometría y accesibilidad. La primera ejecución detectó ese error de recuento en la prueba nueva; corregido el selector, pasaron el ensayo dirigido y la batería completa. Logs locales: `/tmp/motion-verify-final.log` y `/tmp/motion-focused.log`.

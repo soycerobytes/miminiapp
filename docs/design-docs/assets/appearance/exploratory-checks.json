@@ -1,0 +1,15 @@
+[
+  "initial system + dynamic",
+  "keyboard open, radios, Escape focus; explicit override; persistence + recovery",
+  "no overflow 320/393/768/1024/1280/1440 ES/EN",
+  {
+    "motion": {
+      "same": true,
+      "times": true,
+      "paused": "true",
+      "shifts": [],
+      "geometry": true
+    }
+  },
+  "storage blocked fallback page current"
+]

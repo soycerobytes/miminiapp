@@ -1,0 +1,135 @@
+{
+  "browser": "156.0.8078.4",
+  "executable": "/workspace/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome",
+  "method": "headed Chromium, noDefaults CDP, native window minimize/restore",
+  "events": [
+    {
+      "state": "hidden",
+      "trusted": true
+    },
+    {
+      "state": "visible",
+      "trusted": true
+    },
+    {
+      "state": "hidden",
+      "trusted": true
+    },
+    {
+      "state": "visible",
+      "trusted": true
+    }
+  ],
+  "hidden": [
+    {
+      "name": "mma-lime",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    },
+    {
+      "name": "mma-coral",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    },
+    {
+      "name": "mma-orbit",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    },
+    {
+      "name": "mma-tile",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    },
+    {
+      "name": "mma-rings",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    },
+    {
+      "name": "mma-satellite",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    },
+    {
+      "name": "mma-wave",
+      "time": 2466.5279999996947,
+      "state": "paused"
+    }
+  ],
+  "resumed": [
+    {
+      "name": "mma-lime",
+      "time": 2583.2359999993123,
+      "state": "running"
+    },
+    {
+      "name": "mma-coral",
+      "time": 2583.2359999993123,
+      "state": "running"
+    },
+    {
+      "name": "mma-orbit",
+      "time": 2583.2359999993123,
+      "state": "running"
+    },
+    {
+      "name": "mma-tile",
+      "time": 2583.2359999993123,
+      "state": "running"
+    },
+    {
+      "name": "mma-rings",
+      "time": 2583.2359999993123,
+      "state": "running"
+    },
+    {
+      "name": "mma-satellite",
+      "time": 2583.2359999993123,
+      "state": "running"
+    },
+    {
+      "name": "mma-wave",
+      "time": 2583.2359999993123,
+      "state": "running"
+    }
+  ],
+  "manuallyPaused": [
+    {
+      "name": "mma-lime",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    },
+    {
+      "name": "mma-coral",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    },
+    {
+      "name": "mma-orbit",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    },
+    {
+      "name": "mma-tile",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    },
+    {
+      "name": "mma-rings",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    },
+    {
+      "name": "mma-satellite",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    },
+    {
+      "name": "mma-wave",
+      "time": 2666.5359999993125,
+      "state": "paused"
+    }
+  ],
+  "restoredFromCache": true
+}

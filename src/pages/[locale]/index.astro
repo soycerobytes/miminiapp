@@ -1,0 +1,16 @@
+---
+import Home from '../../components/Home.astro';
+import { locales, isLocale } from '../../lib/locales';
+import { getPublishedMetadata } from '../../lib/miniapp-registry';
+import { miniappRegistry } from '../../miniapps/registry';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) throw new Error('Unsupported catalogue locale.');
+const apps = getPublishedMetadata(miniappRegistry);
+---
+
+<Home locale={locale} apps={apps} />

@@ -1,0 +1,16 @@
+import { describe, expect, it } from 'vitest';
+import { calculate } from '../domain/calculate';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+import { validateTranslationParity } from '../../../i18n/validation';
+
+describe('isolated module B', () => {
+  it('retains its own multiplicative result for the shared fixture inputs', () => {
+    expect(calculate(4, 3)).toBe(12);
+  });
+  it('provides nonempty, distinct Spanish and English UI translations', () => {
+    expect(() => validateTranslationParity(es, es)).not.toThrow();
+    expect(() => validateTranslationParity(es, en)).not.toThrow();
+    expect(en.title).not.toBe(es.title);
+  });
+});

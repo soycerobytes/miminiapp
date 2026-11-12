@@ -1,0 +1,22 @@
+{
+  "browser": "156.0.8078.4",
+  "conditions": "same executor, fresh contexts, local Astro preview, no field percentile claims",
+  "results": [
+    {
+      "name": "baseline",
+      "origin": "http://127.0.0.1:4322",
+      "cls": 0,
+      "shifts": [],
+      "longTasks": [],
+      "controlMs": null
+    },
+    {
+      "name": "current",
+      "origin": "http://127.0.0.1:4321",
+      "cls": 0,
+      "shifts": [],
+      "longTasks": [],
+      "controlMs": 1.800000000745058
+    }
+  ]
+}

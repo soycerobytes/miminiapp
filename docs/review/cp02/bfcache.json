@@ -1,0 +1,9 @@
+{
+  "restored": true,
+  "sameNode": true,
+  "theme": "light",
+  "paused": "true",
+  "browser": "Chromium 156.0.8078.4 revision 1248",
+  "method": "Raw full Chromium --headless=new, no Playwright defaults; CDP noDefaults and native Page.navigateToHistoryEntry",
+  "scenario": "ES dark + manual pause; EN sets light; history returns to cached ES; native pageshow persisted=true"
+}

@@ -1,0 +1,5 @@
+---
+import marker from './draft-marker.svg';
+throw new Error('I02_DRAFT_UI_MUST_NEVER_LOAD');
+---
+<img src={marker.src} alt="I02_DRAFT_ASSET_MUST_NEVER_SHIP" />

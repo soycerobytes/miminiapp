@@ -1,0 +1,47 @@
+{
+  "version": "156.0.8078.4",
+  "resolvedChromiumExecutable": "/workspace/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome",
+  "channel": "chromium",
+  "method": "chrome.tabs.setZoom(2) in a disposable local extension",
+  "layoutViewportAndDevicePixelRatioAsserted": true,
+  "captures": [
+    {
+      "locale": "es",
+      "zoom": 2,
+      "before": {
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "devicePixelRatio": 1,
+        "clientWidth": 1280
+      },
+      "after": {
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "devicePixelRatio": 2,
+        "clientWidth": 640,
+        "scrollWidth": 640
+      },
+      "filename": "zoom-200-es.png",
+      "catalogueFilename": "zoom-200-es-catalogue.png"
+    },
+    {
+      "locale": "en",
+      "zoom": 2,
+      "before": {
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "devicePixelRatio": 1,
+        "clientWidth": 1280
+      },
+      "after": {
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "devicePixelRatio": 2,
+        "clientWidth": 640,
+        "scrollWidth": 640
+      },
+      "filename": "zoom-200-en.png",
+      "catalogueFilename": "zoom-200-en-catalogue.png"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "browser": "156.0.8078.4",
+  "results": [
+    {
+      "locale": "es",
+      "device": "desktop",
+      "theme": "light",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "es",
+      "device": "desktop",
+      "theme": "dark",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "es",
+      "device": "mobile",
+      "theme": "light",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "es",
+      "device": "mobile",
+      "theme": "dark",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "theme": "light",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "theme": "dark",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "en",
+      "device": "mobile",
+      "theme": "light",
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "locale": "en",
+      "device": "mobile",
+      "theme": "dark",
+      "overflow": false,
+      "axe": []
+    }
+  ]
+}

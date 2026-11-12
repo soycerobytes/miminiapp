@@ -1,0 +1,40 @@
+---
+import BrandMark from './BrandMark.astro';
+import { getCommon } from '../i18n/common';
+import type { Locale } from '../lib/locales';
+
+interface Props {
+  locale: Locale;
+}
+const copy = getCommon(Astro.props.locale);
+---
+
+<div class="empty-catalogue">
+  <div class="empty-symbol" aria-hidden="true">
+    <BrandMark />
+  </div>
+  <div>
+    <h3>
+      {copy.catalogue.emptyTitleLines.map((line, index) => (
+        <>
+          {index > 0 && (
+            <>
+              {' '}
+              <br />
+            </>
+          )}
+          {line}
+        </>
+      ))}
+    </h3>
+    <p>{copy.catalogue.emptyDescription}</p>
+  </div>
+  <div class="empty-note" aria-hidden="true">
+    {copy.catalogue.emptyNoteLines.map((line, index) => (
+      <>
+        {index > 0 && <br />}
+        {line}
+      </>
+    ))}
+  </div>
+</div>

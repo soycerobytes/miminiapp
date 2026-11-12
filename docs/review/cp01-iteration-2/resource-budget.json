@@ -1,0 +1,10 @@
+{
+  "baselineCommit": "6f367e5",
+  "baselineMethod": "detached worktree outside ignored directories; identical accepted CSS filename/hash",
+  "baselineCssGzip": 5745,
+  "currentCssGzip": 6971,
+  "additionalBuiltCssGzip": 1226,
+  "inlineJsBytes": 2271,
+  "inlineJsGzip": 872,
+  "note": "Final documentation adds 6 gzip bytes of automatically discovered Tailwind utilities; no used visual styles changed."
+}

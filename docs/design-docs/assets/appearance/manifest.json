@@ -1,0 +1,133 @@
+{
+  "createdAt": "2026-11-09T12:09:16.231811+00:00",
+  "purpose": "Prototipo temporal para revisión, sin implementación de producción",
+  "baseSha": "f26d97bb0b6dc1e65cfbb429ec302a45753f8b6f",
+  "browser": "Chromium 156.0.8078.4 / Playwright revision 1248",
+  "node": "24.22.2",
+  "reducedMotion": "reduce en capturas; movimiento normal en ensayo de pausa",
+  "commands": [
+    "ASTRO_TELEMETRY_DISABLED=1 npm run build (copia temporal)",
+    "PLAYWRIGHT_BROWSERS_PATH=/workspace/.cache/ms-playwright node .local/appearance-prototype/capture.mjs",
+    "node .local/appearance-prototype/check.mjs (misma caché y runtime)",
+    "node .local/appearance-prototype/panels.mjs (misma caché y runtime)"
+  ],
+  "reproduction": "Código exploratorio ignorado en .local/appearance-prototype; copia de fuentes remotas /tmp/mimini-theme-base. Galería HTML contiene solo capturas documentales. No se versiona código funcional de prototipo.",
+  "limitations": [
+    "Sin verificación de implementación de producción",
+    "Sin lector de pantalla real",
+    "Sin filmstrip de carga fría",
+    "Sin ejecución remota de suite ni publicación"
+  ],
+  "files": [
+    {
+      "path": "capture-results.json",
+      "bytes": 1058,
+      "sha256": "0890e7388d221aa6de0ab662ca74e5347e8fbe61b42a196b0f7cd2747f3960e2"
+    },
+    {
+      "path": "contrasts.json",
+      "bytes": 6908,
+      "sha256": "37974b23a0cc7bb8a562637403d2a7e19240d52dd2d168c20186eccfe16882a2"
+    },
+    {
+      "path": "control-a-desktop-dark.png",
+      "bytes": 116703,
+      "sha256": "c000d456aa0622dbdc70aa84c2e060fa0510a75ba6ccd23eafc6dee2952b7245"
+    },
+    {
+      "path": "control-a-desktop-light.png",
+      "bytes": 115893,
+      "sha256": "18201a8b6d203d376af1a967ba91acfde10f1352ccf46852a161e77d69261f7b"
+    },
+    {
+      "path": "control-a-mobile-dark.png",
+      "bytes": 58777,
+      "sha256": "c7da17a158a35fa909f2e64ea326bf6eaf0c53e493ab7ece940db1d98c1ed438"
+    },
+    {
+      "path": "control-a-mobile-light.png",
+      "bytes": 58695,
+      "sha256": "778ad95a1404e52a1e7b2b80b374b48ea9f55c36b3aed62702cb0501d9e9512c"
+    },
+    {
+      "path": "control-b-desktop-dark.png",
+      "bytes": 110040,
+      "sha256": "c45142e61c8bc74ca89066d83f80e8c9a1b66f16e5dd48bf7fe57b2fc2ff3aea"
+    },
+    {
+      "path": "control-b-desktop-light.png",
+      "bytes": 108189,
+      "sha256": "7ae3149cfb89b5644a828f08100f7c7528e72bca09a95e680374480c8302766a"
+    },
+    {
+      "path": "control-b-mobile-dark.png",
+      "bytes": 50147,
+      "sha256": "d42cb1812f7d48eac651cc72b351a2b2addbf0aa5e0c4069ecb95fb005512f8a"
+    },
+    {
+      "path": "control-b-mobile-light.png",
+      "bytes": 49007,
+      "sha256": "98529b200742576c3e9ce6f83b387276dd9987f2497c2a50272d4f2990629528"
+    },
+    {
+      "path": "desktop-en-dark.png",
+      "bytes": 111843,
+      "sha256": "dca3d70794db8c08ea6758e158aa9ac138b285cb38b1d90d14b6607d6276cfdb"
+    },
+    {
+      "path": "desktop-en-light.png",
+      "bytes": 109847,
+      "sha256": "7fa42923e35377382235349d3d079e97a8fec8dec5ff207264ab3158f4a330b1"
+    },
+    {
+      "path": "desktop-es-dark.png",
+      "bytes": 113683,
+      "sha256": "7fad955c50d5ccd9b247854d4692b9c7663dad9c503222164380affba27764f1"
+    },
+    {
+      "path": "desktop-es-light.png",
+      "bytes": 111566,
+      "sha256": "dc4afbfb354b519452fdccba05f877658b917913c56575fb75e207efac8416c1"
+    },
+    {
+      "path": "exploratory-checks.json",
+      "bytes": 348,
+      "sha256": "775950b5a07ff8bbd7533d2d21d33d63ee9a301167fd8805153e222196a308ea"
+    },
+    {
+      "path": "mobile-en-dark.png",
+      "bytes": 69794,
+      "sha256": "f6547c9392338ca1c70ca4ef2de45f4858ccab185401abb0ef64ced4727b2a4e"
+    },
+    {
+      "path": "mobile-en-light.png",
+      "bytes": 68647,
+      "sha256": "2cbf0d04808b87d60af8f3ca4d28d375b2f906b81a38b7d8ad850594892de531"
+    },
+    {
+      "path": "mobile-es-dark.png",
+      "bytes": 72758,
+      "sha256": "4d853202cb9797b12e054ff9c765b308a1e7f1798f44286ec6e5d9c2abf4f65d"
+    },
+    {
+      "path": "mobile-es-light.png",
+      "bytes": 71279,
+      "sha256": "11125c8e1f3c95118ff7c70f4699420d0ccf4e91dad8e3b4287a12982f7197db"
+    },
+    {
+      "path": "observed-release.json",
+      "bytes": 302,
+      "sha256": "21b7fd8df07abd79f5eaf1d36dea76dda0b569d5f476e1f1d70bd3f7b62d5d01"
+    },
+    {
+      "path": "panels-results.json",
+      "bytes": 722,
+      "sha256": "5a4099c6cd08719c1eca04927fe634043e9981c26fdcb7c2c2a52c93a4d614a4"
+    },
+    {
+      "path": "review.html",
+      "bytes": 3097,
+      "sha256": "df6a7bb1a5e0241e6c98b10fed5353610272b0f292cd645152b66d1295ee8218"
+    }
+  ]
+}

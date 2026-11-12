@@ -1,0 +1,60 @@
+---
+import AppearanceInit from '../components/AppearanceInit.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { getCommon } from '../i18n/common';
+import type { Locale } from '../lib/locales';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  appSlug?: string;
+}
+
+const { locale, title, description, appSlug } = Astro.props;
+const copy = getCommon(locale);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <AppearanceInit />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description ?? copy.meta.description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/DMSans.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <title>{title ?? copy.meta.title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">
+      {copy.navigation.skip}
+    </a>
+    <div class="site-container" id="inicio">
+      <SiteHeader locale={locale} appSlug={appSlug} />
+      <main id="contenido" tabindex="-1">
+        <slot />
+      </main>
+      <SiteFooter locale={locale} />
+    </div>
+    <script>
+      import '../scripts/motion';
+      import '../scripts/appearance';
+    </script>
+  </body>
+</html>

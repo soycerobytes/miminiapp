@@ -1,0 +1,61 @@
+{
+  "purpose": "CP-01 iteration 1 real build and labelled approval comparisons; no animations",
+  "base": "e2830fa0a5682da1660bbf5189daf62b9c90c98c",
+  "files": [
+    {
+      "file": "desktop-es.png",
+      "bytes": 106218,
+      "sha256": "33c3a533653c17eb499b9d64e28fba953094694039c649790c28226a08fc5b6c"
+    },
+    {
+      "file": "desktop-en.png",
+      "bytes": 105745,
+      "sha256": "b2987acc18bb18ecf1d4e75f0784b705aba022824a5567f784717cb86f0d3a81"
+    },
+    {
+      "file": "mobile-es.png",
+      "bytes": 66842,
+      "sha256": "d736212edeeb55e2c9aaa14fae8614f1f611ee36981d085156e874baa6fa1e9b"
+    },
+    {
+      "file": "mobile-en.png",
+      "bytes": 64493,
+      "sha256": "bb8c0e3110db080ddcb8893788a8e8667e7da25d64a91353c430b20d9b689b0e"
+    },
+    {
+      "file": "comparison-desktop-es.png",
+      "bytes": 164668,
+      "sha256": "fd1ebf20546f7636a1e0bf04ab5f0a5d09d342d5e3f2961c41439f0ae7aafd6f"
+    },
+    {
+      "file": "comparison-desktop-en.png",
+      "bytes": 155341,
+      "sha256": "4b3258081675b7fbfe7b85dafc68972405329f64ae136c54c17c0d0955e4c8e9"
+    },
+    {
+      "file": "comparison-mobile-es.png",
+      "bytes": 276793,
+      "sha256": "6f27afd6025e2e3d2cb9dcf30cc7798b35af39ebd564ee5a35b9f349368d5327"
+    },
+    {
+      "file": "comparison-mobile-en.png",
+      "bytes": 259079,
+      "sha256": "05e80bc3384815b5971016d27334e76c228ecc12f6fcac88afdb5c8579455d33"
+    },
+    {
+      "file": "favicon-sizes.png",
+      "bytes": 22042,
+      "sha256": "2e6d34443be462ae551acbb13dbc4c94f6568d457016b502b5e0e47b79918904"
+    },
+    {
+      "file": "vertical-9x16-home.png",
+      "bytes": 119076,
+      "sha256": "e9207d3f0d4c0dafec57f08fc223f3b3d60cca6225e491895b1a4ad8b5bcf32c"
+    },
+    {
+      "file": "vertical-9x16-catalogue.png",
+      "bytes": 117657,
+      "sha256": "05b1f62fb22d0d99f63bce9385d8fd21a9729b87b2d77ec019ca854883ea91b8"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import LaboratoryArt from './LaboratoryArt.astro';
+import CatalogueCard from './CatalogueCard.astro';
+import EmptyCatalogue from './EmptyCatalogue.astro';
+import { getCommon } from '../i18n/common';
+import type { Locale } from '../lib/locales';
+import type { MiniappDescriptor } from '../lib/miniapp-registry';
+
+interface Props {
+  locale: Locale;
+  apps: readonly MiniappDescriptor[];
+}
+const { locale, apps } = Astro.props;
+const copy = getCommon(locale);
+---
+
+<SiteLayout locale={locale}>
+  <section class="home-hero" aria-labelledby="hero-title">
+    <div>
+      <span class="laboratory-badge">{copy.hero.badge}</span>
+      <h1 id="hero-title">
+        {copy.hero.titleLines.map((line) => (
+          <>
+            {line} <br />
+          </>
+        ))}
+        <em>{copy.hero.titleAccent}</em>
+      </h1>
+      <p class="hero-lead">
+        {apps.length === 0 ? copy.hero.emptyLead : copy.hero.populatedLead}
+      </p>
+      <a class="primary-action" href="#catalogo">
+        {copy.hero.cta}
+        <span class="action-arrow" aria-hidden="true">
+          ↗
+        </span>
+      </a>
+    </div>
+    <div class="hero-visual">
+      <LaboratoryArt />
+    </div>
+  </section>
+  <section
+    class="catalogue-section"
+    id="catalogo"
+    aria-labelledby="catalogue-title"
+  >
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">{copy.catalogue.eyebrow}</p>
+        <h2 id="catalogue-title">{copy.catalogue.title}</h2>
+      </div>
+      <p class="catalogue-quiet">
+        {copy.catalogue.quietLines.map((line, index) => (
+          <>
+            {index > 0 && <br />}
+            {line}
+          </>
+        ))}
+      </p>
+    </div>
+    {apps.length === 0 ? (
+      <EmptyCatalogue locale={locale} />
+    ) : (
+      <div class="catalogue-grid">
+        {apps.map((app) => (
+          <CatalogueCard locale={locale} app={app} />
+        ))}
+      </div>
+    )}
+  </section>
+</SiteLayout>
