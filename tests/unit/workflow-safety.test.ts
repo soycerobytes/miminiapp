@@ -10,7 +10,6 @@ import { describe, expect, it } from 'vitest';
 import {
   CI_RUN_NAME_EXPRESSION,
   CI_WORKFLOW_BLOB_SHA,
-  CI_WORKFLOW_PATH,
 } from '../../scripts/release/pr-ci.ts';
 
 type Value = string | number | boolean | null | Value[] | Mapping;
@@ -34,7 +33,10 @@ const stagingPublishCondition =
 const normalize = (value: unknown) => String(value).replace(/\s+/g, ' ').trim();
 
 const root = resolve(import.meta.dirname, '../..');
-const workflowDirectory = resolve(root, '.github/workflows');
+const workflowDirectory = resolve(
+  root,
+  'tests/fixtures/source-release/workflows',
+);
 const actionPins: Record<string, string> = {
   'actions/checkout': '3d3c42e5aac5ba805825da76410c181273ba90b1',
   'actions/setup-node': '949feb2413d6458794dcd2491c4babbbce0c15c1',
@@ -461,22 +463,31 @@ function auditGitHubRequests(
   );
 }
 
-describe('Phase A deployment safety', () => {
+// Historical source contracts remain tested against frozen fixtures.
+// production-workflow-safety.test.ts audits every actual destination workflow.
+describe('original staging deployment contracts', () => {
   it('pins the complete CI workflow and its context-derived persistent PR run-name', async () => {
     const workflow = await readWorkflow('ci.yml');
     expect(normalize(workflow['run-name'])).toBe(
       normalize(CI_RUN_NAME_EXPRESSION),
     );
     expect(
-      execFileSync('git', ['hash-object', resolve(root, CI_WORKFLOW_PATH)], {
-        encoding: 'utf8',
-      }).trim(),
+      execFileSync(
+        'git',
+        ['hash-object', resolve(workflowDirectory, 'ci.yml')],
+        {
+          encoding: 'utf8',
+        },
+      ).trim(),
     ).toBe(CI_WORKFLOW_BLOB_SHA);
   });
 
   it('keeps the committed authorization disabled and the destinations separate', () => {
     const policy = JSON.parse(
-      readFileSync(resolve(root, '.github/deployment-policy.json'), 'utf8'),
+      readFileSync(
+        resolve(root, 'tests/fixtures/source-release/deployment-policy.json'),
+        'utf8',
+      ),
     ) as Record<string, unknown>;
     expect(policy).toMatchObject({
       schemaVersion: 1,

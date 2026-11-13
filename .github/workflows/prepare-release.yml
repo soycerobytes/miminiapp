@@ -4,10 +4,61 @@ on:
   workflow_dispatch:
     inputs:
       staging_sha:
-        description: "Commit verificado en staging"
+        description: Complete SHA of the verified, currently published staging version
         required: true
         type: string
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+
+concurrency:
+  group: prepare-production-release
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    if: ${{ github.repository == 'soycerobytes/miminiapp' && github.repository_id == '1455524397' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      fingerprint: ${{ steps.inspect.outputs.fingerprint }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Verify staging without writes or executing imported code
+        id: inspect
+        run: node scripts/promotion/cli.ts inspect
+        env:
+          STAGING_SHA: ${{ inputs.staging_sha }}
+          GH_TOKEN: ${{ github.token }}
+
+  prepare:
+    needs: inspect
+    if: ${{ github.repository == 'soycerobytes/miminiapp' && github.repository_id == '1455524397' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write # Only to explicitly dispatch quality for the bot-created PR.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Revalidate, create a destination commit and PR, and dispatch CI
+        run: node scripts/promotion/cli.ts prepare
+        env:
+          STAGING_SHA: ${{ inputs.staging_sha }}
+          EXPECTED_FINGERPRINT: ${{ needs.inspect.outputs.fingerprint }}
+          GH_TOKEN: ${{ github.token }}

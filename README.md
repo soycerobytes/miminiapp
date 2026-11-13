@@ -1,5 +1,7 @@
 # MiMiniApp
 
+Este es el repositorio de **producción** `soycerobytes/miminiapp`. La [guía de promoción](docs/production-promotion.md) describe la importación de versiones verificadas de staging sin importar su historial y el CI previo al merge humano. Workers Builds es el único publicador de producción; los workflows antiguos de publicación por Actions están inactivos. [PR-01](docs/exec-plans/active/PR-01-promocion-entre-repositorios.md) registra instalación y ensayo remoto. Las descripciones posteriores del flujo I-03 pertenecen al circuito histórico del origen.
+
 MiMiniApp prepara una colección de herramientas bilingües ES/EN sobre Astro estático, TypeScript y Tailwind. La base I-01 está Aceptada y archivada; el propietario autorizó expresamente ejecutar I-02 el 2026-11-05. El [ExecPlan I-02](docs/exec-plans/completed/I-02-catalogo-responsive-e-i18n.md) está Aceptado expresamente por el propietario el 2026-11-05 y archivado: catálogo modular, portada responsive e internacionalización, sin miniapps reales ni despliegue.
 
 ## Por dónde empezar

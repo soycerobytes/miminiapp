@@ -49,9 +49,20 @@ export function validatePolicy(
       typeof policy.promotionEnabled !== 'boolean') ||
     (policy.rollbackEnabled !== undefined &&
       typeof policy.rollbackEnabled !== 'boolean') ||
-    policy.repository !== 'aalexlpez/miminiapp' ||
-    !/^\d+$/.test(policy.repositoryId ?? '') ||
-    policy.owner !== 'aalexlpez'
+    !(
+      (policy.repository === 'aalexlpez/miminiapp' &&
+        policy.repositoryId === '1445849027' &&
+        policy.owner === 'aalexlpez') ||
+      (policy.repository === 'soycerobytes/miminiapp' &&
+        policy.repositoryId === '1455524397' &&
+        policy.owner === 'soycerobytes' &&
+        policy.phase === 'A' &&
+        policy.deploymentsEnabled === false &&
+        policy.promotionEnabled === false &&
+        policy.rollbackEnabled === false &&
+        policy.targets?.staging?.deploymentsEnabled === false &&
+        policy.targets?.production?.deploymentsEnabled === false)
+    )
   )
     throw new Error('Invalid deployment policy.');
   const expected = {
