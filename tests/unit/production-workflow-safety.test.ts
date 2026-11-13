@@ -7,6 +7,13 @@ import {
   type Value,
 } from '../helpers/workflow-yaml.ts';
 import { assertPhaseB, readPolicy } from '../../scripts/release/gate.ts';
+import {
+  configurationPaths,
+  isConfigurationPath,
+  provenancePath,
+  validatePolicy,
+} from '../../scripts/promotion/core.ts';
+import { readPolicy as readPromotionPolicy } from '../../scripts/promotion/cli.ts';
 
 const directory = new URL('../../.github/workflows/', import.meta.url);
 const pins: Record<string, string> = {
@@ -149,11 +156,13 @@ function audit(name: string, w: Mapping) {
     demand(
       JSON.stringify(mapping(triggers.pull_request, 'pr').branches) ===
         '["main"]',
-      'Every main PR must run quality',
+      'Configuration PRs must target main',
     );
     demand(
-      !mapping(triggers.pull_request, 'pr').paths,
-      'Path-filtered quality',
+      JSON.stringify(mapping(triggers.pull_request, 'pr').paths) ===
+        JSON.stringify(configurationPaths) &&
+        !mapping(triggers.pull_request, 'pr')['paths-ignore'],
+      'Configuration CI filters differ from the protected import boundary',
     );
     demand(
       triggers.workflow_dispatch,
@@ -290,4 +299,80 @@ describe('actual production workflows and publication lock', () => {
       '${{ github.sha }}';
     expect(() => audit('ci.yml', w)).toThrow('own verifier');
   });
+  it('rejects re-including release provenance in automatic PR checks', async () => {
+    const w = await workflow('ci.yml');
+    const paths = mapping(mapping(w.on, 'on').pull_request, 'pr')
+      .paths as Value[];
+    paths.push(provenancePath);
+    expect(() => audit('ci.yml', w)).toThrow('protected import boundary');
+  });
+  it('rejects dropping configuration paths from automatic validation', async () => {
+    const w = await workflow('ci.yml');
+    mapping(mapping(w.on, 'on').pull_request, 'pr').paths = ['docs/**'];
+    expect(() => audit('ci.yml', w)).toThrow('protected import boundary');
+  });
+});
+
+describe('one CI execution per prepared release', () => {
+  it('reproduces PR #2 without matching any automatic PR trigger', () => {
+    const changed = [
+      provenancePath,
+      'public/fonts/DMSans-OFL.txt',
+      'public/fonts/SpaceGrotesk-OFL.txt',
+    ];
+    expect(changed.some(isConfigurationPath)).toBe(false);
+    expect(
+      [...changed, '.github/workflows/ci.yml'].some(isConfigurationPath),
+    ).toBe(true);
+  });
+  it('no authorized import or its generated provenance can trigger configuration CI', async () => {
+    const policy = await readPromotionPolicy();
+    expect(policy.files.filter(isConfigurationPath)).toEqual([]);
+    expect(isConfigurationPath(provenancePath)).toBe(false);
+  });
+  it.each([
+    '.github/workflows/ci.yml',
+    '.github/promotion-policy.json',
+    '.github/deployment-policy.json',
+    'scripts/promotion/core.ts',
+    'scripts/release/gate.ts',
+    'deploy/cloudflare/production.jsonc',
+    'docs/production-promotion.md',
+    'docs/new-procedure.md',
+    'tests/unit/production-workflow-safety.test.ts',
+    'tests/unit/release-gate.test.ts',
+    'tests/unit/workflow-safety.test.ts',
+    'tests/helpers/workflow-yaml.ts',
+    'tests/fixtures/source-release/README.md',
+    'tests/remote/target.ts',
+    'README.md',
+    'ARCHITECTURE.md',
+    'AGENTS.md',
+    'CLAUDE.md',
+    'GEMINI.md',
+    '.gitignore',
+    '.gitattributes',
+  ])(
+    'configuration and documentation changes still trigger CI: %s',
+    async (path) => {
+      expect(isConfigurationPath(path)).toBe(true);
+      const policy = await readPromotionPolicy();
+      // Prevent a future policy edit from reintroducing duplicate release runs.
+      expect(() =>
+        validatePolicy({ ...policy, files: [...policy.files, path] }),
+      ).toThrow();
+    },
+  );
+  it.each([
+    'src/miniapps/approved/entry.astro',
+    'src/components/Home.astro',
+    'package.json',
+    'package-lock.json',
+    'public/new-asset.svg',
+  ])(
+    'application changes rely on the explicit release validation: %s',
+    (path) => {
+      expect(isConfigurationPath(path)).toBe(false);
+    },
+  );
 });
