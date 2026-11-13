@@ -3,7 +3,9 @@ import { defineConfig, devices } from '@playwright/test';
 const previewUrl = 'http://127.0.0.1:4321/';
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  // Platform journeys live in tests/e2e; each tool keeps its own beside its code.
+  testDir: '.',
+  testMatch: ['tests/e2e/**/*.spec.ts', 'src/miniapps/*/tests/**/*.spec.ts'],
   fullyParallel: true,
   forbidOnly: true,
   retries: 0,

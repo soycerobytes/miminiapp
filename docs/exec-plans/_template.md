@@ -58,7 +58,7 @@ Incluye rollback y bloqueos de release si resulta aplicable.
 
 ## Punto de parada
 
-Entregar evidencia para aceptación humana. No comenzar la siguiente iteración sin la aceptación de la anterior y su propia aprobación y autorización; si hubo cancelación, revisar antes las dependencias con el responsable.
+Entregar evidencia para aceptación humana. No comenzar una iteración que dependa de esta sin su aceptación, ni ninguna sin su propia aprobación y autorización; si hubo cancelación, revisar antes las dependencias con el responsable.
 
 ## Progreso
 

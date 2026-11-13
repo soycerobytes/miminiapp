@@ -4,6 +4,9 @@ export const metadata = {
   id: 'i02-fixture-a',
   slug: 'i02-fixture-a',
   status: 'published',
+  category: 'calculator',
+  tags: ['fixture'],
+  publishedAt: '2026-11-05',
   copy: {
     es: { title: 'Módulo sintético A', description: 'Fixture aislada para comprobar el contrato modular.' },
     en: { title: 'Synthetic module A', description: 'An isolated fixture for testing the modular contract.' },
