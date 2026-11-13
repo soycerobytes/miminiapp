@@ -140,3 +140,9 @@ El propietario aprueba «vamos a aplicar mejor este nuevo flujo», 2026-11-13. L
 | 2026-11-13 | En curso | Propietario / agente | Subida y PR de configuración autorizados; enmienda de CI ligero aprobada e implementada, sin merge. |
 
 **Validación de la enmienda:** tipos (0 errores/warnings/hints), lint y formato correctos; 391 unitarias pasadas. La batería funcional completa anterior se conserva como evidencia de implementación; no se repite en el flujo de releases. El comando exacto del CI para los controles también se probó localmente.
+
+## Bloqueo de entrega — 2026-11-13
+
+Implementación y enmienda de CI ligero confirmadas en commit local 1bd4873. La publicación mediante integración devuelve403 Resource not accessible by integration al crear el árbol; el push Git a config/production-promotion devuelve403 Permission denied to aalexlpez. El lector de instalaciones devuelve únicamente aalexlpez (137896862), selección de repositorios; soycerobytes no figura como instalación accesible. El permiso de colaborador reportado por get_repo no acredita capacidad de escritura de esta integración.
+
+Sin rama remota ni PR creados y sin cambios a main, staging o Cloudflare. Se necesita instalar/autorizar la misma aplicación GitHub en soycerobytes para miminiapp, manteniendo el acceso de colaborador ya concedido; después reintentar con conexión nueva. No solicitar contraseñas/tokens en chat. La autorización de subida/PR permanece vigente. Estado En curso; el bloqueo es externo, no un fallo de las pruebas locales.
