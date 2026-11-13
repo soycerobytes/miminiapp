@@ -2,19 +2,17 @@ import { createHash } from 'node:crypto';
 import { matchesGlob } from 'node:path';
 
 export interface Policy {
-  schemaVersion: 1;
+  schemaVersion: 2;
   source: {
     repository: string;
     id: string;
     branch: string;
     workflow: string;
     workflowBlob: string;
-    registryBlob: string;
     manifest: string;
   };
   destination: { repository: string; id: string; branch: string };
-  files: string[];
-  miniapps: string[];
+  selection: 'snapshot';
 }
 export interface Entry {
   path: string;
@@ -28,10 +26,17 @@ export const provenancePath = '.github/release-provenance.json';
 // identical, ordered list in ci.yml; tests enforce parity and import isolation.
 export const configurationPaths = [
   '.github/**',
-  'scripts/**',
+  'scripts/promotion/**',
+  'scripts/release/**',
+  'scripts/validate-hosting.ts',
   'deploy/**',
-  'docs/**',
-  'tests/helpers/**',
+  'docs/production-promotion.md',
+  'docs/design-docs/index.md',
+  'docs/exec-plans/active/PR-01-promocion-entre-repositorios.md',
+  'docs/PLANS.md',
+  'docs/BOOTSTRAP.md',
+  'docs/harness-decisions.md',
+  'tests/helpers/workflow-yaml.ts',
   'tests/fixtures/source-release/**',
   'tests/remote/**',
   'tests/unit/production-*.test.ts',
@@ -68,51 +73,54 @@ export function requireValue(value: unknown, message: string): asserts value {
 export function safePath(path: string) {
   return (
     typeof path === 'string' &&
-    /^[a-zA-Z0-9_./@-]+$/.test(path.replaceAll('[', '').replaceAll(']', '')) &&
+    path.length > 0 &&
+    path.length <= 1024 &&
     !path.startsWith('/') &&
+    !path.includes('\\') &&
+    [...path].every(
+      (char) => char.charCodeAt(0) >= 32 && char.charCodeAt(0) !== 127,
+    ) &&
     !path.split('/').some((part) => !part || part === '.' || part === '..') &&
-    !/(^|\/)(?:\.git|\.env(?:\..*)?|node_modules|\.local)(\/|$)/.test(path)
+    !/(^|\/)(?:\.git|\.env(?:\..*)?|\.dev\.vars(?:\..*)?|\.netrc|\.pypirc|\.git-credentials|\.ssh|node_modules|\.local)(\/|$)/.test(
+      path,
+    )
   );
+}
+/** Every normal versioned project file is imported except destination controls. */
+export function isSnapshotPath(path: string) {
+  return (
+    safePath(path) && path !== provenancePath && !isConfigurationPath(path)
+  );
+}
+export function managedPaths(base: Snapshot, source: Snapshot) {
+  return [...new Set([...Object.keys(base), ...Object.keys(source)])]
+    .filter(isSnapshotPath)
+    .sort();
 }
 export function validatePolicy(value: unknown): asserts value is Policy {
   const p = value as Policy;
   requireValue(
-    p?.schemaVersion === 1 &&
+    p?.schemaVersion === 2 &&
       p.source?.repository === 'aalexlpez/miminiapp' &&
       p.source.id === '1445849027' &&
       p.source.branch === 'staging' &&
       p.source.workflow === '.github/workflows/staging.yml' &&
       commitPattern.test(p.source.workflowBlob) &&
-      commitPattern.test(p.source.registryBlob) &&
       p.source.manifest ===
         'https://miminiapp-staging.miminiapp-lab.workers.dev/release-manifest.json' &&
       p.destination?.repository === 'soycerobytes/miminiapp' &&
       p.destination.id === '1455524397' &&
       p.destination.branch === 'main' &&
-      Array.isArray(p.miniapps) &&
-      p.miniapps.length === 0 &&
-      Array.isArray(p.files) &&
-      p.files.length > 0 &&
-      new Set(p.files).size === p.files.length &&
-      p.files.includes('src/miniapps/registry.ts') &&
-      p.files.every(
-        (path) =>
-          safePath(path) &&
-          !isConfigurationPath(path) &&
-          !path.startsWith('.github/') &&
-          !path.startsWith('deploy/') &&
-          !path.startsWith('docs/') &&
-          !path.startsWith('scripts/') &&
-          !/^(AGENTS|CLAUDE|GEMINI)\.md$/.test(path) &&
-          (!path.startsWith('src/miniapps/') ||
-            path === 'src/miniapps/registry.ts'),
-      ),
-    'Invalid production promotion policy; no miniapps are authorized yet.',
+      p.selection === 'snapshot' &&
+      !Object.hasOwn(p, 'files') &&
+      !Object.hasOwn(p, 'miniapps') &&
+      !Object.hasOwn(p.source, 'registryBlob'),
+    'Invalid snapshot promotion policy.',
   );
 }
 export function treeEntries(entries: Entry[], truncated = false): Snapshot {
   requireValue(!truncated && Array.isArray(entries), 'Incomplete Git tree.');
-  const result: Snapshot = {};
+  const result: Snapshot = Object.create(null);
   for (const entry of entries) {
     requireValue(safePath(entry.path), 'Unsafe Git path.');
     if (entry.type === 'tree') continue;
@@ -129,24 +137,10 @@ export function treeEntries(entries: Entry[], truncated = false): Snapshot {
 }
 export function selectFiles(policy: Policy, source: Snapshot): Snapshot {
   validatePolicy(policy);
-  for (const path of Object.keys(source)) {
-    // New app code/assets/test modules cannot enter through a broad directory glob.
-    if (/^(src|public|tests\/(components|e2e|integration|visual))\//.test(path))
-      requireValue(
-        policy.files.includes(path),
-        `Unapproved application file: ${path}`,
-      );
-  }
-  requireValue(
-    source['src/miniapps/registry.ts']?.sha === policy.source.registryBlob,
-    'Miniapp registry differs from the reviewed empty catalogue.',
-  );
-  return Object.fromEntries(
-    policy.files
-      .filter((path) => Object.hasOwn(source, path))
-      .sort()
-      .map((path) => [path, source[path]]),
-  );
+  const result: Snapshot = Object.create(null);
+  for (const path of Object.keys(source).filter(isSnapshotPath).sort())
+    result[path] = source[path];
+  return result;
 }
 export function projectionDigest(files: Snapshot) {
   return digest(
@@ -166,11 +160,10 @@ export function assertProjection(
   source: Snapshot,
 ) {
   const selected = selectFiles(policy, source);
-  const expected = { ...base };
-  for (const path of policy.files) {
-    if (selected[path]) expected[path] = selected[path];
-    else delete expected[path];
-  }
+  const expected = Object.fromEntries([
+    ...Object.entries(base).filter(([path]) => !isSnapshotPath(path)),
+    ...Object.entries(selected),
+  ]);
   delete expected[provenancePath];
   const actual = { ...head };
   delete actual[provenancePath];

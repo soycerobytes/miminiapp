@@ -11,7 +11,8 @@ import {
   configurationPaths,
   isConfigurationPath,
   provenancePath,
-  validatePolicy,
+  selectFiles,
+  isSnapshotPath,
 } from '../../scripts/promotion/core.ts';
 import { readPolicy as readPromotionPolicy } from '../../scripts/promotion/cli.ts';
 
@@ -327,7 +328,14 @@ describe('one CI execution per prepared release', () => {
   });
   it('no authorized import or its generated provenance can trigger configuration CI', async () => {
     const policy = await readPromotionPolicy();
-    expect(policy.files.filter(isConfigurationPath)).toEqual([]);
+    expect(policy.selection).toBe('snapshot');
+    const project = {
+      'src/new-tool.ts': { mode: '100644', sha: 'a'.repeat(40) },
+      'docs/new-tool.md': { mode: '100644', sha: 'b'.repeat(40) },
+    };
+    expect(
+      Object.keys(selectFiles(policy, project)).filter(isConfigurationPath),
+    ).toEqual([]);
     expect(isConfigurationPath(provenancePath)).toBe(false);
   });
   it.each([
@@ -338,7 +346,7 @@ describe('one CI execution per prepared release', () => {
     'scripts/release/gate.ts',
     'deploy/cloudflare/production.jsonc',
     'docs/production-promotion.md',
-    'docs/new-procedure.md',
+    'docs/design-docs/index.md',
     'tests/unit/production-workflow-safety.test.ts',
     'tests/unit/release-gate.test.ts',
     'tests/unit/workflow-safety.test.ts',
@@ -357,10 +365,12 @@ describe('one CI execution per prepared release', () => {
     async (path) => {
       expect(isConfigurationPath(path)).toBe(true);
       const policy = await readPromotionPolicy();
-      // Prevent a future policy edit from reintroducing duplicate release runs.
-      expect(() =>
-        validatePolicy({ ...policy, files: [...policy.files, path] }),
-      ).toThrow();
+      expect(isSnapshotPath(path)).toBe(false);
+      expect(
+        selectFiles(policy, {
+          [path]: { mode: '100644', sha: 'a'.repeat(40) },
+        })[path],
+      ).toBeUndefined();
     },
   );
   it.each([
@@ -369,6 +379,9 @@ describe('one CI execution per prepared release', () => {
     'package.json',
     'package-lock.json',
     'public/new-asset.svg',
+    'docs/new-procedure.md',
+    'scripts/new-tool-helper.ts',
+    'tests/helpers/new-tool-helper.ts',
   ])(
     'application changes rely on the explicit release validation: %s',
     (path) => {

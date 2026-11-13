@@ -13,6 +13,8 @@ import {
   provenancePath,
   safePath,
   selectFiles,
+  managedPaths,
+  isSnapshotPath,
   treeEntries,
   validatePolicy,
   type Entry,
@@ -46,14 +48,13 @@ const entry = (path: string, value = path): Entry => ({
 });
 const blob = { mode: '100644', sha };
 const basicPolicy: Policy = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   source: {
     repository: 'aalexlpez/miminiapp',
     id: '1445849027',
     branch: 'staging',
     workflow: '.github/workflows/staging.yml',
     workflowBlob: sha,
-    registryBlob: gitHash('registry'),
     manifest:
       'https://miminiapp-staging.miminiapp-lab.workers.dev/release-manifest.json',
   },
@@ -62,13 +63,12 @@ const basicPolicy: Policy = {
     id: '1455524397',
     branch: 'main',
   },
-  files: ['src/miniapps/registry.ts', 'src/platform.ts'],
-  miniapps: [],
+  selection: 'snapshot',
 };
 const sourceFiles: Snapshot = {
   'src/miniapps/registry.ts': {
     mode: '100644',
-    sha: basicPolicy.source.registryBlob,
+    sha: gitHash('registry'),
   },
   'src/platform.ts': blob,
 };
@@ -115,7 +115,7 @@ afterEach(() => {
 });
 
 describe('production import boundary', () => {
-  it('selects exact reviewed files, ignoring source deployment/governance files', () => {
+  it('selects the project snapshot while preserving production controls', () => {
     expect(
       selectFiles(basicPolicy, {
         ...sourceFiles,
@@ -125,22 +125,29 @@ describe('production import boundary', () => {
     ).toEqual(sourceFiles);
   });
   it.each([
-    'src/miniapps/unapproved/entry.astro',
+    'src/miniapps/new-tool/entry.astro',
+    'src/miniapps/new-tool/i18n/es.ts',
     'public/new-tool.svg',
-    'src/components/Unknown.astro',
-    'tests/e2e/unapproved.spec.ts',
-  ])('rejects unreviewed application additions: %s', (path) => {
-    expect(() =>
-      selectFiles(basicPolicy, { ...sourceFiles, [path]: blob }),
-    ).toThrow('Unapproved application file');
+    'src/components/New.astro',
+    'tests/e2e/new-tool.spec.ts',
+    'scripts/new-build-helper.ts',
+    'tests/helpers/new-tool-helper.ts',
+    'docs/new-tool.md',
+    'new-directory/config.json',
+    'src/miniapps/área útil/entry.astro',
+  ])('automatically imports a new versioned project file: %s', (path) => {
+    expect(
+      selectFiles(basicPolicy, { ...sourceFiles, [path]: blob })[path],
+    ).toEqual(blob);
+    expect(isSnapshotPath(path)).toBe(true);
   });
-  it('rejects enabling miniapps by changing only the registry', () => {
-    expect(() =>
+  it('accepts the validated staging registry without a production pin or per-miniapp approval', () => {
+    expect(
       selectFiles(basicPolicy, {
         ...sourceFiles,
         'src/miniapps/registry.ts': blob,
-      }),
-    ).toThrow('reviewed empty catalogue');
+      })['src/miniapps/registry.ts'],
+    ).toEqual(blob);
   });
   it.each([
     '../secret',
@@ -160,14 +167,47 @@ describe('production import boundary', () => {
     'scripts/promotion/core.ts',
     'AGENTS.md',
     '.env.production',
-  ])(
-    'rejects a policy that imports destination controls/secrets: %s',
-    (path) => {
-      expect(() =>
-        validatePolicy({ ...basicPolicy, files: [...basicPolicy.files, path] }),
-      ).toThrow();
-    },
-  );
+    '.dev.vars',
+  ])('does not import destination controls or secret files: %s', (path) => {
+    expect(
+      selectFiles(basicPolicy, { ...sourceFiles, [path]: blob })[path],
+    ).toBeUndefined();
+  });
+  it('rejects the former per-file policy schema', () => {
+    expect(() =>
+      validatePolicy({
+        ...basicPolicy,
+        schemaVersion: 1,
+        files: ['src/platform.ts'],
+        miniapps: [],
+      }),
+    ).toThrow('snapshot promotion policy');
+    expect(() => validatePolicy({ ...basicPolicy, files: [] })).toThrow();
+  });
+  it('covers the union of old and new paths without requiring a maintained file list', () => {
+    expect(
+      managedPaths(
+        { 'old/directory/file.ts': blob, 'scripts/promotion/core.ts': blob },
+        { 'new/directory/file.ts': blob, [provenancePath]: blob },
+      ),
+    ).toEqual(['new/directory/file.ts', 'old/directory/file.ts']);
+  });
+  it('imports ordinary Git file names that overlap with JavaScript object properties', () => {
+    const source = treeEntries([
+      entry('__proto__'),
+      entry('constructor'),
+      entry('toString'),
+    ]);
+    const selected = selectFiles(basicPolicy, source);
+    expect(Object.keys(selected).sort()).toEqual([
+      '__proto__',
+      'constructor',
+      'toString',
+    ]);
+    expect(() =>
+      assertProjection(basicPolicy, {}, source, source),
+    ).not.toThrow();
+  });
   it('rejects truncated trees, symlinks, submodules and duplicate paths', () => {
     expect(() => treeEntries([], true)).toThrow('Incomplete');
     for (const [mode, type] of [
@@ -179,7 +219,7 @@ describe('production import boundary', () => {
       ).toThrow('Unsupported');
     expect(() => treeEntries([entry('a'), entry('a')])).toThrow('Unsupported');
   });
-  it('handles managed deletions and preserves every unmanaged production file', () => {
+  it('mirrors deletions while preserving production controls', () => {
     const base = {
       ...sourceFiles,
       '.github/workflows/ci.yml': blob,
@@ -276,17 +316,16 @@ describe('staging evidence', () => {
 async function githubFixture() {
   const policy = await readPolicy();
   const bytes = new Map<string, Buffer>();
-  const sourceEntries = policy.files.map((path) => {
-    const content =
-      path === 'src/miniapps/registry.ts'
-        ? Buffer.from('')
-        : Buffer.from(`reviewed ${path}\n`);
+  const sourceEntries = [
+    'src/miniapps/registry.ts',
+    'src/styles/global.css',
+    'package.json',
+  ].map((path) => {
+    const content = Buffer.from(`validated ${path}\n`);
     const e = entry(path, content.toString());
     bytes.set(e.sha, content);
     return e;
   });
-  sourceEntries.find((e) => e.path === 'src/miniapps/registry.ts')!.sha =
-    policy.source.registryBlob;
   sourceEntries.push({
     path: policy.source.workflow,
     type: 'blob',
@@ -372,7 +411,7 @@ async function githubFixture() {
       reads.push({ url, headers: options?.headers });
       if (u.hostname === 'raw.githubusercontent.com') {
         const file = sourceEntries.find((e) =>
-          u.pathname.endsWith(`/${e.path}`),
+          decodeURIComponent(u.pathname).endsWith(`/${e.path}`),
         );
         return new Response(new Uint8Array(bytes.get(file!.sha)!));
       }
@@ -466,6 +505,12 @@ async function githubFixture() {
     writes,
     reads,
     sourceEntries,
+    addSource: (path: string, content: string) => {
+      const e = entry(path, content);
+      bytes.set(e.sha, Buffer.from(content));
+      sourceEntries.push(e);
+      return e;
+    },
     baseEntries,
     pr,
     setBaseRef: (value: string) => {
@@ -555,11 +600,76 @@ describe('manual preparation end to end with isolated API fixtures', () => {
     await expect(prepare(true)).rejects.toThrow('run identity/result');
     expect(f.writes).toEqual([]);
   });
-  it('rejects unexpected files or a different source workflow', async () => {
+  it('rejects secret paths before writing any files', async () => {
     const f = await githubFixture();
-    f.sourceEntries.push(entry('public/unapproved.svg'));
-    await expect(prepare(true)).rejects.toThrow('Unapproved application file');
+    f.sourceEntries.push(entry('.env.production'));
+    await expect(prepare(true)).rejects.toThrow('Unsafe Git path');
     expect(f.writes).toEqual([]);
+  });
+  it('copies new miniapp/resources/docs and removes deleted files through the real writer path', async () => {
+    const f = await githubFixture();
+    const added = f.addSource(
+      'src/miniapps/new-tool/entry.astro',
+      '<h1>New tool</h1>',
+    );
+    f.addSource('public/new-tool.svg', '<svg/>');
+    f.addSource('docs/new-tool.md', '# New tool');
+    f.baseEntries.push(entry('src/deleted-tool.ts'));
+    f.baseEntries.push(entry('deploy/production-only.jsonc'));
+    const c = await inspectCandidate(f.policy, sha);
+    vi.stubEnv(
+      'EXPECTED_FINGERPRINT',
+      digest(JSON.stringify({ baseSha, proof: c.proof })),
+    );
+    await prepare(true);
+    const changes = f.writes.find((w) => w.path === '/git/trees')!.body
+      .tree as { path: string; sha: string | null }[];
+    expect(changes).toContainEqual({ ...added, sha: added.sha });
+    expect(changes.some((e) => e.path === 'public/new-tool.svg')).toBe(true);
+    expect(changes.some((e) => e.path === 'docs/new-tool.md')).toBe(true);
+    expect(
+      changes.find((e) => e.path === 'src/deleted-tool.ts')?.sha,
+    ).toBeNull();
+    expect(changes.some((e) => e.path === 'deploy/production-only.jsonc')).toBe(
+      false,
+    );
+  });
+  it('imports new assets larger than the former four-megabyte cap', async () => {
+    const f = await githubFixture();
+    const asset = f.addSource(
+      'public/large-asset.bin',
+      'x'.repeat(5 * 1024 * 1024),
+    );
+    const c = await inspectCandidate(f.policy, sha);
+    vi.stubEnv(
+      'EXPECTED_FINGERPRINT',
+      digest(JSON.stringify({ baseSha, proof: c.proof })),
+    );
+    await prepare(true);
+    const changes = f.writes.find((w) => w.path === '/git/trees')!.body
+      .tree as { path: string; sha: string }[];
+    expect(changes.find((e) => e.path === asset.path)?.sha).toBe(asset.sha);
+  });
+  it('does not upload credential-shaped content from newly imported files', async () => {
+    const f = await githubFixture();
+    const sensitive = 'ghp_' + 'x'.repeat(36);
+    f.addSource('public/accidental-token.txt', sensitive);
+    const c = await inspectCandidate(f.policy, sha);
+    vi.stubEnv(
+      'EXPECTED_FINGERPRINT',
+      digest(JSON.stringify({ baseSha, proof: c.proof })),
+    );
+    await expect(prepare(true)).rejects.toThrow('Credential-shaped content');
+    expect(
+      f.writes.some((w) => w.path === '/git/refs' || w.path === '/pulls'),
+    ).toBe(false);
+    expect(
+      f.writes.some(
+        (w) =>
+          w.path === '/git/blobs' &&
+          w.body.content === Buffer.from(sensitive).toString('base64'),
+      ),
+    ).toBe(false);
   });
   it('requires the read-only job fingerprint before any writes', async () => {
     const f = await githubFixture();

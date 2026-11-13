@@ -1,16 +1,14 @@
 # Arquitectura actual
 
-## Producción independiente — PR-01, 2026-11-13
+## Producción independiente — PR-01
 
-ADR-MMA-020 aprueba el circuito entre repositorios. `.github/promotion-policy.json` fija origen/destino, workflow confiable de staging, registro vacío y rutas importables. `scripts/promotion/` valida evidencia pública, proyección y procedencia y crea mediante API un commit cuyo único padre es main de destino; no importa objetos del historial de origen. El preparador manual divide inspección de lectura y escritura de rama/PR. Su token no se envía al origen y no ejecuta código descargado.
+ADR-MMA-020 y su enmienda de snapshot completo rigen este destino. La política schemaVersion 2 fija origen/destino y el workflow confiable; selection: snapshot copia automáticamente todos los archivos normales versionados de la versión seleccionada, salvo controles propios y paths privados. Se sincronizan altas, cambios y borrados; el registro y las miniapps no necesitan autorización por archivo en producción.
 
-CI/quality verifica releases con controles de base, comprueba la evidencia de staging, la proyección exacta, la configuración preservada y la ascendencia. No instala dependencias ni repite las pruebas funcionales. Se solicita explícitamente para el PR del bot. Los otros PR a main ejecutan lint/formato y tests propios de los controles de producción; las funcionalidades se desarrollan y prueban en staging.
+Los controles concretos se preservan mediante configurationPaths y la procedencia se genera aparte. Esa frontera coincide con los filtros pull_request: nuevos scripts/documentos/helpers de proyecto se importan sin disparar el CI de configuración, mientras que sus controles se mantienen. scripts/promotion valida el SHA y su evidencia, el snapshot exacto, la base y la ascendencia. Crea un commit de destino sin importar commits del origen.
 
-El CI automático de PR se limita a rutas propias de controles y documentación; excluye la procedencia generada. La política de importación rechaza esas rutas y sus tests garantizan disjunción entre archivos de una release y filtros de configuración. Se evita así la segunda ejecución por apertura del PR del bot que requería aprobación y podía caducar. workflow_dispatch conserva la única validación de las releases; no cambia la política de aprobaciones ni se ejecuta la aplicación. El ajuste está en rama de trabajo hasta revisión y merge humano.
+Staging concentra las pruebas funcionales. quality de release se solicita explícitamente y solo valida la transferencia con controles de base. PR propios de configuración ejecutan sus tests/lint/formato. No hay otra ejecución automática por abrir la release. La política legacy y publicadores de Actions siguen cerrados. Workers Builds publica tras merge humano; no se promete equivalencia binaria. La guía actual está en docs/production-promotion.md.
 
-La política legacy de despliegue identifica producción y mantiene todos sus permisos desactivados; los workflows anteriores de producción/staging/rollback/promoción son manuales e inactivos. Sus contratos originales se conservan en fixtures de tests y no se ejecutan como automatización. Workers Builds es el único publicador declarado por el propietario; reconstruye la fuente, sin equivalencia binaria prometida. No se modifican Cloudflare/DNS ni el repositorio de staging.
-
-El propietario autorizó subir la rama de configuración y abrir PR, sin merge. El ensayo de PR real, asociación de quality, ruleset y configuración externa quedan pendientes; no se declaran desplegados. Procedimiento y recuperación en [la guía](docs/production-promotion.md).
+El flujo inicial y el primer PR real están publicados y verificados. La corrección de snapshot completo se entrega en PR separado, sin modificar staging ni Cloudflare y sin fusionarse automáticamente.
 
 Las secciones I-03 siguientes conservan la historia de la arquitectura del origen; no autorizan activar sus publicadores en este repositorio.
 

@@ -1,76 +1,55 @@
-# Promoción de staging a producción
+# Promoción de la versión completa de staging
 
-## Alcance y estado
+## Flujo habitual
 
-Origen: `aalexlpez/miminiapp` (1445849027), staging. Destino: `soycerobytes/miminiapp` (1455524397), main. ADR-MMA-020 y PR-01 autorizan la implementación y su entrega mediante PR, con CI ligero de producción. Los workflows no estarán instalados hasta integrar el PR de configuración. Los tests locales y de API simulada no demuestran todavía el ruleset ni la asociación del check en un PR real generado por el bot.
+1. Desarrollar en aalexlpez/miminiapp y validar en staging mediante sus pruebas y la revisión funcional del propietario.
+2. En soycerobytes/miminiapp → Actions → Prepare release from staging, seleccionar main e introducir el SHA completo de staging ya publicado.
+3. El workflow comprueba la identidad publicada, el workflow confiable de staging y su último run/intento satisfactorio. Elegir ese SHA autoriza la versión completa: no hay una lista de archivos o miniapps por aprobar en producción.
+4. Sincroniza los archivos versionados de proyecto del snapshot inmutable, incluyendo altas, modificaciones, nuevos directorios y borrados. Crea un commit cuyo único padre es main de producción y abre un PR. El historial de origen no se importa.
+5. Solicita explícitamente quality para comprobar procedencia, integridad, configuración preservada y ascendencia. No instala ni vuelve a ejecutar pruebas funcionales de aplicación.
+6. El propietario revisa el diff y hace merge manual. Workers Builds reconstruye y publica desde main. No se promete identidad binaria con la compilación de staging.
 
-El historial de origen no se importa: cada release crea un commit cuyo único padre es main de destino. SHA/run/hashes son datos de procedencia. Las menciones al origen en ellos y en documentación histórica son intencionadas. Workers Builds reconstruye la fuente autorizada; no se afirma equivalencia binaria con el artefacto de staging.
+Si no hay diferencias de proyecto, no crea un PR vacío. Nuevas miniapps, entradas de registro, recursos, scripts auxiliares, traducciones, documentación y pruebas se copian automáticamente cuando forman parte del SHA validado. No hay que editar producción para registrar cada archivo o herramienta. Los borradores versionados también forman parte de la copia del código; el build conserva las reglas de visibilidad que ya se probaron en staging.
 
-## Instalación inicial
+## Qué se preserva
 
-1. Revisar el PR de configuración y esperar quality. Es un PR normal, que instala por primera vez los controles y no necesita procedencia de release.
-2. Confirmar Settings → Actions → General → permiso para crear PR desde Actions. Mantener permisos generales de lectura. Solo el job prepare tiene contents/pull-requests/actions write; actions write permite solicitar explícitamente CI para el PR creado por el bot. Sus pruebas nunca reciben ese token de escritura.
-3. Revisar personalmente en Cloudflare: repositorio de producción, rama main, build `npm run build`, comando existente para `deploy/cloudflare/production.jsonc` y previews desactivadas para release si preparar no debe publicar. Estos cambios no configuran recursos, DNS ni credenciales.
-4. Hacer merge manual del PR de configuración cuando se quiera instalar. También este merge puede disparar Workers Builds: no se promete instalación en main sin publicación.
-5. Probar una preparación con un cambio real de aplicación validado en staging. Si la aplicación ya coincide con producción, termina sin crear un PR vacío. No modificar staging artificialmente desde producción para forzar la prueba.
-6. Comprobar que el PR generado tiene quality asociado a su commit actual y que valida evidencia y transferencia sin repetir pruebas funcionales. Solo entonces exigir quality de GitHub Actions y rama actualizada en el ruleset. No conservar promotion como check obligatorio: su control ahora forma parte de quality. No relajar PR obligatorio ni prohibiciones de force push/borrado para instalarlo.
+La política schemaVersion 2 usa selection: snapshot. Ya no contiene files, miniapps ni registryBlob. La lista reducida de excepciones vive en scripts/promotion/core.ts y coincide con los filtros de configuración de ci.yml.
 
-Si quality no aparece o no se asocia al PR, no fusionar. El ensayo remoto es condición de cierre de PR-01, no una consecuencia demostrada por los tests locales.
+Se preservan .github/, deploy/, scripts/promotion/, scripts/release/, scripts/validate-hosting.ts, pruebas propias de seguridad/publicación y sus fixtures, los documentos específicos de promoción y gobierno del destino, y los archivos raíz README.md, ARCHITECTURE.md, AGENTS.md, CLAUDE.md, GEMINI.md, .gitignore y .gitattributes. La procedencia de la release se genera localmente, nunca se importa.
 
-## Publicación habitual
+No se bloquea una carpeta genérica de scripts, documentación o helpers por contener archivos nuevos: por ejemplo scripts/new-tool.ts, docs/new-tool.md y tests/helpers/new-tool.ts se sincronizan. Solo sus controles concretos se preservan. Los nuevos controles de producción deben añadirse deliberadamente a las excepciones para no tratarlos como aplicación.
 
-1. Desarrollar y probar normalmente en staging. Este repositorio no escucha sus pushes.
-2. Copiar el SHA completo de 40 caracteres de la versión publicada en staging.
-3. En producción → Actions → Prepare release from staging → Run workflow, elegir main e introducir staging_sha.
-4. inspect valida identidad de repositorios, SHA/tree, workflow fijado, último run/intento, jobs/pasos verify y pruebas remotas, y manifiesto HTTPS servido. prepare repite las comprobaciones y contrasta el fingerprint independiente.
-5. Se crea release/<SHA corto>-<run>-<intento>, un commit propio y un PR. No se sobrescriben ramas existentes ni se hace merge. Se preservan los controles propios de producción.
-6. Se solicita CI mediante workflow_dispatch en la rama release. No se depende de que un PR abierto con GITHUB_TOKEN dispare pull_request. El disparador pull_request solo atiende rutas propias de configuración/documentación del destino; excluye expresamente .github/release-provenance.json. Así la release no crea otra ejecución pendiente de aprobación.
-7. quality usa controles de la base confiable y valida evidencia de staging, proyección/procedencia, configuración preservada y refs. Para releases no instala dependencias ni ejecuta tests de aplicación: la batería completa ya pasó en staging. Los PR de configuración comprueban lint/formato y los tests propios de los controles. No usa secretos Cloudflare.
-8. Revisar Files changed y checks; hacer merge manual cuando se quiera publicar. Workers Builds inicia entonces la publicación. Actions no despliega.
+Se rechazan paths inseguros, .env, .dev.vars, almacenes privados habituales, symlinks y submódulos. Se comprueban los hashes Git de los bytes, se admiten archivos normales hasta 100 MiB y se rechazan patrones de credenciales privadas conocidos; .npmrc solo admite opciones no secretas revisadas. El código y las dependencias del SHA de origen son de confianza tras sus pruebas y la selección humana; revisar el diff sigue siendo necesario. Los secretos de GitHub/Cloudflare no son archivos del snapshot y no se copian.
 
-No se añade un manifiesto ficticio de staging al build de producción ni se atribuyen pruebas remotas de producción que no se hayan ejecutado.
+La sincronización también elimina archivos de aplicación que estén en producción pero hayan desaparecido del origen, incluso si nunca figuraron en una lista antigua. No editar funcionalidades directamente en producción: staging es la fuente canónica de su código. Los controles protegidos se conservan aunque no existan en staging.
 
-## Archivos y miniapps
+## Validaciones y disparadores
 
-`.github/promotion-policy.json` enumera rutas exactas. No utiliza globs src/** o public/** que autoricen archivos futuros. Incluye plataforma, recursos revisados, toolchain y pruebas de aplicación. Altas/modificaciones/borrados se gestionan solo dentro de esa lista.
+Staging ejecuta la batería funcional completa. Las releases usan exclusivamente workflow_dispatch con quality ligero. Los filtros pull_request solo coinciden con controles propios preservados, excluyendo .github/release-provenance.json; una release válida no los modifica ni genera otra ejecución pendiente de aprobación. Los tests garantizan que cada ruta importada queda fuera de esos filtros, aunque sea un archivo nuevo.
 
-Se preservan workflows, políticas, deploy/, scripts/release/, scripts/promotion/, pruebas de seguridad de destino y documentos de gobierno. Se rechazan .env, paths inseguros, symlinks y submódulos. Los bytes importados modificados se contrastan con su hash Git y se rechazan patrones conocidos de claves privadas/tokens; .npmrc solo admite opciones no secretas revisadas. Esto no certifica la ausencia de cualquier secreto arbitrario escrito dentro de código: revisar el diff sigue siendo necesario.
+Los PR propios de configuración ejecutan lint, formato y las pruebas de production-promotion/production-workflow-safety, porque esos controles no se prueban en staging. Los cambios de aplicación/toolchain se realizan en staging y se promocionan; un PR manual que solo cambie aplicación no ejecuta el CI de configuración ni sustituye el circuito de promoción. Mantener quality como check obligatorio después de comprobar su asociación real al PR.
 
-El catálogo autorizado está vacío. registryBlob fija el registro vacío revisado y esta primera versión rechaza miniapps no vacía. El alta real de la primera herramienta necesitará su aprobación, ampliación explícita de archivos/recursos, implementación y tests de autorización. Marcar published en staging no basta.
+Si cambia el workflow de staging, revisar su cambio antes de actualizar workflowBlob. No aceptar automáticamente un nuevo pin: esto es una modificación del sistema de validación, distinta de añadir archivos de aplicación.
 
-Si cambia staging.yml del origen, revisar el cambio antes de actualizar workflowBlob. Nunca aceptar automáticamente el nuevo hash. Los fixtures source-release conservan contratos históricos; production-workflow-safety audita todos los workflows reales del destino.
+## Instalación y operación
+
+La integración GitHub debe estar instalada en soycerobytes para este repositorio; Actions debe poder crear PR. Mantener permisos generales de lectura. Solo prepare tiene contents/pull-requests/actions write para crear objetos/rama/PR y solicitar CI explícitamente. No ejecuta código descargado con ese token.
+
+Cloudflare usa soycerobytes/miminiapp/main, build npm run build, deploy npx wrangler deploy --config deploy/cloudflare/production.jsonc y root /. Builds for Preview branches debe permanecer desactivado si no se quieren builds de preparación. El antiguo preview command puede quedarse como estaba, al estar desactivadas esas ejecuciones. Los publicadores de Actions permanecen inactivos. No se modifican recursos, DNS ni credenciales desde este cambio.
+
+El merge de cualquier PR de configuración también puede iniciar Workers Builds. Integrar manualmente cuando se quiera instalar el ajuste; después probar la próxima release real sin fabricar cambios en staging para forzar una prueba.
 
 ## Fallos y recuperación
 
-* SHA antiguo/no publicado: seleccionar el que staging sirve ahora. No reutilizar un run verde antiguo frente a un intento posterior fallido o pendiente.
-* Cambios concurrentes de staging/main/evidencia: preparar de nuevo y cerrar el PR obsoleto tras revisarlo. Un merge de actualización en la rama release rompe el contrato de un único commit; volver a prepararla.
-* Archivo nuevo: revisar su finalidad y actualizar la lista mediante PR. No ampliar a una carpeta entera para evitar el rechazo.
-* Sin delta: no se crea PR vacío; esperar un cambio auténtico autorizado en staging.
-* Rama creada pero PR/dispatch fallido: el workflow falla y no fusiona nada. Revisar lo creado. Un rerun usa otro sufijo de intento sin sobrescribir ramas. Si solo falló dispatch, ejecutar CI manualmente eligiendo la rama release y su número de PR exactos.
-* Límite API pública o fallo de red: fallar sin publicar y reintentar cuando se recupere. El token del destino no se envía al origen; no se necesita un PAT amplio.
-* Build de Cloudflare fallido: consultar su ejecución real; no activar los publicadores antiguos de Actions.
-* Revertir producción: PR normal que revierta el merge correspondiente, quality y merge humano. Se añade historial de reversión y Workers Builds vuelve a publicar. Nunca reset/force push. El preparador solo admite staging actualmente publicado, no un SHA histórico arbitrario.
+* SHA antiguo/no publicado o pruebas pendientes/fallidas: elegir el SHA servido ahora y esperar validación. No usar un verde antiguo frente a un intento posterior fallido.
+* Cambio concurrente de main/staging/evidencia: preparar de nuevo y cerrar la propuesta obsoleta tras revisarla. No hacer merge de actualización sobre release/*; su contrato requiere un único commit nuevo sobre la base exacta.
+* Rama creada y PR/dispatch fallido: inspeccionar lo creado. Un rerun usa otro sufijo de intento sin sobrescribir ramas. Si solo falló dispatch, ejecutar CI manualmente eligiendo la rama release y su PR exactos.
+* Falta de red o cuota API pública: fallar sin publicar y reintentar al recuperar acceso. No se envía el token de destino al origen.
+* Build Cloudflare fallido: consultar su log real; no activar publicadores legacy de Actions.
+* Recuperar una versión anterior: revertir los cambios correspondientes en staging, validar esa nueva versión y promocionar su nuevo SHA mediante el mismo circuito. Nunca reset/force push a main. El preparador solo acepta staging actualmente publicado.
 
-## Verificaciones de desarrollo de estos controles
+Los runs históricos caducados por aprobación no se reejecutan sobre PR ya fusionados. La ejecución explícita de PR #2 pasó y Cloudflare publicó d5e93fed; PR #3 instala filtros para evitar la duplicación. Esta corrección sustituye la lista de archivos por sincronización del snapshot y conserva ese aislamiento de ejecuciones.
 
-Los comandos siguientes sirven para validar cambios de implementación localmente. No se ejecutan de nuevo por cada release en producción. Para cambios propios de configuración, el CI remoto ejecuta solo lint, formato y las pruebas unitarias de production-promotion y production-workflow-safety.
+## Verificación de implementación
 
-Usar Node 24.22.2, npm 11.19.1 y Chromium fijado por el lockfile:
-
-```sh
-npm ci
-npx --no-install playwright install chromium
-npm run verify
-```
-
-En entornos sin escritura en el perfil, fijar ASTRO_TELEMETRY_DISABLED=1 y ubicar caché npm/PLAYWRIGHT_BROWSERS_PATH dentro del workspace.
-
-`node scripts/promotion/cli.ts inspect` requiere workflow_dispatch real en main, STAGING_SHA y token de lectura de destino: no escribe. prepare es la operación de escritura, reservada a su job. Los tests simulan ambas, verifican ausencia de merge/publicación y ascendencia independiente, y comprueban el gate de PR. El ensayo remoto sigue siendo necesario.
-
-## Una ejecución por release
-
-El workflow explícito de la release emite quality sin aprobación adicional de otra ejecución. El CI automático por pull_request se filtra a controles/documentación propios del destino. La política de importación rechaza esas rutas, de modo que una release válida solo modifica archivos de aplicación autorizados y .github/release-provenance.json (excluido del disparador automático). Se comprueba que los filtros YAML y la frontera de importación coincidan.
-
-Las modificaciones de aplicación y toolchain se desarrollan en staging y llegan a main mediante la preparación de releases. Un PR manual que solo cambie archivos de aplicación no activa el CI de configuración: debe usar el circuito de staging/release, no fusionarse por ausencia de un check. Cuando quality sea obligatorio, ese PR manual quedará pendiente de la validación exigida. Los PR de controles o documentación siguen comprobándose automáticamente. No cambiar la política de aprobaciones de GitHub para solucionar esta duplicidad.
-
-El fallo histórico `43423516599` fue una ejecución adicional por pull_request cuya aprobación caducó sin jobs. La ejecución explícita `43423512618` y la publicación de d5e93fed fueron satisfactorias. No reejecutar el run histórico del PR ya fusionado: el verificador exige un PR abierto y su head/base vigentes. La corrección debe comprobarse con la próxima release real después de instalar el ajuste.
+Usar Node 24.22.2/npm 11.19.1. Para estos cambios: npm run check, npm run lint, npm run format:check y las unitarias pertinentes. npm run verify permanece disponible para desarrollo local; no se ejecuta por cada release en producción. Las pruebas cubren nuevas herramientas/directorios, cambios de registro, borrados, preservación de controles, secretos, concurrencia, procedencia y ausencia de merge/publicación automática.
