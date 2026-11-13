@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "aalexlpez/miminiapp",
+  "sourceRepositoryId": "1445849027",
+  "sourceSha": "6f4f7f0c35ee1cc48b176d1038b4edb9669db273",
+  "sourceTree": "0209047072ad905c1a16a1f5550af825a7822193",
+  "sourceRunId": "42816629375",
+  "sourceRunAttempt": 1,
+  "stagingPayloadSha256": "8751350b15d8ffcd2052a69a8ad0a2cfcface65dcfa3111504795f339557aa1f",
+  "projectionSha256": "cb995be950d058c03fb49d1cc82a308b9fb76cb27556d7259dd28b40a00dcf3f",
+  "policySha256": "13fae9aa91191746a85a370d1b3956300fb21a8f45f7ec12d5efc249b46ce0ee",
+  "destinationBaseSha": "02e37ff249c923d511290e707bac1f9296800e57"
+}
