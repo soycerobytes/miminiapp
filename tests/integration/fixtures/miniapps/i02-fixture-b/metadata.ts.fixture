@@ -4,6 +4,9 @@ export const metadata = {
   id: 'i02-fixture-b',
   slug: 'i02-fixture-b',
   status: 'published',
+  category: 'calculator',
+  tags: ['fixture'],
+  publishedAt: '2026-11-05',
   copy: {
     es: { title: 'Módulo sintético B', description: 'Una segunda fixture aislada sin cambios de plataforma.' },
     en: { title: 'Synthetic module B', description: 'A second isolated fixture without platform changes.' },

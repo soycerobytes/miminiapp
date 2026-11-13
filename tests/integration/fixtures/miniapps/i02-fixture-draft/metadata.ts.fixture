@@ -4,6 +4,7 @@ export const metadata = {
   id: 'i02-fixture-draft',
   slug: 'i02-fixture-draft',
   status: 'draft',
+  category: 'calculator',
   copy: {
     es: { title: 'Borrador sintético D', description: 'I02_DRAFT_METADATA_NO_PUBLICAR' },
     en: { title: 'Synthetic draft D', description: 'I02_DRAFT_METADATA_DO_NOT_PUBLISH' },

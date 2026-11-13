@@ -1,6 +1,6 @@
 # Operación I-03 — staging mediante GitHub Actions
 
-**Actualizado:** 2026-11-07 (Europe/Madrid). **Staging:** `Verificado`. **I-03:** `En curso`, sin aceptación global. Este PR es documental: Codex no lo fusiona, despliega o cambia infraestructura.
+**Actualizado:** 2026-11-13. **Staging:** `Verificado` el 2026-11-07. **I-03:** `En curso`, sin aceptación global. Ningún agente fusiona, despliega o cambia infraestructura por iniciativa propia.
 
 ## Resultado comprobado
 
@@ -10,7 +10,7 @@ MiMiniApp está publicada en [staging](https://miminiapp-staging.miminiapp-lab.w
 
 El propietario administra Cloudflare y las credenciales guardadas en GitHub Environment `staging`: secreto `CLOUDFLARE_API_TOKEN` (Editor account-owned restringido al Worker) y variable `CLOUDFLARE_ACCOUNT_ID`. Mantiene también la autorización de publicación específica existente. No debe recrear Worker, secreto o token en cada release ordinaria.
 
-Codex desarrolla, prueba y prepara ramas/PR autorizados. GitHub Actions verifica, construye, publica y ejecuta pruebas remotas. **Codex no necesita conectividad o credenciales Cloudflare.** No copiar tokens al chat, repositorio, CI de PR, entorno de Codex o producción. El antiguo requisito CLOUDFLARE_BOOTSTRAP_API_TOKEN en Codex quedó obsoleto; no se usa Admin, OAuth o Workers Scripts: Edit general como sustituto.
+Las personas y los agentes desarrollan, prueban y preparan ramas/PR autorizados. GitHub Actions verifica, construye, publica y ejecuta pruebas remotas. **Nadie necesita conectividad o credenciales Cloudflare para desarrollar.** No copiar tokens al chat, repositorio, CI de PR, entorno de desarrollo o producción. El antiguo requisito CLOUDFLARE_BOOTSTRAP_API_TOKEN quedó obsoleto; no se usa Admin, OAuth o Workers Scripts: Edit general como sustituto.
 
 ## Publicaciones ordinarias de staging
 
@@ -43,4 +43,4 @@ Producción, promoción y rollback permanecen bloqueados y no se ejecutan. Tambi
 
 Ante un fallo de prepare/probe, no forzar el gate ni sustituir credenciales por permisos generales. Ante error o timeout de Wrangler, no asumir ausencia de efectos: el propietario comprueba el estado servido antes de decidir. Un fallo de pruebas remotas no se convierte en éxito y no dispara rollback automático. El ensayo manual excepcional de rollback requiere su autorización; master no contiene su dispatch y no se promete un botón operativo.
 
-Retención existente: evidencia de acceso/fallos 7 días y candidatos/recibos 30 días. No promover artefactos expirados. Objetivo de gasto 0 USD/mes sujeto a cuotas reales; no se añaden servicios. Si se incorpora otro colaborador, las reviews obligatorias se configuran mediante protecciones sin rediseñar workflows.
+Retención existente: evidencia de acceso/fallos 7 días y candidatos/recibos 30 días. No promover artefactos expirados. Objetivo de gasto 0 USD/mes sujeto a cuotas reales; no se añaden servicios. Para incorporar a otro colaborador, véase [CONTRIBUTING.md](../CONTRIBUTING.md#incorporar-a-otra-persona): además de las reviews obligatorias en las protecciones, el gate solo publica merges del propietario salvo que la política liste a esa persona en `maintainers` (enmienda propuesta a ADR-MMA-009).
