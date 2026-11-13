@@ -1,0 +1,13 @@
+name: Prepare release from staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      staging_sha:
+        description: "Commit verificado en staging"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
