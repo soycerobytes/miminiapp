@@ -1,0 +1,139 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Fixed destination of the previously validated release
+        required: true
+        type: choice
+        options: [staging, production]
+      prior-run-id:
+        description: Previous successful, validated deployment run in this repository
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  checks: read
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  PLAYWRIGHT_BROWSERS_PATH: /tmp/miminiapp-playwright
+
+jobs:
+  gate:
+    # Exceptional manual recovery is also inactive throughout Phase A.
+    if: ${{ false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      candidate-run-id: ${{ steps.candidate.outputs.candidate-run-id }}
+      candidate-artifact-id: ${{ steps.candidate.outputs.candidate-artifact-id }}
+      candidate-receipt-id: ${{ steps.candidate.outputs.candidate-receipt-id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Check the authorization for exceptional recovery
+        run: node scripts/release/cli.ts assert-phase-b "$RELEASE_TARGET" rollback
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+          I03_PHASE_B_AUTHORIZED: ${{ vars.I03_PHASE_B_AUTHORIZED }}
+      - name: Resolve only a previous trusted and validated deployment
+        id: candidate
+        run: node scripts/release/cli.ts check-rollback "$RELEASE_TARGET"
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+          PRIOR_RUN_ID: ${{ inputs.prior-run-id }}
+          GH_TOKEN: ${{ github.token }}
+
+  rollback-publish:
+    if: ${{ false }}
+    needs: gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    environment: ${{ inputs.target }}
+    concurrency:
+      group: miminiapp-publicacion
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Check authorization and runtime
+        run: |
+          node scripts/release/cli.ts assert-phase-b "$RELEASE_TARGET" rollback
+          test "$(node --version)" = "v24.22.2"
+          test "$(npm --version)" = "11.19.1"
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+          I03_PHASE_B_AUTHORIZED: ${{ vars.I03_PHASE_B_AUTHORIZED }}
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.gate.outputs.candidate-artifact-id }}
+          run-id: ${{ needs.gate.outputs.candidate-run-id }}
+          github-token: ${{ github.token }}
+          path: .local/release-candidate
+          merge-multiple: true
+          digest-mismatch: error
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.gate.outputs.candidate-receipt-id }}
+          run-id: ${{ needs.gate.outputs.candidate-run-id }}
+          github-token: ${{ github.token }}
+          path: .local/staging-validation
+          merge-multiple: true
+          digest-mismatch: error
+      - name: Recheck the recovery selection under the publication lock
+        run: node scripts/release/cli.ts check-rollback "$RELEASE_TARGET"
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+          PRIOR_RUN_ID: ${{ inputs.prior-run-id }}
+          GH_TOKEN: ${{ github.token }}
+      - name: Verify the previous candidate and validation receipt
+        id: identity
+        run: |
+          node scripts/release/cli.ts verify .local/release-candidate
+          node scripts/release/cli.ts verify-receipt .local/release-candidate .local/staging-validation/staging-validation.json
+      - name: Restore only the verified previous artifact
+        run: node scripts/release/cli.ts publish "$RELEASE_TARGET" .local/release-candidate
+        env:
+          RELEASE_TARGET: ${{ inputs.target }}
+          RELEASE_OPERATION: rollback
+          PRIOR_RUN_ID: ${{ inputs.prior-run-id }}
+          GH_TOKEN: ${{ github.token }}
+          I03_PHASE_B_AUTHORIZED: ${{ vars.I03_PHASE_B_AUTHORIZED }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          RELEASE_RECEIPT_PATH: .local/staging-validation/staging-validation.json
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Smoke-test the restored release
+        run: npm run test:remote
+        env:
+          REMOTE_TARGET: ${{ inputs.target }}
+          REMOTE_BASE_URL: ${{ inputs.target == 'staging' && 'https://miminiapp-staging.miminiapp-lab.workers.dev' || 'https://miminiapp.miminiapp-lab.workers.dev' }}
+          RELEASE_SOURCE_SHA: ${{ steps.identity.outputs.source-sha }}
+          RELEASE_SOURCE_TREE: ${{ steps.identity.outputs.source-tree }}
+          RELEASE_PAYLOAD_SHA256: ${{ steps.identity.outputs.payload-sha256 }}
+      - name: Keep recovery failure evidence
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rollback-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore

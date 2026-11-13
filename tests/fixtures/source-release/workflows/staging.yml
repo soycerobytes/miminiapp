@@ -1,0 +1,155 @@
+name: Staging
+
+on:
+  push:
+    branches: [staging]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  checks: read
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  PLAYWRIGHT_BROWSERS_PATH: /tmp/miminiapp-playwright
+
+jobs:
+  prepare:
+    # Phase A: activation requires an explicitly authorized code change.
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' && github.repository == 'aalexlpez/miminiapp' && vars.I03_STAGING_PUBLICATION_AUTHORIZED == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      artifact-id: ${{ steps.candidate.outputs.artifact-id }}
+      artifact-digest: ${{ steps.candidate.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Check authorization and the protected merge
+        run: |
+          node scripts/release/cli.ts assert-phase-b staging
+          node scripts/release/cli.ts check-merged staging
+        env:
+          GH_TOKEN: ${{ github.token }}
+          I03_STAGING_PUBLICATION_AUTHORIZED: ${{ vars.I03_STAGING_PUBLICATION_AUTHORIZED }}
+      - name: Verify runtime
+        run: |
+          test "$(node --version)" = "v24.22.2"
+          test "$(npm --version)" = "11.19.1"
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: npm run verify
+      - name: Package the already tested build
+        run: node scripts/release/cli.ts pack dist .local/release-candidate
+      - id: candidate
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-candidate-${{ github.sha }}-${{ github.run_attempt }}
+          path: .local/release-candidate/
+          retention-days: 30
+          if-no-files-found: error
+          include-hidden-files: true
+
+  remote-test:
+    name: remote-test
+    # Both this literal lock and the committed policy deny publication in Phase A.
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' && github.repository == 'aalexlpez/miminiapp' && vars.I03_STAGING_PUBLICATION_AUTHORIZED == 'true' && needs.prepare.result == 'success' }}
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    environment: staging
+    concurrency:
+      group: miminiapp-publicacion
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Recheck authorization before installing trusted dependencies
+        run: node scripts/release/cli.ts assert-phase-b staging
+        env:
+          I03_STAGING_PUBLICATION_AUTHORIZED: ${{ vars.I03_STAGING_PUBLICATION_AUTHORIZED }}
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.prepare.outputs.artifact-id }}
+          path: .local/release-candidate
+          merge-multiple: true
+          digest-mismatch: error
+      - name: Verify the exact artifact
+        id: identity
+        run: node scripts/release/cli.ts verify .local/release-candidate
+      - name: Recheck the current protected merge under the publication lock
+        run: node scripts/release/cli.ts check-merged staging
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Check staging access without changing Cloudflare resources
+        id: access
+        run: node scripts/release/cli.ts probe-staging-access
+        env:
+          RELEASE_TARGET: staging
+          GH_TOKEN: ${{ github.token }}
+          I03_STAGING_PUBLICATION_AUTHORIZED: ${{ vars.I03_STAGING_PUBLICATION_AUTHORIZED }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Keep the sanitized access evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: staging-access-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .local/staging-access.json
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Recheck authorization after the access probe
+        run: node scripts/release/cli.ts assert-phase-b staging
+        env:
+          I03_STAGING_PUBLICATION_AUTHORIZED: ${{ vars.I03_STAGING_PUBLICATION_AUTHORIZED }}
+      - name: Publish only the staging Worker
+        run: node scripts/release/cli.ts publish staging .local/release-candidate
+        env:
+          RELEASE_TARGET: staging
+          GH_TOKEN: ${{ github.token }}
+          I03_STAGING_PUBLICATION_AUTHORIZED: ${{ vars.I03_STAGING_PUBLICATION_AUTHORIZED }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Test the live staging identity and application
+        run: npm run test:remote
+        env:
+          REMOTE_TARGET: staging
+          REMOTE_BASE_URL: https://miminiapp-staging.miminiapp-lab.workers.dev
+          RELEASE_SOURCE_SHA: ${{ steps.identity.outputs.source-sha }}
+          RELEASE_SOURCE_TREE: ${{ steps.identity.outputs.source-tree }}
+          RELEASE_PAYLOAD_SHA256: ${{ steps.identity.outputs.payload-sha256 }}
+      - name: Record successful validation separately from the payload
+        run: node scripts/release/cli.ts receipt .local/release-candidate .local/staging-validation.json
+        env:
+          REMOTE_TESTS_PASSED: 'true'
+          MANIFEST_ARTIFACT_ID: ${{ needs.prepare.outputs.artifact-id }}
+          MANIFEST_ARTIFACT_DIGEST: sha256:${{ needs.prepare.outputs.artifact-digest }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: staging-validation-${{ github.sha }}-${{ github.run_attempt }}
+          path: .local/staging-validation.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Keep remote failure evidence
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: staging-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore

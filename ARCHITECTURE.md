@@ -1,5 +1,17 @@
 # Arquitectura actual
 
+## Producción independiente — PR-01, 2026-11-13
+
+ADR-MMA-020 aprueba el circuito entre repositorios. `.github/promotion-policy.json` fija origen/destino, workflow confiable de staging, registro vacío y rutas importables. `scripts/promotion/` valida evidencia pública, proyección y procedencia y crea mediante API un commit cuyo único padre es main de destino; no importa objetos del historial de origen. El preparador manual divide inspección de lectura y escritura de rama/PR. Su token no se envía al origen y no ejecuta código descargado.
+
+CI/quality verifica releases con controles de base, comprueba la evidencia de staging, la proyección exacta, la configuración preservada y la ascendencia. No instala dependencias ni repite las pruebas funcionales. Se solicita explícitamente para el PR del bot. Los otros PR a main ejecutan lint/formato y tests propios de los controles de producción; las funcionalidades se desarrollan y prueban en staging.
+
+La política legacy de despliegue identifica producción y mantiene todos sus permisos desactivados; los workflows anteriores de producción/staging/rollback/promoción son manuales e inactivos. Sus contratos originales se conservan en fixtures de tests y no se ejecutan como automatización. Workers Builds es el único publicador declarado por el propietario; reconstruye la fuente, sin equivalencia binaria prometida. No se modifican Cloudflare/DNS ni el repositorio de staging.
+
+El propietario autorizó subir la rama de configuración y abrir PR, sin merge. El ensayo de PR real, asociación de quality, ruleset y configuración externa quedan pendientes; no se declaran desplegados. Procedimiento y recuperación en [la guía](docs/production-promotion.md).
+
+Las secciones I-03 siguientes conservan la historia de la arquitectura del origen; no autorizan activar sus publicadores en este repositorio.
+
 Actualización de movimiento autorizada el 2026-11-10 (enmienda ADR-MMA-018): `motion.ts` inicia el movimiento activo en cada documento; el botón de ondas de `MotionControl.astro` alterna pausa/reanudación y muestra raya diagonal al pausar. El sistema operativo ya no bloquea este control ni los SVG decorativos. La suspensión por visibilidad sigue siendo automática y temporal; no altera la pausa manual. Las microinteracciones de apariencia mantienen reduced-motion. Esta actualización sustituye las descripciones históricas de prioridad reduced-motion que aparecen más abajo.
 
 **Actualizado:** 2026-11-08. **I-01:** Aceptado y archivado por el propietario. **I-02:** Aceptado expresamente por el propietario el 2026-11-05 y archivado, tras aprobación del plan/ADR-MMA-011/016/017 y autorización expresa de ejecución.

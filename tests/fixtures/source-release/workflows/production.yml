@@ -1,0 +1,133 @@
+name: Production
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  checks: read
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  PLAYWRIGHT_BROWSERS_PATH: /tmp/miminiapp-playwright
+
+jobs:
+  gate:
+    # Phase A: no production job is active, including credential-free preparation.
+    if: ${{ false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      candidate-run-id: ${{ steps.candidate.outputs.candidate-run-id }}
+      candidate-artifact-id: ${{ steps.candidate.outputs.candidate-artifact-id }}
+      candidate-receipt-id: ${{ steps.candidate.outputs.candidate-receipt-id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Check the committed authorization
+        run: node scripts/release/cli.ts assert-phase-b production
+        env:
+          I03_PHASE_B_AUTHORIZED: ${{ vars.I03_PHASE_B_AUTHORIZED }}
+      - name: Find the exact candidate from the owner's merged promotion PR
+        id: candidate
+        run: node scripts/release/cli.ts check-merged production
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  production-publish:
+    name: remote-test
+    # Do not replace this literal without the owner's express Phase B authorization.
+    if: ${{ false }}
+    needs: gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    environment: production
+    concurrency:
+      group: miminiapp-publicacion
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Check authorization and runtime
+        run: |
+          node scripts/release/cli.ts assert-phase-b production
+          test "$(node --version)" = "v24.22.2"
+          test "$(npm --version)" = "11.19.1"
+        env:
+          I03_PHASE_B_AUTHORIZED: ${{ vars.I03_PHASE_B_AUTHORIZED }}
+      - run: npm ci
+      - name: Download the immutable staging artifact by ID
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.gate.outputs.candidate-artifact-id }}
+          run-id: ${{ needs.gate.outputs.candidate-run-id }}
+          github-token: ${{ github.token }}
+          path: .local/release-candidate
+          merge-multiple: true
+          digest-mismatch: error
+      - name: Download its successful staging receipt by ID
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.gate.outputs.candidate-receipt-id }}
+          run-id: ${{ needs.gate.outputs.candidate-run-id }}
+          github-token: ${{ github.token }}
+          path: .local/staging-validation
+          merge-multiple: true
+          digest-mismatch: error
+      - name: Recheck the current promotion under the publication lock
+        run: node scripts/release/cli.ts check-merged production
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Verify the artifact and its validation receipt
+        id: identity
+        run: |
+          node scripts/release/cli.ts verify .local/release-candidate
+          node scripts/release/cli.ts verify-receipt .local/release-candidate .local/staging-validation/staging-validation.json
+      - name: Publish the validated artifact without rebuilding it
+        run: node scripts/release/cli.ts publish production .local/release-candidate
+        env:
+          RELEASE_TARGET: production
+          GH_TOKEN: ${{ github.token }}
+          I03_PHASE_B_AUTHORIZED: ${{ vars.I03_PHASE_B_AUTHORIZED }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          RELEASE_RECEIPT_PATH: .local/staging-validation/staging-validation.json
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Smoke-test the exact production release
+        run: npm run test:remote
+        env:
+          REMOTE_TARGET: production
+          REMOTE_BASE_URL: https://miminiapp.miminiapp-lab.workers.dev
+          RELEASE_SOURCE_SHA: ${{ steps.identity.outputs.source-sha }}
+          RELEASE_SOURCE_TREE: ${{ steps.identity.outputs.source-tree }}
+          RELEASE_PAYLOAD_SHA256: ${{ steps.identity.outputs.payload-sha256 }}
+      - name: Retain the verified source of this successful production release
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: production-release-${{ github.sha }}-${{ github.run_attempt }}
+          path: .local/production-release.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Keep production failure evidence
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: production-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore

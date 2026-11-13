@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "phase": "B",
+  "deploymentsEnabled": true,
+  "repository": "aalexlpez/miminiapp",
+  "repositoryId": "1445849027",
+  "owner": "aalexlpez",
+  "targets": {
+    "staging": {
+      "branch": "staging",
+      "worker": "miminiapp-staging",
+      "url": "https://miminiapp-staging.miminiapp-lab.workers.dev",
+      "deploymentsEnabled": true
+    },
+    "production": {
+      "branch": "main",
+      "worker": "miminiapp",
+      "url": "https://miminiapp.miminiapp-lab.workers.dev",
+      "deploymentsEnabled": false
+    }
+  },
+  "promotionEnabled": false,
+  "rollbackEnabled": false,
+  "cloudflareAccountIdSha256": "088cf89dc302b4ff6b33b945b8f7cd73024d67a5569a53cb2d088970fc987a27"
+}

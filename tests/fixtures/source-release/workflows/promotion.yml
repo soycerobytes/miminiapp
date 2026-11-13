@@ -1,0 +1,39 @@
+name: Promotion
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  checks: read
+
+jobs:
+  promotion:
+    name: promotion
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Block promotion until separately authorized
+        run: |
+          echo '::error::Promotion is not authorized during staging setup.'
+          exit 1
+      # The PR cannot replace the code which decides whether it may be promoted.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+      - name: Verify runtime
+        run: |
+          test "$(node --version)" = "v24.22.2"
+          test "$(npm --version)" = "11.19.1"
+      - name: Check origin and the exact validated staging candidate
+        run: node scripts/release/cli.ts check-promotion
+        env:
+          GH_TOKEN: ${{ github.token }}
