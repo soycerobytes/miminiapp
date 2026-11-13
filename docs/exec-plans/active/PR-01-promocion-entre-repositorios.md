@@ -150,3 +150,17 @@ Sin rama remota ni PR creados y sin cambios a main, staging o Cloudflare. Se nec
 ## Acceso restablecido y entrega — 2026-11-13
 
 El propietario instala ChatGPT Codex Connector en soycerobytes, con selección de repositorios. El lector devuelve la instalación181571833 además de la original. Una conexión nueva confirma main intacto en2a52211d36cb9fabca920200f6875bf8dccdb881 y el push crea config/production-promotion correctamente. El bloqueo403 anterior queda resuelto. Se abre PR de configuración hacia main para revisión y comprobaciones ligeras, sin merge. El ensayo de una release real después de instalar continúa pendiente.
+
+## Corrección autorizada: evitar ejecución duplicada
+
+* **Estado de la corrección:** En curso, dentro de PR-01. **Responsable:** propietario de MiMiniApp. **Fecha:** 2026-11-13.
+* **Evidencia:** PR #1 instalado en `02e37ff`; PR #2 de release fusionado en `d5e93fe`. Validación explícita `43423512618` satisfactoria; Cloudflare publicó el merge correctamente (versión c99c57cc-c944-4d31-ae0f-2e32c83031dd). La ejecución adicional por pull_request `43423516599` no ejecutó jobs: requería aprobación y caducó.
+* **Aprobación y autorización:** el propietario acepta la propuesta concreta de filtros de rutas, tests y nuevo PR mediante «vale, vamos a aplicar el ajuste». ADR-MMA-020 registra la enmienda antes de implementar.
+* **Alcance:** filtros pull_request solo para controles propios, procedencia excluida; mantener workflow_dispatch y su validación; impedir que la política de copia incluya rutas que activen el CI de configuración. Documentar disparadores, comprobaciones de regresión y límites.
+* **Verificaciones:** tipos, lint, formato, unitarias pertinentes; reproducir los tres archivos del PR #2 y demostrar que no disparan pull_request; probar tanto configuración como documentación y rechazo de importación de rutas protegidas. CI real del nuevo PR antes de entregar. Sin batería funcional ni builds de publicación.
+* **Punto de parada:** PR listo para merge humano. La ausencia de la ejecución adicional en GitHub se confirmará con la siguiente release real tras instalar, sin fabricar cambios en staging ni alterar archivos de aplicación para provocar una release.
+* **Recuperación:** revertir el PR de filtros si fuese necesario, conservando el dispatch explícito que ya funciona. No cambiar reglas de aprobación para resolver la duplicidad.
+
+| 2026-11-13 | En curso | Propietario / agente | Corrección de duplicidad aprobada y autorizada; rama fix/single-release-check desde main vigente. |
+
+**Verificación local de esta corrección:** tipos (sin errores/warnings/hints), lint y formato correctos; 421 unitarias satisfactorias. Se cubren filtros YAML, exclusión de procedencia, el delta real del PR #2, controles/documentación que sí activan CI y el rechazo en runtime de importaciones de esas rutas. Aplicación, dependencias, lockfile, configuración Cloudflare y lista autorizada de miniapps intactos. Pendiente CI del PR correctivo y posterior comprobación con una release real tras merge humano.

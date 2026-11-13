@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { matchesGlob } from 'node:path';
 
 export interface Policy {
   schemaVersion: 1;
@@ -23,6 +24,41 @@ export interface Entry {
 }
 export type Snapshot = Record<string, Pick<Entry, 'mode' | 'sha'>>;
 export const provenancePath = '.github/release-provenance.json';
+// Only destination-owned paths trigger automatic configuration CI. Keep the
+// identical, ordered list in ci.yml; tests enforce parity and import isolation.
+export const configurationPaths = [
+  '.github/**',
+  'scripts/**',
+  'deploy/**',
+  'docs/**',
+  'tests/helpers/**',
+  'tests/fixtures/source-release/**',
+  'tests/remote/**',
+  'tests/unit/production-*.test.ts',
+  'tests/unit/release-*.test.ts',
+  'tests/unit/workflow-safety.test.ts',
+  'tests/unit/pr-ci-identity.test.ts',
+  'tests/unit/staging-token-probe.test.ts',
+  'tests/unit/remote-target.test.ts',
+  'README.md',
+  'ARCHITECTURE.md',
+  'AGENTS.md',
+  'CLAUDE.md',
+  'GEMINI.md',
+  '.gitignore',
+  '.gitattributes',
+  `!${provenancePath}`,
+] as const;
+
+export function isConfigurationPath(path: string) {
+  let included = false;
+  for (const pattern of configurationPaths) {
+    const negative = pattern.startsWith('!');
+    if (matchesGlob(path, negative ? pattern.slice(1) : pattern))
+      included = !negative;
+  }
+  return included;
+}
 export const commitPattern = /^[a-f0-9]{40}$/;
 export const digest = (value: string) =>
   createHash('sha256').update(value).digest('hex');
@@ -62,6 +98,7 @@ export function validatePolicy(value: unknown): asserts value is Policy {
       p.files.every(
         (path) =>
           safePath(path) &&
+          !isConfigurationPath(path) &&
           !path.startsWith('.github/') &&
           !path.startsWith('deploy/') &&
           !path.startsWith('docs/') &&

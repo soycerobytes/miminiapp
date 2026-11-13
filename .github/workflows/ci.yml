@@ -6,6 +6,30 @@ run-name: >-
 on:
   pull_request:
     branches: [main]
+    # Releases change only imported application files and their provenance.
+    # They use the explicit dispatch below, without a second approval-gated run.
+    paths:
+      - '.github/**'
+      - 'scripts/**'
+      - 'deploy/**'
+      - 'docs/**'
+      - 'tests/helpers/**'
+      - 'tests/fixtures/source-release/**'
+      - 'tests/remote/**'
+      - 'tests/unit/production-*.test.ts'
+      - 'tests/unit/release-*.test.ts'
+      - 'tests/unit/workflow-safety.test.ts'
+      - 'tests/unit/pr-ci-identity.test.ts'
+      - 'tests/unit/staging-token-probe.test.ts'
+      - 'tests/unit/remote-target.test.ts'
+      - 'README.md'
+      - 'ARCHITECTURE.md'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'GEMINI.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - '!.github/release-provenance.json'
   workflow_dispatch:
     inputs:
       pr_number:

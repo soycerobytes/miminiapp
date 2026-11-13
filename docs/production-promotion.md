@@ -24,7 +24,7 @@ Si quality no aparece o no se asocia al PR, no fusionar. El ensayo remoto es con
 3. En producción → Actions → Prepare release from staging → Run workflow, elegir main e introducir staging_sha.
 4. inspect valida identidad de repositorios, SHA/tree, workflow fijado, último run/intento, jobs/pasos verify y pruebas remotas, y manifiesto HTTPS servido. prepare repite las comprobaciones y contrasta el fingerprint independiente.
 5. Se crea release/<SHA corto>-<run>-<intento>, un commit propio y un PR. No se sobrescriben ramas existentes ni se hace merge. Se preservan los controles propios de producción.
-6. Se solicita CI mediante workflow_dispatch en la rama release. No se depende de que un PR abierto con GITHUB_TOKEN dispare pull_request. CI también atiende los PR normales a main.
+6. Se solicita CI mediante workflow_dispatch en la rama release. No se depende de que un PR abierto con GITHUB_TOKEN dispare pull_request. El disparador pull_request solo atiende rutas propias de configuración/documentación del destino; excluye expresamente .github/release-provenance.json. Así la release no crea otra ejecución pendiente de aprobación.
 7. quality usa controles de la base confiable y valida evidencia de staging, proyección/procedencia, configuración preservada y refs. Para releases no instala dependencias ni ejecuta tests de aplicación: la batería completa ya pasó en staging. Los PR de configuración comprueban lint/formato y los tests propios de los controles. No usa secretos Cloudflare.
 8. Revisar Files changed y checks; hacer merge manual cuando se quiera publicar. Workers Builds inicia entonces la publicación. Actions no despliega.
 
@@ -66,3 +66,11 @@ npm run verify
 En entornos sin escritura en el perfil, fijar ASTRO_TELEMETRY_DISABLED=1 y ubicar caché npm/PLAYWRIGHT_BROWSERS_PATH dentro del workspace.
 
 `node scripts/promotion/cli.ts inspect` requiere workflow_dispatch real en main, STAGING_SHA y token de lectura de destino: no escribe. prepare es la operación de escritura, reservada a su job. Los tests simulan ambas, verifican ausencia de merge/publicación y ascendencia independiente, y comprueban el gate de PR. El ensayo remoto sigue siendo necesario.
+
+## Una ejecución por release
+
+El workflow explícito de la release emite quality sin aprobación adicional de otra ejecución. El CI automático por pull_request se filtra a controles/documentación propios del destino. La política de importación rechaza esas rutas, de modo que una release válida solo modifica archivos de aplicación autorizados y .github/release-provenance.json (excluido del disparador automático). Se comprueba que los filtros YAML y la frontera de importación coincidan.
+
+Las modificaciones de aplicación y toolchain se desarrollan en staging y llegan a main mediante la preparación de releases. Un PR manual que solo cambie archivos de aplicación no activa el CI de configuración: debe usar el circuito de staging/release, no fusionarse por ausencia de un check. Cuando quality sea obligatorio, ese PR manual quedará pendiente de la validación exigida. Los PR de controles o documentación siguen comprobándose automáticamente. No cambiar la política de aprobaciones de GitHub para solucionar esta duplicidad.
+
+El fallo histórico `43423516599` fue una ejecución adicional por pull_request cuya aprobación caducó sin jobs. La ejecución explícita `43423512618` y la publicación de d5e93fed fueron satisfactorias. No reejecutar el run histórico del PR ya fusionado: el verificador exige un PR abierto y su head/base vigentes. La corrección debe comprobarse con la próxima release real después de instalar el ajuste.
