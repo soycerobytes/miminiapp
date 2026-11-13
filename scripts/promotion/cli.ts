@@ -12,6 +12,7 @@ import {
   provenancePath,
   requireValue,
   selectFiles,
+  managedPaths,
   treeEntries,
   validatePolicy,
   type Entry,
@@ -204,7 +205,7 @@ export async function prepare(write = false) {
   await output('fingerprint', fingerprint);
   if (!write) {
     console.log(
-      `Verified staging ${sha}; ${Object.keys(candidate.selected).length} authorized files. No branch or PR created.`,
+      `Verified staging ${sha}; ${Object.keys(candidate.selected).length} snapshot files. No branch or PR created.`,
     );
     return;
   }
@@ -221,7 +222,7 @@ export async function prepare(write = false) {
     type: string;
     sha: string | null;
   }[] = [];
-  for (const path of policy.files) {
+  for (const path of managedPaths(base.files, candidate.selected)) {
     const expected = candidate.selected[path];
     const previous = base.files[path];
     if (expected?.sha === previous?.sha && expected?.mode === previous?.mode)
@@ -242,7 +243,7 @@ export async function prepare(write = false) {
     );
     const bytes = Buffer.from(await response.arrayBuffer());
     requireValue(
-      bytes.length <= 4_000_000 &&
+      bytes.length <= 100 * 1024 * 1024 &&
         createHash('sha1')
           .update(`blob ${bytes.length}\0`)
           .update(bytes)
@@ -261,9 +262,7 @@ export async function prepare(write = false) {
     changes.push({ path, mode: expected.mode, type: 'blob', sha: blob.sha });
   }
   if (!changes.length) {
-    console.log(
-      'No authorized application changes; no release branch or PR created.',
-    );
+    console.log('No project changes; no release branch or PR created.');
     return;
   }
   const provenance = { ...candidate.proof, destinationBaseSha: baseSha };
@@ -311,7 +310,7 @@ export async function prepare(write = false) {
       head: branch,
       base: 'main',
       title: `Release ${sha.slice(0, 12)}`,
-      body: `Imports the authorized files from staging ${sha}, validated by source run ${candidate.proof.sourceRunId} (attempt ${candidate.proof.sourceRunAttempt}).\n\nSource history is not imported. Production configuration is preserved. Cloudflare Workers Builds will rebuild after a manual merge.\n\nReview the diff and wait for quality. No automatic merge or deployment is performed by this workflow.`,
+      body: `Synchronizes the complete project snapshot from staging ${sha}, validated by source run ${candidate.proof.sourceRunId} (attempt ${candidate.proof.sourceRunAttempt}).\n\nSource history is not imported. Production configuration is preserved. Cloudflare Workers Builds will rebuild after a manual merge.\n\nReview the diff and wait for quality. No automatic merge or deployment is performed by this workflow.`,
     },
   );
   console.log(pr.html_url);

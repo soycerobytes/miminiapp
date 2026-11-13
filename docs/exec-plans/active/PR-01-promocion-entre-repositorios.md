@@ -11,7 +11,7 @@
 
 ## Objetivo
 
-Importar una instantánea aprobada de staging mediante un commit propio de producción, sin importar objetos de historial del origen. Abrir un PR de release; únicamente el merge manual a main dará paso al mecanismo de publicación que el propietario indica que ya existe en Cloudflare Workers Builds.
+Importar el snapshot completo de proyecto del SHA aprobado de staging mediante un commit propio de producción, sin importar objetos de historial del origen. Abrir un PR de release; únicamente el merge manual a main dará paso al mecanismo de publicación que el propietario indica que ya existe en Cloudflare Workers Builds.
 
 Producción conservará su historial independiente. No se eliminará ni reescribirá el historial existente. El SHA de staging puede conservarse como dato de procedencia sin importar sus commits.
 
@@ -164,3 +164,15 @@ El propietario instala ChatGPT Codex Connector en soycerobytes, con selección d
 | 2026-11-13 | En curso | Propietario / agente | Corrección de duplicidad aprobada y autorizada; rama fix/single-release-check desde main vigente. |
 
 **Verificación local de esta corrección:** tipos (sin errores/warnings/hints), lint y formato correctos; 421 unitarias satisfactorias. Se cubren filtros YAML, exclusión de procedencia, el delta real del PR #2, controles/documentación que sí activan CI y el rechazo en runtime de importaciones de esas rutas. Aplicación, dependencias, lockfile, configuración Cloudflare y lista autorizada de miniapps intactos. Pendiente CI del PR correctivo y posterior comprobación con una release real tras merge humano.
+
+## Corrección de alcance: sincronizar la versión completa
+
+**Estado:** En curso. **Responsable:** propietario de MiMiniApp. **Autorización:** petición de importar todos los archivos nuevos de staging; enmienda de ADR-MMA-020 registrada antes de implementar.
+
+Objetivo: que una nueva miniapp, archivo, carpeta, traducción o recurso no exija editar producción. Importar por defecto todo archivo versionado normal del SHA seleccionado, con sincronización de borrados. Preservar controles propios y excluir secretos, sin importar historial ni activar publicadores anteriores. Ajustar filtros del CI para mantener una sola validación por release. Crear pruebas de altas, modificaciones, borrados, registro nuevo, directorios nuevos, nombres Unicode y conservación de controles. Mantener pruebas de evidencia/procedencia y cierre ante entradas inseguras. Validar localmente y entregar PR sin fusionar; no modificar staging para ensayar.
+
+La enmienda actual sustituye hacia adelante la lista positiva y el pin del catálogo vacío descritos históricamente en este plan. La aprobación del SHA publicado autoriza toda su versión de proyecto; no se exige un PR de política por miniapp o archivo nuevo. La excepción de controles se estrecha a rutas concretas, para que scripts/docs/helpers nuevos de aplicación también se copien sin duplicar CI.
+
+**Evidencia del snapshot completo:** tipos sin errores/warnings/hints; lint/formato correctos; 437 unitarias locales, incluidas 111 pruebas de controles. Inspección real del SHA 6f4f7f0c35ee1cc48b176d1038b4edb9669db273 y run42816629375: 274 archivos de proyecto seleccionados automáticamente, sin diferencias actuales de proyecto ni solapamiento con filtros de configuración. Casos nuevos: nuevas miniapps/registro/assets/docs/helpers/directorios, borrados, nombres Unicode/espacios y propiedades reservadas, recursos mayores de 4 MiB y rechazo de credenciales. Sin cambios en aplicación, dependencias, lockfile, recursos ni staging.
+
+El propietario cambia temporalmente la conexión para la entrega; GitHub CLI confirma soycerobytes y el autor local usa su correo noreply. Se entrega en rama fix/promote-staging-snapshot y PR hacia main sin merge. Pendiente CI remoto y la primera promoción real con archivos nuevos tras instalar.
