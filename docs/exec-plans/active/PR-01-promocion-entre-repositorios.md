@@ -146,3 +146,7 @@ El propietario aprueba «vamos a aplicar mejor este nuevo flujo», 2026-11-13. L
 Implementación y enmienda de CI ligero confirmadas en commit local 1bd4873. La publicación mediante integración devuelve403 Resource not accessible by integration al crear el árbol; el push Git a config/production-promotion devuelve403 Permission denied to aalexlpez. El lector de instalaciones devuelve únicamente aalexlpez (137896862), selección de repositorios; soycerobytes no figura como instalación accesible. El permiso de colaborador reportado por get_repo no acredita capacidad de escritura de esta integración.
 
 Sin rama remota ni PR creados y sin cambios a main, staging o Cloudflare. Se necesita instalar/autorizar la misma aplicación GitHub en soycerobytes para miminiapp, manteniendo el acceso de colaborador ya concedido; después reintentar con conexión nueva. No solicitar contraseñas/tokens en chat. La autorización de subida/PR permanece vigente. Estado En curso; el bloqueo es externo, no un fallo de las pruebas locales.
+
+## Acceso restablecido y entrega — 2026-11-13
+
+El propietario instala ChatGPT Codex Connector en soycerobytes, con selección de repositorios. El lector devuelve la instalación181571833 además de la original. Una conexión nueva confirma main intacto en2a52211d36cb9fabca920200f6875bf8dccdb881 y el push crea config/production-promotion correctamente. El bloqueo403 anterior queda resuelto. Se abre PR de configuración hacia main para revisión y comprobaciones ligeras, sin merge. El ensayo de una release real después de instalar continúa pendiente.
