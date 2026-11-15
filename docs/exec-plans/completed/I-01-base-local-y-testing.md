@@ -7,7 +7,7 @@
 * **Creado:** 2026-11-04.
 * **Última actualización:** 2026-11-05.
 * **Origen:** Plan independiente preparado tras aceptar I-00; aquella fase de preparación no autorizaba ejecución. Las autorizaciones posteriores de ejecución y de traslado mediante Git se registran abajo; no amplían a CI/Cloudflare/despliegues.
-* **Dependencia satisfecha:** [I-00 aceptada](../completed/I-00-traslado-documental.md), archivada en completed/; commit local `38574b75c13d7056f38d8c589223041614952239`.
+* **Dependencia satisfecha:** [I-00 aceptada](I-00-traslado-documental.md), archivada en completed/; commit local `38574b75c13d7056f38d8c589223041614952239`.
 * **Aprobación:** 2026-11-04, propietario de MiMiniApp, mediante «Bloque C: alcance y criterios de aceptación del ExecPlan I-01», junto con los bloques A/B.
 * **Autorización de ejecución:** 2026-11-04, propietario de MiMiniApp: «Autorizo expresamente la ejecución del ExecPlan I-01 — Base local y testing, conforme al alcance y las decisiones técnicas aprobadas». Se conserva la aprobación previa sin autorización como hecho histórico; la autorización vigente empieza con esta indicación.
 * **Autorización de traslado:** 2026-11-04, propietario de MiMiniApp: «vale, haz lo que dices, lo autorizo», en respuesta a la propuesta de crear feature/i01-base-local-testing, realizar un commit del trabajo de I-01 y subir exclusivamente esa rama a GitHub para retomarlo en otro chat. Es un permiso específico para este punto de continuación, no aceptación de I-01 ni autorización general de futuros commits/pushes, merges o cambios en master.
@@ -22,7 +22,7 @@
 
 Inicializar una base de desarrollo **local**, estática y reproducible con Astro, React, TypeScript y Tailwind CSS, y demostrar que su batería inicial de verificación funciona sobre una página construida y una interacción real.
 
-El alcance exige un checkout instalable desde lockfile y comandos documentados de desarrollo, tipos, lint, formato, unitarias/componentes, E2E, accesibilidad y build. La base está implementada, verificada y aceptada por el propietario dentro del alcance local aprobado, incluido el navegador fijado; el [informe de ejecución](../../i01-execution-report.md) distingue resultados finales, errores históricos y límites.
+El alcance exige un checkout instalable desde lockfile y comandos documentados de desarrollo, tipos, lint, formato, unitarias/componentes, E2E, accesibilidad y build. La base está implementada, verificada y aceptada por el propietario dentro del alcance local aprobado, incluido el navegador fijado; el [informe de ejecución](../../reports/i01/execution.md) distingue resultados finales, errores históricos y límites.
 
 ## Alcance
 
@@ -187,7 +187,7 @@ El propietario autoriza posteriormente de forma expresa la ejecución. Se regist
 
 ## Resultado actual y criterios verificados
 
-El [informe de ejecución](../../i01-execution-report.md) conserva comandos, recuentos, hashes, revisión visual/teclado, errores históricos y el inventario de cambios. AC01–10 están comprobados: los pendientes AC03/04/07/08 se cierran con Chromium 156.0.8078.4 / revisión 1248, verify exit 0 (14 unitarias, 9 componentes y 8 E2E/axe, sin omisiones) y revisión asistida de teclado/foco y seis capturas inspeccionadas. No se atribuye revisión humana, dispositivo físico, otros motores o certificación WCAG completa.
+El [informe de ejecución](../../reports/i01/execution.md) conserva comandos, recuentos, hashes, revisión visual/teclado, errores históricos y el inventario de cambios. AC01–10 están comprobados: los pendientes AC03/04/07/08 se cierran con Chromium 156.0.8078.4 / revisión 1248, verify exit 0 (14 unitarias, 9 componentes y 8 E2E/axe, sin omisiones) y revisión asistida de teclado/foco y seis capturas inspeccionadas. No se atribuye revisión humana, dispositivo físico, otros motores o certificación WCAG completa.
 
 Ajustes mecánicos aplicados y verificados: FormEvent → SubmitEvent, dev/preview --ignore-lock para evitar el background inferido por Astro y favicon data:, para retirar el 404 automático, manteniendo todas las aserciones. Ninguna versión aprobada se cambió. npm audit: 0 altas/críticas y 11 moderadas de herramientas de desarrollo, evaluadas con seguimiento PEND-007 conforme a la política aprobada.
 

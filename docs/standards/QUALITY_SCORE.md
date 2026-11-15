@@ -4,7 +4,7 @@
 **Responsable:** propietario de MiMiniApp.
 **Actualizado:** 2026-11-04.
 
-El [dossier v1.2](references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md), sección 6, reporta pruebas automatizadas recurrentes como requisito acordado. [ADR-MMA-008](design-docs/index.md) está Aprobada por el propietario el 2026-11-04, con herramientas, versiones, comandos y política local del [paquete I-01](design-docs/i01-approval-proposal.md). Los gates remotos y otros motores se concretarán en sus iteraciones posteriores. Instalación real, npm ci, tipos/lint/pruebas de lógica/componentes y build ya se han comprobado. La parte de navegador requerida pasa también con Chromium 156 fijado, incluidos axe y revisión asistida de teclado/foco y capturas responsive. Resultados, controles negativos y límites en el [informe de ejecución](i01-execution-report.md). No hay puntuación global ni certificación de calidad; los resultados locales medidos, incluidos los de navegador, se distinguen de los objetivos de producto y entornos remotos.
+El [dossier v1.2](../references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md), sección 6, reporta pruebas automatizadas recurrentes como requisito acordado. [ADR-MMA-008](../design-docs/index.md) está Aprobada por el propietario el 2026-11-04, con herramientas, versiones, comandos y política local del [paquete I-01](../design-docs/i01-approval-proposal.md). Los gates remotos y otros motores se concretarán en sus iteraciones posteriores. Instalación real, npm ci, tipos/lint/pruebas de lógica/componentes y build ya se han comprobado. La parte de navegador requerida pasa también con Chromium 156 fijado, incluidos axe y revisión asistida de teclado/foco y capturas responsive. Resultados, controles negativos y límites en el [informe de ejecución](../reports/i01/execution.md). No hay puntuación global ni certificación de calidad; los resultados locales medidos, incluidos los de navegador, se distinguen de los objetivos de producto y entornos remotos.
 
 ## Capas de verificación — local aprobado, remoto por implementar
 
@@ -55,3 +55,22 @@ Cubrir los criterios de aceptación automatizables de cada iteración y límites
 Una miniapp debe demostrar corrección de lógica, recorrido crítico por idioma cuando difieran textos/rutas, demo reproducible y reset, teclado y tamaños representativos, ausencia de solicitudes privadas inesperadas y revisión manual móvil. Aplicar las metas de [frontend](FRONTEND.md) distinguiendo objetivos de mediciones; las pruebas automáticas no certifican WCAG ni datos de campo.
 
 En el ExecPlan correspondiente registrar ejecución real, resultado, versión/herramientas, target y artefactos vigentes. Separar aprobado, fallido, omitido y no ejecutado. Hay scripts locales y pruebas reales ejecutadas, con su evidencia en el informe. El navegador fijado ya está instalado y verify pasa completo; I-01 está Aceptado por el propietario el 2026-11-05; no hay CI remota ni despliegues verificados y no se sustituyen por el diagnóstico del navegador del sistema.
+
+## Política de evidencias
+
+Aprobada por el propietario el 2026-11-15 ([MT-01](../exec-plans/completed/MT-01-mantenimiento-y-colaboracion.md)). Se aplica al trabajo nuevo; la evidencia ya versionada de iteraciones anteriores se conserva como está.
+
+**Resultados de pruebas.** La evidencia de que una batería pasó es su ejecución en GitHub Actions: se cita el enlace al run y el commit. Un resultado obtenido solo en local se describe como tal, con comando, versión del runtime y del navegador, y recuentos.
+
+**Archivos locales.** `.local/` está ignorado por Git. Lo que hay ahí sirve a quien lo generó y a nadie más: no se enlaza desde la documentación ni se cita como evidencia consultable. Si un dato importa, se copia su resumen al informe.
+
+**Capturas y vídeo.** Se versionan solo cuando alguien las necesita para aprobar un cambio visual, bajo estas reglas:
+
+* en `docs/review/<iteración>/`, con un `manifest.json` o un README que diga qué muestra cada archivo;
+* las mínimas que permiten decidir: normalmente una por idioma, tamaño y apariencia que cambie de verdad, no la matriz completa;
+* PNG por debajo de 300 KB cada una; el vídeo solo cuando el movimiento es lo que se aprueba, y entonces un único clip corto;
+* nunca con datos personales, secretos o cabeceras de sesión.
+
+El resto de capturas se regenera con `npm run capture:review` o se adjunta al PR, donde GitHub las aloja sin engordar el repositorio.
+
+**Informes.** Un informe de ejecución recoge qué se ejecutó, con qué resultado y qué quedó sin comprobar. Separa lo aprobado, lo fallido, lo omitido y lo no ejecutado.

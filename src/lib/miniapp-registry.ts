@@ -6,16 +6,34 @@ export interface MiniappCopy {
   readonly description: string;
 }
 
+/** Stable identifiers taken from the kinds of tool in the product definition. */
+export const miniappCategories = [
+  'calculator',
+  'productivity',
+  'everyday',
+  'science',
+  'game',
+  'experience',
+] as const;
+
+export type MiniappCategory = (typeof miniappCategories)[number];
+
 /** Pure metadata: importing this descriptor must never import tool UI. */
 export interface MiniappDescriptor {
   readonly id: string;
   readonly slug: string;
   readonly status: 'draft' | 'published';
+  readonly category: MiniappCategory;
+  /** Optional stable keywords, written like slugs; not translated copy. */
+  readonly tags?: readonly string[];
+  /** Calendar date of first publication, YYYY-MM-DD; required once published. */
+  readonly publishedAt?: string;
   readonly copy: Readonly<Record<Locale, MiniappCopy>>;
 }
 
 export type PublishedMiniappDescriptor = MiniappDescriptor & {
   readonly status: 'published';
+  readonly publishedAt: string;
 };
 
 export interface MiniappEntryModule {
@@ -43,6 +61,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function nonemptyText(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isCategory(value: unknown): value is MiniappCategory {
+  return miniappCategories.some((category) => category === value);
+}
+
+/** Accepts only a real calendar day, so ordering by this text is reliable. */
+function isCalendarDate(value: unknown): value is string {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value))
+    return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return (
+    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
+  );
 }
 
 /** Runtime validation also protects builds from malformed data and JS callers. */
@@ -74,6 +106,28 @@ export function validateRegistry(
     const status: unknown = descriptor.status;
     if (status !== 'published' && status !== 'draft') {
       throw new Error(`Invalid miniapp status: ${String(status)}`);
+    }
+    if (!isCategory(descriptor.category)) {
+      throw new Error(
+        `Invalid category for miniapp ${descriptor.id}: ${String(descriptor.category)}`,
+      );
+    }
+    const tags: unknown = descriptor.tags;
+    if (
+      tags !== undefined &&
+      (!Array.isArray(tags) ||
+        tags.some((tag) => typeof tag !== 'string' || !slugPattern.test(tag)) ||
+        new Set(tags).size !== tags.length)
+    ) {
+      throw new Error(`Invalid tags for miniapp: ${descriptor.id}`);
+    }
+    const publishedAt: unknown = descriptor.publishedAt;
+    if (
+      status === 'published'
+        ? !isCalendarDate(publishedAt)
+        : publishedAt !== undefined && !isCalendarDate(publishedAt)
+    ) {
+      throw new Error(`Invalid publication date for miniapp: ${descriptor.id}`);
     }
     if (!isRecord(descriptor.copy)) {
       throw new Error(`Missing translations for miniapp: ${descriptor.id}`);

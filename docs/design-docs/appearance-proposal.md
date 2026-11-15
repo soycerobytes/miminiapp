@@ -146,7 +146,7 @@ Contraste calculado con luminancia relativa sRGB WCAG: `(Lmayor + .05) / (Lmenor
 | dark  | Éxito / superficie         | `#b9f65a` | `#242033` | 12.33:1 |  4.5:1 |
 | dark  | Error / superficie         | `#ffad91` | `#242033` |  8.75:1 |  4.5:1 |
 
-[Mediciones originales](assets/appearance/contrasts.json). Ver [informe de implementación](../cp02-execution-report.md) para colores computados finales y correcciones aprobadas.
+[Mediciones originales](assets/appearance/contrasts.json). Ver [informe de implementación](../reports/cp02/execution.md) para colores computados finales y correcciones aprobadas.
 
 ## Preferencias y carga inicial propuestas (ADR-MMA-019)
 

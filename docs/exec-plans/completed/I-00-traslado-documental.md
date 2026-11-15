@@ -39,7 +39,7 @@ H-001 sigue siendo la decisión heredada aprobada. [H-002](../../harness-decisio
 
 ## Trabajo previsto para la revisión
 
-1. Revisar la [auditoría y mapa documental](../../onboarding-audit.md) y el origen de cada requisito.
+1. Revisar la [auditoría y mapa documental](../../reports/i00/onboarding-audit.md) y el origen de cada requisito.
 2. Confirmar los estados, responsables y pendientes sin atribuir aprobaciones al adjunto.
 3. Revisar el delta y corregir las inconsistencias documentales dentro del alcance solicitado.
 4. Completar las comprobaciones por herramienta que puedan ejecutarse y registrar las restantes.
@@ -51,7 +51,7 @@ Checkout existente `/workspace/miminiapp`; Git y lectura/edición de Markdown. P
 
 ## Criterios de aceptación
 
-La [auditoría de cierre](../../onboarding-audit.md#revisión-de-cierre-de-i-00) conserva el inventario completo, la cobertura y las comprobaciones actuales. Los resultados documentales y la limitación aceptada fundamentaron Verificado; la posterior aceptación expresa del propietario fundamenta ahora Aceptado. Se conservan las evidencias de cada paso.
+La [auditoría de cierre](../../reports/i00/onboarding-audit.md#revisión-de-cierre-de-i-00) conserva el inventario completo, la cobertura y las comprobaciones actuales. Los resultados documentales y la limitación aceptada fundamentaron Verificado; la posterior aceptación expresa del propietario fundamenta ahora Aceptado. Se conservan las evidencias de cada paso.
 
 | ID | Criterio | Evidencia y situación |
 | --- | --- | --- |
@@ -71,7 +71,7 @@ No aplica batería de producto: solo documentación. No se añaden tests trivial
 
 ## Verificaciones y evidencia
 
-La [auditoría](../../onboarding-audit.md#revisión-de-cierre-de-i-00) registra cobertura, revisión del delta y comprobaciones realmente ejecutadas. La verificación final autorizada ha terminado correctamente: 25 Markdown UTF-8, 122 enlaces/anclas, 2 imports, 17/17 invariantes, copia del dossier idéntica, git diff --check y git fsck --full correctos. La revisión semántica independiente no detecta defectos materiales nuevos. No hay pruebas de aplicación ejecutadas porque todavía no existe.
+La [auditoría](../../reports/i00/onboarding-audit.md#revisión-de-cierre-de-i-00) registra cobertura, revisión del delta y comprobaciones realmente ejecutadas. La verificación final autorizada ha terminado correctamente: 25 Markdown UTF-8, 122 enlaces/anclas, 2 imports, 17/17 invariantes, copia del dossier idéntica, git diff --check y git fsck --full correctos. La revisión semántica independiente no detecta defectos materiales nuevos. No hay pruebas de aplicación ejecutadas porque todavía no existe.
 
 La verificación anterior se efectuó cuando el plan seguía Borrador y se conserva como evidencia histórica. Tras la aprobación y autorización actuales se ha ejecutado de nuevo la revisión y verificación de las actividades pendientes: todos los criterios I00-AC-01–07 están satisfechos, el séptimo por aceptación expresa de la limitación conocida. Se registra `Verificado` con fecha 2026-11-04 tras superar 17/17 invariantes originales, 9/9 controles del cierre, 25 Markdown UTF-8, 122 enlaces/anclas, 2 imports, copia idéntica del dossier, git diff --check y git fsck --full. La revisión independiente no detecta defectos materiales. En aquella verificación no se reescribió ni se legitimó retroactivamente el trabajo anterior y el plan se mantuvo Verificado; la aceptación se recibe y registra posteriormente en la indicación humana de cierre.
 

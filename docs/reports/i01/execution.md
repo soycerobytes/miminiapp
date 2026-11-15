@@ -4,7 +4,7 @@
 
 ## Aceptación y archivo — 2026-11-05
 
-El propietario declara: **«Acepto expresamente I-01 como propietario de MiMiniApp»**, después de considerar satisfactorios los resultados ya verificados. Se registra Verificado → Aceptado en el [ExecPlan archivado](exec-plans/completed/I-01-base-local-y-testing.md), conservando este informe, las evidencias y sus límites. No se repiten pruebas de aplicación: el cierre solo registra la aceptación, mueve el plan y actualiza referencias/estado documental.
+El propietario declara: **«Acepto expresamente I-01 como propietario de MiMiniApp»**, después de considerar satisfactorios los resultados ya verificados. Se registra Verificado → Aceptado en el [ExecPlan archivado](../../exec-plans/completed/I-01-base-local-y-testing.md), conservando este informe, las evidencias y sus límites. No se repiten pruebas de aplicación: el cierre solo registra la aceptación, mueve el plan y actualiza referencias/estado documental.
 
 Se conservan PEND-001–005 y PEND-007, las once incidencias moderadas evaluadas, la licencia/dominio pendientes y las decisiones todavía propuestas. La cobertura sigue limitada a Chromium fijado en escritorio y móvil emulado, revisión asistida visual/teclado y axe sin certificación WCAG completa; no hay pruebas de dispositivos físicos, otros motores, CI remota o despliegues. PEND-006 permanece resuelto. I-00, H-001/H-002 y su trazabilidad no cambian.
 
@@ -194,6 +194,6 @@ Las dependencias y las evidencias generadas quedan ignoradas. Los archivos tempo
 
 ## Traslado autorizado a otro chat
 
-El 2026-11-04 el propietario responde «vale, haz lo que dices, lo autorizo» a la propuesta de crear feature/i01-base-local-testing, realizar un commit de los archivos de I-01 y subir exclusivamente esa rama. El permiso queda registrado en el [ExecPlan](exec-plans/completed/I-01-base-local-y-testing.md); no acepta la iteración ni autoriza merge, cambios en master, despliegues, I-02 o futuros commits/pushes.
+El 2026-11-04 el propietario responde «vale, haz lo que dices, lo autorizo» a la propuesta de crear feature/i01-base-local-testing, realizar un commit de los archivos de I-01 y subir exclusivamente esa rama. El permiso queda registrado en el [ExecPlan](../../exec-plans/completed/I-01-base-local-y-testing.md); no acepta la iteración ni autoriza merge, cambios en master, despliegues, I-02 o futuros commits/pushes.
 
-El commit conserva código, lockfile, pruebas, aprobaciones y resultados documentales; excluye dependencias, binarios, logs, capturas y artefactos ignorados. La [guía de continuación](i01-handoff.md) indica cómo retomar el trabajo y regenerar evidencia en la máquina nueva. El resultado de la operación Git y su SHA se comprueban después de crear el commit; este informe no presupone que el push haya tenido éxito. I-01 sigue En curso hasta completar las verificaciones obligatorias.
+El commit conserva código, lockfile, pruebas, aprobaciones y resultados documentales; excluye dependencias, binarios, logs, capturas y artefactos ignorados. La [guía de continuación](handoff.md) indica cómo retomar el trabajo y regenerar evidencia en la máquina nueva. El resultado de la operación Git y su SHA se comprueban después de crear el commit; este informe no presupone que el push haya tenido éxito. I-01 sigue En curso hasta completar las verificaciones obligatorias.

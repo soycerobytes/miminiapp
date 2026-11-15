@@ -7,7 +7,7 @@
 * **Creado:** 2026-11-05.
 * **Última actualización:** 2026-11-05.
 * **Origen:** preparado inicialmente como borrador por instrucción del propietario después de aceptar I-01; la aprobación formal y la posterior autorización expresa se registran a continuación.
-* **Dependencia satisfecha:** [I-01 — Base local y testing](../completed/I-01-base-local-y-testing.md), aceptada expresamente por el propietario el 2026-11-05.
+* **Dependencia satisfecha:** [I-01 — Base local y testing](I-01-base-local-y-testing.md), aceptada expresamente por el propietario el 2026-11-05.
 * **Base local de referencia:** commit de cierre I-01 `0288de567fe7e1665973c6d8e128866962f66e2e`; no enviado al remoto. Este plan se prepara después y queda fuera de aquel commit.
 * **Decisiones aprobadas, 2026-11-05:** el propietario aprueba registro modular, rutas ES/EN con español predeterminado, slugs estables, separación/validación de traducciones, Tailwind mobile-first y revisión por capturas. Aprueba Laboratorio creativo moderno, la segunda composición con etiqueta «Laboratorio creativo», titular «Ideas que se vuelven herramientas» y navegación móvil visible, paleta y Space Grotesk/DM Sans bajo accesibilidad/licencias. Se formaliza en ADR-MMA-011/016/017, ratificados expresamente por el propietario al aprobar este plan; su ejecución fue autorizada expresamente después de aprobar el plan.
 * **Aprobación formal:** 2026-11-05, propietario de MiMiniApp: «Apruebo formalmente el ExecPlan I-02 — Catálogo, diseño responsive e internacionalización ES/EN», incluidos sus 14 criterios de aceptación. Se registra Borrador → Aprobado y la ratificación de ADR-MMA-011/016/017.
@@ -153,7 +153,7 @@ Autorización expresa recibida el 2026-11-05:
 
 ## Entorno y herramientas
 
-Se reutilizan runtime, dependencias, configuración de Playwright y scripts existentes descritos en [README](../../../README.md) y el [informe I-01](../../i01-execution-report.md). `npm ci` solo será necesario si faltan dependencias o el entorno necesita reconstruirse; no se modifica el lockfile ni se instala una biblioteca de i18n por preparar el plan.
+Se reutilizan runtime, dependencias, configuración de Playwright y scripts existentes descritos en [README](../../../README.md) y el [informe I-01](../../reports/i01/execution.md). `npm ci` solo será necesario si faltan dependencias o el entorno necesita reconstruirse; no se modifica el lockfile ni se instala una biblioteca de i18n por preparar el plan.
 
 La instalación futura del navegador, si fuera necesaria, y las pruebas usarán el mismo `PLAYWRIGHT_BROWSERS_PATH`. Se registrará la revisión y ruta real del ejecutable de Playwright; no se usará `channel` ni `executablePath` para seleccionar Chromium del sistema. Si la descarga falla, registrar URL/dominio/error exacto y comunicar el bloqueo antes de modificar red o sustituir navegador.
 
@@ -210,12 +210,12 @@ Los resultados futuros se declararán locales. Chromium móvil emulado/escritori
 * Un catálogo vacío puede ocultar errores de entradas publicadas o traducciones: probarlos con fixtures aislados y comprobar que no llegan al build público. No desbloquear la verificación anunciando una miniapp ficticia.
 * Una decisión material nueva puede convertirse accidentalmente en código o contrato: detener el camino afectado y solicitar la decisión correspondiente. Este plan se ejecutó por autorización expresa; cualquier cambio material se registra conforme a PLANS.md. No extender I-02 a infraestructura para resolver una limitación de revisión.
 * [PEND-007](../tech-debt-tracker.md#pend-007--seguimiento-de-incidencias-moderadas-de-lint) continúa abierto: once incidencias moderadas de herramientas de desarrollo, cero altas/críticas en la evidencia de I-01. No equivale a un audit actual ni se cierra con esta iteración; evaluar actualización compatible antes de contribuciones no confiables, sin `audit fix --force` ni cambios de majors por iniciativa propia.
-* Se conservan las demás deudas y limitaciones de [I-01](../completed/I-01-base-local-y-testing.md) y el [registro de deuda](../tech-debt-tracker.md), incluido el historial de descarga Chromium ya resuelto. No se amplía cobertura de herramientas de IA, licencia, infraestructura o navegadores por preparar I-02.
+* Se conservan las demás deudas y limitaciones de [I-01](I-01-base-local-y-testing.md) y el [registro de deuda](../tech-debt-tracker.md), incluido el historial de descarga Chromium ya resuelto. No se amplía cobertura de herramientas de IA, licencia, infraestructura o navegadores por preparar I-02.
 * La implementación futura será local y reversible, sin migración de datos. Si se cancela o necesita recuperación, retirar únicamente el delta propio de I-02 sobre la base aceptada y repetir las verificaciones afectadas; preservar cambios ajenos y la historia aceptada de I-01. Sin push o despliegue no hay rollback remoto que ejecutar.
 
 ## Punto de parada
 
-**Situación actual:** I-02 `Aceptado`, tras revisión personal de capturas de escritorio/móvil y aceptación expresa del propietario el 2026-11-05; plan cerrado y archivado en `completed/`. El [informe de ejecución](../../i02-execution-report.md) registra los resultados AC1–14, capturas reales, ajustes mecánicos y límites. Sin bloqueos técnicos abiertos acreditados.
+**Situación actual:** I-02 `Aceptado`, tras revisión personal de capturas de escritorio/móvil y aceptación expresa del propietario el 2026-11-05; plan cerrado y archivado en `completed/`. El [informe de ejecución](../../reports/i02/execution.md) registra los resultados AC1–14, capturas reales, ajustes mecánicos y límites. Sin bloqueos técnicos abiertos acreditados.
 
 **Parada de esta ejecución:** resultado aceptado y plan archivado. El propietario autoriza un commit local de I-02 y únicamente preparar el borrador de I-03. No ejecutar I-03 ni hacer pushes o despliegues. La mejora de flotación/microinteracciones se registra en PEND-008 sin implementarla; permanecen las deudas y limitaciones documentadas.
 
