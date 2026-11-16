@@ -5,8 +5,8 @@ Guía práctica del contrato aprobado en ADR-MMA-011 y ADR-MMA-016. Una miniapp 
 ## Antes de escribir código
 
 1. El propietario elige la herramienta. Nadie más la selecciona.
-2. Rellena su [ficha funcional](product-specs/miniapp-template.md): entradas, resultados esperados, errores, límites, privacidad, demo y pruebas.
-3. Prepara el ExecPlan de su iteración y espera aprobación y autorización, según [PLANS.md](PLANS.md).
+2. Rellena su [ficha funcional](../product-specs/miniapp-template.md): entradas, resultados esperados, errores, límites, privacidad, demo y pruebas.
+3. Prepara el ExecPlan de su iteración y espera aprobación y autorización, según [PLANS.md](../PLANS.md).
 
 Por defecto una miniapp se ejecuta entera en el navegador. Si necesita una API externa, persistencia más allá de `localStorage` o cualquier servidor, hace falta antes una decisión aprobada (ADR-MMA-005 y ADR-MMA-006).
 
@@ -55,7 +55,7 @@ export const metadata = {
 
 Este archivo no puede importar componentes ni estilos: el catálogo lo lee sin cargar la interfaz.
 
-Las categorías salen de los tipos de herramienta de la [definición del producto](product-specs/index.md). Añadir una nueva es un cambio de contrato: se propone en el registro de decisiones.
+Las categorías salen de los tipos de herramienta de la [definición del producto](../product-specs/index.md). Añadir una nueva es un cambio de contrato: se propone en el registro de decisiones.
 
 ## 2. Punto de entrada
 
@@ -109,7 +109,7 @@ El orden del registro es el orden del catálogo. `validateRegistry` falla en bui
 
 ## 4. Estilos
 
-La convención completa está en [FRONTEND.md](FRONTEND.md#convención-de-estilos). Para una miniapp:
+La convención completa está en [FRONTEND.md](../standards/FRONTEND.md#convención-de-estilos). Para una miniapp:
 
 * Sus estilos viven en su carpeta: utilidades de Tailwind en el marcado o un bloque `<style>` en su `.astro`.
 * No añadas reglas de una herramienta a `src/styles/`. Esos tres archivos son de la plataforma.
@@ -134,7 +134,7 @@ Cada herramienta necesita un ejemplo reproducible y un restablecimiento rápido,
 npm run verify
 ```
 
-Revisa además a mano con `npm run dev`: móvil y escritorio, ambos idiomas, claro y oscuro, y solo con teclado. Después sigue el flujo de [CONTRIBUTING.md](../CONTRIBUTING.md): PR a `staging`, CI, revisión y merge. La herramienta queda publicada en staging; el propietario la acepta antes de promoverla.
+Revisa además a mano con `npm run dev`: móvil y escritorio, ambos idiomas, claro y oscuro, y solo con teclado. Después sigue el flujo de [CONTRIBUTING.md](../../CONTRIBUTING.md): PR a `staging`, CI, revisión y merge. La herramienta queda publicada en staging; el propietario la acepta antes de promoverla.
 
 ## Lista de comprobación
 

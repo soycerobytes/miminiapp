@@ -2,11 +2,11 @@
 
 ## Control
 
-* **Estado:** `Borrador`
+* **Estado:** `Aceptado`
 * **Responsable de aprobación, autorización y aceptación:** Propietario de MiMiniApp, por rol.
-* **Creado:** 2026-11-13. **Última actualización:** 2026-11-13.
+* **Creado:** 2026-11-13. **Última actualización:** 2026-11-15.
 * **Dependencias:** ninguna. No modifica el alcance ni el estado de I-03 ni de CP-02.
-* **Desviación de trazabilidad:** el trabajo ya está hecho en la rama `claude/stoic-hypatia-zzl92r`. El 2026-11-13 el propietario pidió una auditoría del repositorio y, al recibirla, indicó «haz todas las mejoras que encontraste, pero no partas de master». Esa instrucción directa autorizó a ejecutar; este plan se redacta después para dejar constancia de qué se hizo y qué se propone. El propietario no ha aprobado todavía ni el plan ni el detalle de las propuestas, por eso el estado es `Borrador` y no `Verificado`.
+* **Desviación de trazabilidad:** el trabajo se ejecutó antes de existir este plan. El 2026-11-13 el propietario pidió una auditoría y, al recibirla, indicó «haz todas las mejoras que encontraste, pero no partas de master». Esa instrucción directa autorizó a ejecutar; el plan se redactó después, en `Borrador`, y no recorrió los estados intermedios en su momento. El propietario fusionó el PR #15 el 2026-11-13 y el 2026-11-15 aprobó las propuestas y aceptó el resultado. Los estados intermedios no se reconstruyen con fechas inventadas.
 
 ## Objetivo y resultado esperado
 
@@ -60,22 +60,19 @@ Que una segunda persona, o un agente nuevo, pueda clonar el repositorio, entende
 
 ## Decisiones aplicables y propuestas
 
-Se respetan todas las decisiones aprobadas. Lo que las modifica está registrado como `Propuesta`, a la espera del propietario:
+Se respetan todas las decisiones aprobadas. Lo que las modifica se registró como `Propuesta` y el propietario lo aprobó el 2026-11-15:
 
-* [Enmiendas a ADR-MMA-003, 009, 011, 015 y 017](../../design-docs/index.md#enmiendas-propuestas-el-2026-11-13--mt-01).
+* [Enmiendas a ADR-MMA-003, 009, 011, 015 y 017](../../design-docs/index.md#enmiendas-del-2026-11-13--mt-01).
 * [H-003](../../harness-decisions.md#h-003--colaboración-entre-varias-personas-y-documentos-vivos).
-* [Convención de estilos](../../FRONTEND.md#convención-de-estilos) y [política de evidencias](../../QUALITY_SCORE.md#política-de-evidencias).
+* [Convención de estilos](../../standards/FRONTEND.md#convención-de-estilos) y [política de evidencias](../../standards/QUALITY_SCORE.md#política-de-evidencias).
 
-## Cuestiones que debe resolver el propietario
+## Cuestiones resueltas por el propietario
 
-1. ¿Ratifica las cinco enmiendas, H-003, la convención de estilos y la política de evidencias? Puede aceptar unas y no otras.
-2. ¿Son correctas las seis categorías propuestas para las miniapps?
-3. ¿Deben los mantenedores adicionales poder publicar solo en staging, como se propone?
-4. Los pasos de [PEND-009](../tech-debt-tracker.md#pend-009--pasos-y-decisiones-del-propietario-tras-mt-01).
+El 2026-11-15, tras leer el resumen de las cinco enmiendas, H-003, la convención de estilos y la política de evidencias, el propietario responde «si, está bien». Quedan aprobadas sin cambios, incluidas las seis categorías y la restricción de los mantenedores adicionales a staging. Los pasos de [PEND-009](../tech-debt-tracker.md#pend-009--pasos-y-decisiones-del-propietario-tras-mt-01) siguen abiertos y no forman parte de esta aceptación.
 
 ## Verificaciones y evidencia
 
-Ejecutadas el 2026-11-13 en una sesión cloud, desde la raíz del repositorio, con el Chromium 156.0.8078.4 que fija Playwright 1.64.1 (revisión 1248). Son resultados locales: no hay todavía una ejecución de CI porque la rama no se ha podido subir.
+Ejecutadas el 2026-11-13 en una sesión cloud, desde la raíz del repositorio, con el Chromium 156.0.8078.4 que fija Playwright 1.64.1 (revisión 1248). Estos son los resultados locales previos al PR.
 
 | Comprobación | Resultado |
 | --- | --- |
@@ -91,7 +88,9 @@ Ejecutadas el 2026-11-13 en una sesión cloud, desde la raíz del repositorio, c
 
 De las 17 pruebas unitarias nuevas, 14 cubren el gate (11 en `release-gate.test.ts`, 3 en `release-merged-pr.test.ts`) y 3 el descriptor. Las anteriores pasan sin modificar, salvo los descriptores de ejemplo, que incorporan los campos nuevos.
 
-No comprobado: el gate con un segundo mantenedor real en GitHub, la publicación de staging con estos cambios, `tests/remote/`, Firefox, WebKit y dispositivos físicos.
+Después del merge del PR #15 (`fd9082e`), el [run 43495406369 de Staging](https://github.com/aalexlpez/miminiapp/actions/runs/43495406369) terminó en `success`: el gate modificado aceptó el merge del propietario y la publicación y las pruebas remotas pasaron.
+
+No comprobado: el gate con un segundo mantenedor real en GitHub, Firefox, WebKit y dispositivos físicos.
 
 ## Riesgos y recuperación
 
@@ -103,10 +102,12 @@ Cada cambio de código está en su propio commit para poder revertirlo por separ
 
 ## Punto de parada
 
-Entregar la rama al propietario. No se abre PR, no se fusiona ni se publica sin su indicación. Tras su revisión: registrar aquí la aprobación y la aceptación, cambiar a `Aprobada` lo que ratifique y archivar el plan.
+Plan cerrado. Los pendientes que deja están en PEND-009 y PEND-010.
 
 ## Historial de estado
 
 | Fecha | Estado | Actor | Evidencia o motivo |
 | --- | --- | --- | --- |
 | 2026-11-13 | `Borrador` | Claude Code | Plan redactado después de ejecutar el trabajo por instrucción directa del propietario («haz todas las mejoras que encontraste»). Pendiente de su aprobación y aceptación. |
+| 2026-11-13 | `Borrador` | Propietario de MiMiniApp | Fusiona el PR #15 en `staging` (`fd9082e`); la publicación de staging termina correctamente. El merge no se registró entonces como aprobación de las propuestas. |
+| 2026-11-15 | `Aceptado` | Propietario de MiMiniApp | «si, está bien», en respuesta al resumen de lo que quedaba pendiente de ratificar: aprueba las cinco enmiendas, H-003, la convención de estilos y la política de evidencias, y acepta el resultado. Plan archivado en `completed/`. |

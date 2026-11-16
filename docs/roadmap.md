@@ -1,6 +1,6 @@
 # Roadmap de MiMiniApp
 
-**Actualizado:** 2026-11-13. **Responsable:** propietario de MiMiniApp.
+**Actualizado:** 2026-11-15. **Responsable:** propietario de MiMiniApp.
 
 Este documento orienta. No aprueba ni autoriza nada: el estado canónico de cada iteración es el de su ExecPlan, conforme a [PLANS.md](PLANS.md). No fija fechas de lanzamiento ni compromete un ritmo semanal a costa de la calidad.
 
@@ -16,7 +16,8 @@ Las iteraciones `I-xx` proceden del [dossier de origen](references/MiMiniApp_Ini
 | [I-03](exec-plans/active/I-03-github-actions-y-cloudflare.md) | GitHub Actions y Cloudflare: staging, producción y promoción por PR | En curso. Staging verificado el 2026-11-07 |
 | [CP-01](exec-plans/completed/CP-01-creative-playground.md) | Identidad integrada y movimiento decorativo | Aceptado, 2026-11-08 |
 | [CP-02](exec-plans/active/CP-02-apariencia.md) | Apariencia clara, oscura y del sistema | En curso; fusionado en `staging`, pendiente de aceptación |
-| [MT-01](exec-plans/active/MT-01-mantenimiento-y-colaboracion.md) | Documentación al día y preparación para varios colaboradores | Borrador. Trabajo hecho en rama, pendiente de revisión del propietario |
+| [MT-01](exec-plans/completed/MT-01-mantenimiento-y-colaboracion.md) | Documentación al día y preparación para varios colaboradores | Aceptado, 2026-11-15 |
+| [MT-02](exec-plans/active/MT-02-organizacion-documental.md) | Organización documental, enlaces y mapa de navegación | Verificado localmente el 2026-11-15; pendiente de aceptación |
 | I-05 | Flujo de contribución pública | Sin plan. Depende de decidir la licencia |
 | I-06 | Primera miniapp real | Sin plan. Depende de que el propietario elija la herramienta |
 
@@ -24,11 +25,9 @@ I-04 quedó sin alcance propio: producción y el gate de promoción se incorpora
 
 ## Qué falta para cerrar lo que está abierto
 
-**I-03.** Staging funciona de extremo a extremo. Quedan producción, promoción, rollback, el ensayo de aislamiento de escritura entre Workers y la aceptación global. Detalle en la [guía operativa](i03-operations.md).
+**I-03.** Staging funciona de extremo a extremo. Quedan producción, promoción, rollback, el ensayo de aislamiento de escritura entre Workers y la aceptación global. Detalle en la [guía operativa](guides/staging.md).
 
 **CP-02.** La apariencia y los ajustes posteriores de cabecera y movimiento están fusionados en `staging`. Falta la aceptación expresa del propietario para archivar el plan.
-
-**MT-01.** Falta que el propietario revise la rama, ratifique o corrija las propuestas y haga los pasos que solo él puede hacer en GitHub, listados en [PEND-009](exec-plans/tech-debt-tracker.md#pend-009--pasos-y-decisiones-del-propietario-tras-mt-01).
 
 ## Qué viene después
 

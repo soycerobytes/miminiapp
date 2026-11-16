@@ -56,7 +56,7 @@ Un agente de IA no fusiona PR ni publica por iniciativa propia, aunque CI esté 
 | elige o cambia tecnología, dependencias, contratos compartidos, persistencia, seguridad o despliegue | Una decisión aprobada en [docs/design-docs/index.md](docs/design-docs/index.md) antes de implementar. |
 | afecta a varias partes, es arriesgado o difícil de revertir | Un ExecPlan aprobado y autorizado, según [docs/PLANS.md](docs/PLANS.md). |
 | cambia el alcance del producto | Actualizar primero [docs/product-specs/index.md](docs/product-specs/index.md). |
-| añade una miniapp | Su ficha funcional y la [guía de miniapps](docs/miniapps.md). |
+| añade una miniapp | Su ficha funcional y la [guía de miniapps](docs/guides/miniapps.md). |
 
 En caso de duda, pregunta antes de implementar.
 
@@ -64,7 +64,7 @@ En caso de duda, pregunta antes de implementar.
 
 Cada artefacto nombra a su responsable. Solo esa persona lo aprueba, lo autoriza o acepta su resultado.
 
-Las dos reglas siguientes para más de un mantenedor, y la de iteraciones en paralelo, son la propuesta [H-003](docs/harness-decisions.md#h-003--colaboración-entre-varias-personas-y-documentos-vivos). Rigen desde que el propietario la ratifique.
+Las reglas siguientes proceden de [H-003](docs/harness-decisions.md#h-003--colaboración-entre-varias-personas-y-documentos-vivos), aprobada el 2026-11-15.
 
 * **Con un solo mantenedor**, una indicación expresa suya en cualquier canal es válida. Quien la recibe la registra en el artefacto con fecha y actor.
 * **Con más de un mantenedor**, la aprobación debe quedar en GitHub: una revisión aprobatoria o un comentario del responsable en el PR que cambia el estado del artefacto. El artefacto enlaza ese PR. Una cita transcrita de un chat ya no basta.
@@ -95,7 +95,7 @@ No se omiten, desactivan ni debilitan pruebas para conseguir un verde. No hay un
 
 ## Evidencias
 
-La política completa está en [docs/QUALITY_SCORE.md](docs/QUALITY_SCORE.md#política-de-evidencias). En resumen:
+La política completa está en [docs/standards/QUALITY_SCORE.md](docs/standards/QUALITY_SCORE.md#política-de-evidencias). En resumen:
 
 * Los resultados de pruebas se citan por su ejecución de GitHub Actions, no por archivos locales.
 * `.local/` está ignorado por Git: nada de lo que hay ahí es evidencia para otra persona.

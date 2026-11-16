@@ -5,11 +5,11 @@
 **Estado de la definición:** Aprobada.
 **Responsable de aprobación:** Propietario de MiMiniApp (rol identificado).
 **Aprobación canónica:** 2026-11-04, por el propietario, mediante «Bloque A: definición canónica del producto MiMiniApp». No autoriza implementación.
-**Última actualización:** 2026-11-05.
+**Última actualización:** 2026-11-15 (entrada de preparación de Plan B; sin modificar el alcance aprobado).
 
 ## Procedencia y alcance de esta definición
 
-Traslado documental del [dossier v1.2](../references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md), secciones 4 y 6. El dossier reporta requisitos ya acordados y propuestas abiertas; se conserva esa distinción como evidencia aportada. La definición se preparó en Borrador y pasa ahora a `Aprobada` por la indicación humana expresa del Bloque A del 2026-11-04, no por incorporar el dossier. Esta aprobación no autoriza implementación. La [auditoría de preparación](../onboarding-audit.md) distingue lo comprobado de lo pendiente.
+Traslado documental del [dossier v1.2](../references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md), secciones 4 y 6. El dossier reporta requisitos ya acordados y propuestas abiertas; se conserva esa distinción como evidencia aportada. La definición se preparó en Borrador y pasa ahora a `Aprobada` por la indicación humana expresa del Bloque A del 2026-11-04, no por incorporar el dossier. Esta aprobación no autoriza implementación. La [auditoría de preparación](../reports/i00/onboarding-audit.md) distingue lo comprobado de lo pendiente.
 
 ## Propósito
 
@@ -73,13 +73,13 @@ Añadir o corregir una miniapp no debe romper las existentes ni exigir alterar s
 
 No se adoptan tecnologías, servicios o automatizaciones por trasladar estos requisitos. Las excepciones al procesamiento local y los cambios de alcance requieren la decisión y autorización correspondientes. Marca y dominio son provisionales; `miminiapp.com` no implica propiedad ni disponibilidad.
 
-La política de pruebas local y los límites de seguridad aprobados, junto con los diseños remotos todavía propuestos, se detallan en [calidad](../QUALITY_SCORE.md), [frontend](../FRONTEND.md), [seguridad](../SECURITY.md) y [fiabilidad](../RELIABILITY.md). El informe de ejecución distingue la parte local ya implementada de los objetivos de producto/remotos todavía futuros; las comprobaciones actuales no son certificaciones de todo el producto.
+La política de pruebas local y los límites de seguridad aprobados, junto con los diseños remotos todavía propuestos, se detallan en [calidad](../standards/QUALITY_SCORE.md), [frontend](../standards/FRONTEND.md), [seguridad](../standards/SECURITY.md) y [fiabilidad](../standards/RELIABILITY.md). El informe de ejecución distingue la parte local ya implementada de los objetivos de producto/remotos todavía futuros; las comprobaciones actuales no son certificaciones de todo el producto.
 
 ## Cuestiones pendientes
 
 * La definición ya está aprobada por su responsable identificado por rol; cualquier cambio material posterior requiere nueva aprobación canónica.
 * Para I-01 los ADR y el plan están aprobados y la ejecución está autorizada; la validación requerida con Chromium 156 fijado está completada y el resultado fue Aceptado expresamente por el propietario el 2026-11-05 y el plan está archivado. Los restantes ADR/iteraciones conservan sus propios estados.
-* I-02 está Aceptado tras su ejecución autorizada y verificación; el [informe](../i02-execution-report.md) traza sus 14 criterios y evidencias. El propietario registra su aceptación expresa el 2026-11-05, tras revisar personalmente las capturas reales de escritorio y móvil. No autoriza I-03, infraestructura, miniapps reales ni acciones de publicación.
+* I-02 está Aceptado tras su ejecución autorizada y verificación; el [informe](../reports/i02/execution.md) traza sus 14 criterios y evidencias. El propietario registra su aceptación expresa el 2026-11-05, tras revisar personalmente las capturas reales de escritorio y móvil. No autoriza I-03, infraestructura, miniapps reales ni acciones de publicación.
 * Elegir más adelante la primera miniapp y la cantidad de lanzamiento; no bloquea el catálogo inicialmente vacío de I-02.
 * Resolver licencia y titularidad antes de presentar el producto como software con licencia abierta.
 * Confirmar marca, redes y dominio; compra y DNS requieren instrucción expresa.
@@ -107,13 +107,17 @@ El propietario aprueba expresamente los bloques A/B/C del [paquete consolidado](
 
 Se ha contrastado el contenido actual con las decisiones de MiMiniApp trasladadas del dossier: se mantienen propósito, usuarios, ES/EN, client-first, móvil/escritorio, demo, ritmo flexible, alcance y exclusiones. No se elige una miniapp ni se incorpora una función nueva. Licencia, dominio, primera miniapp, analítica e infraestructura siguen diferidos expresamente; no bloquean la preparación de la base local. Aprobar la definición no autoriza por sí mismo su implementación.
 
+## Fichas de miniapps en preparación
+
+El propietario solicita el 2026-11-15 contrastar Plan B con la base real y preparar una definición adaptada y su plan. La [ficha Plan B v06](plan-b.md) está en `Borrador`, propuesta como primera miniapp real; su selección y requisitos todavía no están aprobados. El [paquete de revisión](../design-docs/plan-b-approval.md) agrupa definición, propuestas técnicas y [PB-01](../exec-plans/active/PB-01-plan-b.md), también en `Borrador`. Esta preparación no cambia el alcance aprobado de la plataforma, no determina el número de herramientas de lanzamiento ni autoriza implementación o publicación. La referencia anterior a aplazar la primera miniapp describe la base aprobada; esta nueva propuesta no la sustituye hasta decisión expresa del propietario.
+
 ## Estado de las decisiones
 
 Consulta el [registro técnico](../design-docs/index.md). Ninguna entrada se declara aprobada por la sola recepción del dossier.
 
 ## Plan de trabajo
 
-Consulta [PLANS.md](../PLANS.md), el [roadmap informativo](../roadmap.md) y los [planes activos](../exec-plans/active/). El roadmap no autoriza su ejecución.
+Consulta [PLANS.md](../PLANS.md), el [roadmap informativo](../roadmap.md) y los [planes activos](../exec-plans/active). El roadmap no autoriza su ejecución.
 
 La definición se completará a partir de la información proporcionada y de la investigación autorizada. No se elegirán tecnologías ni se iniciará implementación por el mero hecho de crear esta instancia.
 

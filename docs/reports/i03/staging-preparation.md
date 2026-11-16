@@ -61,7 +61,7 @@ La persistencia real de la identidad PR–CI tras el merge ya está comprobada: 
 
 El propietario administra cuenta Cloudflare y credenciales en GitHub Environment staging; Codex desarrolla/prueba/prepara PR y no necesita conectividad o secretos Cloudflare. Actions publica y verifica. No se cambian reglas, permisos, secretos, variable de autorización, ramas protegidas o predeterminada por este trabajo. Master permanece predeterminada; producción, promoción y rollback siguen bloqueados. Los límites de lectura administrativa403 de Fase A se conservan.
 
-Flujo operativo comprobado: **feature → PR a staging → CI → revisión y merge manual del propietario → Actions → Cloudflare staging → pruebas remotas y recibo**. El detalle está en la [guía operativa](i03-operations.md) y la [puesta en marcha](i03-staging-startup.md). No hace falta ejecutar Wrangler o renovar credenciales en cada publicación ordinaria.
+Flujo operativo comprobado: **feature → PR a staging → CI → revisión y merge manual del propietario → Actions → Cloudflare staging → pruebas remotas y recibo**. El detalle está en la [guía operativa](../../guides/staging.md) y la [puesta en marcha](staging-startup.md). No hace falta ejecutar Wrangler o renovar credenciales en cada publicación ordinaria.
 
 La verificación de este PR documental es coherencia de estado, enlaces y diff limitado a Markdown, con el CI obligatorio del PR. No se repiten manualmente las pruebas de aplicación ya satisfactorias ni se modifica arquitectura. La propuesta de primera miniherramienta se entrega por separado, sin implementarla ni incluirla en este PR de infraestructura.
 
@@ -114,7 +114,7 @@ La expectativa del test nativo del probe admite tanto el rechazo por política c
 
 ### Límite durante la preparación original
 
-El propietario aprobó expresamente aplicar el [parche de activación](staging-publication-activation.patch), volver a probar y actualizar el PR #3. Ya está aplicado en su misma rama; se conserva el archivo como evidencia histórica. No se configura la variable `I03_STAGING_PUBLICATION_AUTHORIZED=true`, no se fusiona y no se ejecuta ningún despliegue. El [procedimiento](i03-staging-startup.md) exige entregar diff, commit y nuevo CI para revisión, y esperar otra autorización expresa de la primera publicación antes de variable y merge manual. Solo ese merge protegido a staging puede disparar el circuito; aplicar el parche en una feature no lo dispara.
+El propietario aprobó expresamente aplicar el [parche de activación](staging-publication-activation.patch), volver a probar y actualizar el PR #3. Ya está aplicado en su misma rama; se conserva el archivo como evidencia histórica. No se configura la variable `I03_STAGING_PUBLICATION_AUTHORIZED=true`, no se fusiona y no se ejecuta ningún despliegue. El [procedimiento](staging-startup.md) exige entregar diff, commit y nuevo CI para revisión, y esperar otra autorización expresa de la primera publicación antes de variable y merge manual. Solo ese merge protegido a staging puede disparar el circuito; aplicar el parche en una feature no lo dispara.
 
 El PR se entrega en borrador. Antes del merge el propietario deberá pasarlo a listo para revisión y conservar las protecciones. Un fallo o timeout no autoriza rollback automático ni ampliación de permisos; se registra el estado y el propietario revisa Cloudflare. Los IDs del PR y los resultados remotos efectivamente observados se presentan al entregar; no se inventan pruebas de permisos, despliegue o identidad HTTP de la plantilla/web.
 

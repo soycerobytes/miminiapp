@@ -6,7 +6,7 @@
 
 El usuario pide complementar el harness con el archivo aportado y dejar las skills como tarea pendiente para el final. Se preparan documentos de definición y planificación dentro de ese alcance; no se ejecutan como órdenes independientes los pasos del adjunto.
 
-Se conserva una [copia fiel del dossier v1.2](references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md). Es una referencia histórica, no una fuente de autoridad que sustituya a `AGENTS.md` y sus documentos canónicos. Los acuerdos reportados por el dossier se señalan como tales; las propuestas abiertas no se elevan a decisiones aprobadas. La definición sigue en `Borrador` y las decisiones técnicas en `Propuesta` hasta formalización humana en su fuente correspondiente.
+Se conserva una [copia fiel del dossier v1.2](../../references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md). Es una referencia histórica, no una fuente de autoridad que sustituya a `AGENTS.md` y sus documentos canónicos. Los acuerdos reportados por el dossier se señalan como tales; las propuestas abiertas no se elevan a decisiones aprobadas. La definición sigue en `Borrador` y las decisiones técnicas en `Propuesta` hasta formalización humana en su fuente correspondiente.
 
 ## Hechos observados
 
@@ -19,17 +19,17 @@ Se conserva una [copia fiel del dossier v1.2](references/MiMiniApp_Inicio_Proyec
 
 | Información del dossier | Fuente preparada | Estado y límite |
 | --- | --- | --- |
-| Propósito, usuarios, ritmo flexible, PROD/CAT, MVP y exclusiones | [Producto](product-specs/index.md) | Borrador; primera miniapp y cantidad inicial sin decidir |
-| Stack, modelo client-first, hosting, testing, contribución y despliegue | [Registro técnico](design-docs/index.md) | 13 entradas técnicas en Propuesta; evidencia declarada y opciones aún abiertas separadas |
-| Arquitectura sugerida, módulos, registro y rutas | [Arquitectura objetivo](design-docs/architecture-target.md) | Propuesta sin carpetas de aplicación creadas |
-| Estado realmente existente | [ARCHITECTURE.md](../ARCHITECTURE.md) | Solo harness documental, sin atribuir infraestructura operativa |
-| ES/EN, móvil/escritorio, accesibilidad, privacidad y calidad | [Frontend](FRONTEND.md), [seguridad](SECURITY.md), [calidad](QUALITY_SCORE.md), [fiabilidad](RELIABILITY.md) | Criterios y diseños futuros, sin resultados de aplicación |
-| Ficha semanal de miniapp | [Plantilla funcional](product-specs/miniapp-template.md) | Plantilla sin seleccionar una miniapp |
-| Política común y puentes de entrada | [AGENTS.md](../AGENTS.md), [CLAUDE.md](../CLAUDE.md), [GEMINI.md](../GEMINI.md) | Una sola política; compatibilidad de imports aún no probada en los otros clientes |
-| Arranque sin skills y verificación por herramienta | [Bootstrap](BOOTSTRAP.md) | Procedimientos ordinarios como alternativa; sin instalar clientes ni skills |
-| Iteraciones pequeñas, dependencias, evidencia y punto de parada | [PLANS.md](PLANS.md), [plantilla](exec-plans/_template.md), [H-002](harness-decisions.md#h-002--adaptación-documental-de-la-instancia-miminiapp) | Estados y autoridad humana preservados; H-002 aprobada expresamente para esta instancia el 2026-11-04 |
-| Secuencia I-00 a I-06 | [Roadmap](roadmap.md), [plan I-00](exec-plans/completed/I-00-traslado-documental.md) | I-00 aceptada y archivada; autorización posterior limitada a commit local de I-00 y preparación del borrador I-01, sin ejecución ni pushes |
-| Skills y asuntos diferidos | [Pendientes](exec-plans/tech-debt-tracker.md) | Skills al final por petición expresa; sin instalación o activación |
+| Propósito, usuarios, ritmo flexible, PROD/CAT, MVP y exclusiones | [Producto](../../product-specs/index.md) | Borrador; primera miniapp y cantidad inicial sin decidir |
+| Stack, modelo client-first, hosting, testing, contribución y despliegue | [Registro técnico](../../design-docs/index.md) | 13 entradas técnicas en Propuesta; evidencia declarada y opciones aún abiertas separadas |
+| Arquitectura sugerida, módulos, registro y rutas | [Arquitectura objetivo](../../design-docs/architecture-target.md) | Propuesta sin carpetas de aplicación creadas |
+| Estado realmente existente | [ARCHITECTURE.md](../../../ARCHITECTURE.md) | Solo harness documental, sin atribuir infraestructura operativa |
+| ES/EN, móvil/escritorio, accesibilidad, privacidad y calidad | [Frontend](../../standards/FRONTEND.md), [seguridad](../../standards/SECURITY.md), [calidad](../../standards/QUALITY_SCORE.md), [fiabilidad](../../standards/RELIABILITY.md) | Criterios y diseños futuros, sin resultados de aplicación |
+| Ficha semanal de miniapp | [Plantilla funcional](../../product-specs/miniapp-template.md) | Plantilla sin seleccionar una miniapp |
+| Política común y puentes de entrada | [AGENTS.md](../../../AGENTS.md), [CLAUDE.md](../../../CLAUDE.md), [GEMINI.md](../../../GEMINI.md) | Una sola política; compatibilidad de imports aún no probada en los otros clientes |
+| Arranque sin skills y verificación por herramienta | [Bootstrap](../../BOOTSTRAP.md) | Procedimientos ordinarios como alternativa; sin instalar clientes ni skills |
+| Iteraciones pequeñas, dependencias, evidencia y punto de parada | [PLANS.md](../../PLANS.md), [plantilla](../../exec-plans/_template.md), [H-002](../../harness-decisions.md#h-002--adaptación-documental-de-la-instancia-miminiapp) | Estados y autoridad humana preservados; H-002 aprobada expresamente para esta instancia el 2026-11-04 |
+| Secuencia I-00 a I-06 | [Roadmap](../../roadmap.md), [plan I-00](../../exec-plans/completed/I-00-traslado-documental.md) | I-00 aceptada y archivada; autorización posterior limitada a commit local de I-00 y preparación del borrador I-01, sin ejecución ni pushes |
+| Skills y asuntos diferidos | [Pendientes](../../exec-plans/tech-debt-tracker.md) | Skills al final por petición expresa; sin instalación o activación |
 
 Los documentos `DESIGN.md`, `PRODUCT_SENSE.md` y `design-docs/core-beliefs.md` permanecen vacíos: no necesitan duplicar contenido que ya tiene otra fuente. No se añaden plantillas de CI, hooks o un validador permanente.
 
@@ -129,7 +129,7 @@ No faltan funcionalidades principales ni decisiones descritas en el dossier en l
 * Claude Code y Gemini CLI siguen sin prueba de carga efectiva. Se acepta este criterio únicamente si se prueban o el propietario acepta expresamente la limitación.
 * No hay código, scripts de producto, paquetes, CI, despliegues ni pruebas de aplicación ejecutadas. No se crea I-01, no se hacen commits ni pushes; HEAD permanece en el SHA de partida.
 
-Los [criterios I00-AC-01–07](exec-plans/completed/I-00-traslado-documental.md#criterios-de-aceptación) muestran el cumplimiento documental y el pendiente entre clientes. La entrega está lista para revisión, pero no se declara I-00 formalmente Verificado ni Aceptado por cuenta del agente.
+Los [criterios I00-AC-01–07](../../exec-plans/completed/I-00-traslado-documental.md#criterios-de-aceptación) muestran el cumplimiento documental y el pendiente entre clientes. La entrega está lista para revisión, pero no se declara I-00 formalmente Verificado ni Aceptado por cuenta del agente.
 
 La verificación final se repitió el 2026-11-04 después de la indicación expresa del propietario «autorizo su verificación final». Resultados: git diff --check y git fsck --full correctos; 25 Markdown UTF-8, 122 enlaces/anclas, 2 imports y 17/17 invariantes correctos; copia idéntica al adjunto; delta de 14 archivos modificados y 8 nuevos, todos Markdown; HEAD sin cambios y único plan activo I-00. La revisión independiente confirma ausencia de defectos materiales nuevos. Claude Code y Gemini CLI siguen sin estar disponibles; no se acredita su carga efectiva ni se da por aceptada esa limitación.
 

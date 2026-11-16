@@ -180,4 +180,4 @@ La aprobación expresa de ADR-MMA-017 queda registrada con el alcance indicado a
 
 ## Evidencia de implementación I-02
 
-Implementación y pruebas locales completadas el 2026-11-05, con trazabilidad AC1–14 en el [informe de ejecución](../i02-execution-report.md). Las capturas reales se distinguen de las maquetas. I-02 queda Aceptado y archivado tras revisión personal de escritorio/móvil por el propietario el 2026-11-05; se autoriza su commit local de cierre. Sin cambios materiales de ADR, pushes o despliegues.
+Implementación y pruebas locales completadas el 2026-11-05, con trazabilidad AC1–14 en el [informe de ejecución](../reports/i02/execution.md). Las capturas reales se distinguen de las maquetas. I-02 queda Aceptado y archivado tras revisión personal de escritorio/móvil por el propietario el 2026-11-05; se autoriza su commit local de cierre. Sin cambios materiales de ADR, pushes o despliegues.

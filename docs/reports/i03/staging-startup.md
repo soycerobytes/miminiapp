@@ -10,7 +10,7 @@
 - El propietario confirma Wrangler con 12 archivos, 30 pruebas remotas satisfactorias e identidad, ES/EN, responsive y accesibilidad verificados.
 - Probe: lectura de staging y denegación de lectura del otro Worker (403); aislamiento de escritura no probado.
 
-El [informe existente](i03-staging-preparation-report.md) conserva metadatos de artefactos, origen de cada evidencia y la historia del primer intento fallido/corrección. El [contrato PR–CI](i03-pr-ci-identity.md) ya está fusionado y funcionó después del merge; la prueba posterior dejó de ser únicamente un replay.
+El [informe existente](staging-preparation.md) conserva metadatos de artefactos, origen de cada evidencia y la historia del primer intento fallido/corrección. El [contrato PR–CI](../../design-docs/i03-pr-ci-identity.md) ya está fusionado y funcionó después del merge; la prueba posterior dejó de ser únicamente un replay.
 
 ## Lo que ya está preparado
 
@@ -28,7 +28,7 @@ El parche docs/staging-publication-activation.patch es evidencia histórica ya a
 6. Wrangler publica en el Worker staging existente; Actions comprueba identidad y ejecuta la suite remota. Solo su éxito permite el recibo.
 7. El propietario abre staging, valida la entrega y conserva la evidencia del run/intento/artefacto.
 
-La [guía operativa](i03-operations.md) reúne responsabilidades, mantenimiento y fallos. El procedimiento ordinario no exige un despliegue manual semanal. Un PR abierto o rama no autorizada no publica; el merge del propietario es el control humano. Esta documentación no autoriza a Codex a realizarlo.
+La [guía operativa](../../guides/staging.md) reúne responsabilidades, mantenimiento y fallos. El procedimiento ordinario no exige un despliegue manual semanal. Un PR abierto o rama no autorizada no publica; el merge del propietario es el control humano. Esta documentación no autoriza a Codex a realizarlo.
 
 ## Límites y pendientes
 
