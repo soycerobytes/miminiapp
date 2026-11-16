@@ -4,7 +4,7 @@
 **Responsable:** propietario de MiMiniApp.
 **Actualizado:** 2026-11-04.
 
-El [dossier v1.2](references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md), sección 6, reporta pruebas automatizadas recurrentes como requisito acordado. [ADR-MMA-008](design-docs/index.md) está Aprobada por el propietario el 2026-11-04, con herramientas, versiones, comandos y política local del [paquete I-01](design-docs/i01-approval-proposal.md). Los gates remotos y otros motores se concretarán en sus iteraciones posteriores. Instalación real, npm ci, tipos/lint/pruebas de lógica/componentes y build ya se han comprobado. La parte de navegador requerida pasa también con Chromium 156 fijado, incluidos axe y revisión asistida de teclado/foco y capturas responsive. Resultados, controles negativos y límites en el [informe de ejecución](i01-execution-report.md). No hay puntuación global ni certificación de calidad; los resultados locales medidos, incluidos los de navegador, se distinguen de los objetivos de producto y entornos remotos.
+El [dossier v1.2](../references/MiMiniApp_Inicio_Proyecto_Harness_IA_v1.2.md), sección 6, reporta pruebas automatizadas recurrentes como requisito acordado. [ADR-MMA-008](../design-docs/index.md) está Aprobada por el propietario el 2026-11-04, con herramientas, versiones, comandos y política local del [paquete I-01](../design-docs/i01-approval-proposal.md). Los gates remotos y otros motores se concretarán en sus iteraciones posteriores. Instalación real, npm ci, tipos/lint/pruebas de lógica/componentes y build ya se han comprobado. La parte de navegador requerida pasa también con Chromium 156 fijado, incluidos axe y revisión asistida de teclado/foco y capturas responsive. Resultados, controles negativos y límites en el [informe de ejecución](../reports/i01/execution.md). No hay puntuación global ni certificación de calidad; los resultados locales medidos, incluidos los de navegador, se distinguen de los objetivos de producto y entornos remotos.
 
 ## Capas de verificación — local aprobado, remoto por implementar
 
@@ -58,7 +58,7 @@ En el ExecPlan correspondiente registrar ejecución real, resultado, versión/he
 
 ## Política de evidencias
 
-Propuesta el 2026-11-13, preparada por instrucción del propietario y pendiente de su ratificación con [MT-01](exec-plans/active/MT-01-mantenimiento-y-colaboracion.md). Se aplicaría al trabajo nuevo; la evidencia ya versionada de iteraciones anteriores se conserva como está.
+Aprobada por el propietario el 2026-11-15 ([MT-01](../exec-plans/completed/MT-01-mantenimiento-y-colaboracion.md)). Se aplica al trabajo nuevo; la evidencia ya versionada de iteraciones anteriores se conserva como está.
 
 **Resultados de pruebas.** La evidencia de que una batería pasó es su ejecución en GitHub Actions: se cita el enlace al run y el commit. Un resultado obtenido solo en local se describe como tal, con comando, versión del runtime y del navegador, y recuentos.
 

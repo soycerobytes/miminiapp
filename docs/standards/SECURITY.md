@@ -1,6 +1,6 @@
 # Seguridad y privacidad — límites y estado de aprobación
 
-**Estado:** límites de producto y client-first aprobados mediante la definición y ADR-005/006 el 2026-11-04; política de calidad local aprobada en ADR-008. Las otras [decisiones](design-docs/index.md) y la infraestructura remota conservan sus pendientes. La fixture local está implementada: React renderiza texto escapado, valida la etiqueta y mantiene estado efímero sin persistencia ni APIs. Los E2E y el recorrido asistido con Chromium 156 fijado no detectan solicitudes externas ni errores relevantes de consola/red; I-01 Aceptado por el propietario el 2026-11-05. No hay controles remotos desplegados.
+**Estado:** límites de producto y client-first aprobados mediante la definición y ADR-005/006 el 2026-11-04; política de calidad local aprobada en ADR-008. Las otras [decisiones](../design-docs/index.md) y la infraestructura remota conservan sus pendientes. La fixture local está implementada: React renderiza texto escapado, valida la etiqueta y mantiene estado efímero sin persistencia ni APIs. Los E2E y el recorrido asistido con Chromium 156 fijado no detectan solicitudes externas ni errores relevantes de consola/red; I-01 Aceptado por el propietario el 2026-11-05. No hay controles remotos desplegados.
 **Responsable:** propietario de MiMiniApp.
 
 ## Datos y ejecución

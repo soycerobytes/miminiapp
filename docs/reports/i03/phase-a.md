@@ -2,7 +2,7 @@
 
 **Fecha histórica:** 2026-11-06. **Hito de Fase A:** preparación completada con los límites descritos. Este informe conserva el estado de aquella fase, incluidas sus restricciones y comprobaciones pendientes; no describe la situación actual completa.
 
-**Actualización de referencia, 2026-11-07:** staging ya está publicado y su hito está Verificado; I-03 sigue En curso, sin aceptación global. El [informe de staging](i03-staging-preparation-report.md) registra run42305409224 intento4 y los pendientes. El modelo posterior sustituye el requisito histórico de Cloudflare en Codex: el propietario administra sus credenciales en GitHub Environment y Actions publica. No se repite o amplía infraestructura mediante esta nota.
+**Actualización de referencia, 2026-11-07:** staging ya está publicado y su hito está Verificado; I-03 sigue En curso, sin aceptación global. El [informe de staging](staging-preparation.md) registra run42305409224 intento4 y los pendientes. El modelo posterior sustituye el requisito histórico de Cloudflare en Codex: el propietario administra sus credenciales en GitHub Environment y Actions publica. No se repite o amplía infraestructura mediante esta nota.
 
 ## Recuperación e integridad
 

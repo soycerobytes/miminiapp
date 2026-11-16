@@ -4,7 +4,7 @@
 
 ## Resultado comprobado
 
-MiMiniApp está publicada en [staging](https://miminiapp-staging.miminiapp-lab.workers.dev). PR #4 fue fusionado por el propietario en `e1e3b6596f97b86ba7e2ff3d21aab1ac5e21e0c0`. El [run 42305409224, intento 4](https://github.com/aalexlpez/miminiapp/actions/runs/42305409224/attempts/4) terminó success, con prepare y remote-test satisfactorios. El propietario confirma 12 archivos publicados y 30 pruebas remotas correctas. El [informe de staging](i03-staging-preparation-report.md) distingue confirmación humana, lecturas API, artefactos y límites.
+MiMiniApp está publicada en [staging](https://miminiapp-staging.miminiapp-lab.workers.dev). PR #4 fue fusionado por el propietario en `e1e3b6596f97b86ba7e2ff3d21aab1ac5e21e0c0`. El [run 42305409224, intento 4](https://github.com/aalexlpez/miminiapp/actions/runs/42305409224/attempts/4) terminó success, con prepare y remote-test satisfactorios. El propietario confirma 12 archivos publicados y 30 pruebas remotas correctas. El [informe de staging](../reports/i03/staging-preparation.md) distingue confirmación humana, lecturas API, artefactos y límites.
 
 ## Responsabilidades y credenciales
 
@@ -29,7 +29,7 @@ La variable de repositorio I03_STAGING_PUBLICATION_AUTHORIZED forma parte de la 
 
 El intento 4 acreditó lectura de staging y denegación de lectura del otro Worker (403), según confirmación del propietario y paso satisfactorio de Actions. Ese 403 es la comprobación negativa esperada; **no prueba aislamiento de escritura**. Un 404 sería inconcluso y tampoco demostraría scope correcto. Se mantiene writeIsolation=not-tested; no se ejecuta ninguna modificación contra producción para completarlo en este PR.
 
-Solo probe/publish reciben el secreto del Environment, después de los gates; nunca PR, instalación, build o env global. La cuenta y el destino siguen fijados. Un fallo del probe detiene Wrangler y no autoriza ampliar permisos. La identidad PR–CI usa el [contrato ya implementado](i03-pr-ci-identity.md), conservando merge real y relecturas de vigencia.
+Solo probe/publish reciben el secreto del Environment, después de los gates; nunca PR, instalación, build o env global. La cuenta y el destino siguen fijados. Un fallo del probe detiene Wrangler y no autoriza ampliar permisos. La identidad PR–CI usa el [contrato ya implementado](../design-docs/i03-pr-ci-identity.md), conservando merge real y relecturas de vigencia.
 
 ## GitHub e historial conservados
 
@@ -43,4 +43,4 @@ Producción, promoción y rollback permanecen bloqueados y no se ejecutan. Tambi
 
 Ante un fallo de prepare/probe, no forzar el gate ni sustituir credenciales por permisos generales. Ante error o timeout de Wrangler, no asumir ausencia de efectos: el propietario comprueba el estado servido antes de decidir. Un fallo de pruebas remotas no se convierte en éxito y no dispara rollback automático. El ensayo manual excepcional de rollback requiere su autorización; master no contiene su dispatch y no se promete un botón operativo.
 
-Retención existente: evidencia de acceso/fallos 7 días y candidatos/recibos 30 días. No promover artefactos expirados. Objetivo de gasto 0 USD/mes sujeto a cuotas reales; no se añaden servicios. Para incorporar a otro colaborador, véase [CONTRIBUTING.md](../CONTRIBUTING.md#incorporar-a-otra-persona): además de las reviews obligatorias en las protecciones, el gate solo publica merges del propietario salvo que la política liste a esa persona en `maintainers` (enmienda propuesta a ADR-MMA-009).
+Retención existente: evidencia de acceso/fallos 7 días y candidatos/recibos 30 días. No promover artefactos expirados. Objetivo de gasto 0 USD/mes sujeto a cuotas reales; no se añaden servicios. Para incorporar a otro colaborador, véase [CONTRIBUTING.md](../../CONTRIBUTING.md#incorporar-a-otra-persona): además de las reviews obligatorias en las protecciones, el gate solo publica merges del propietario salvo que la política liste a esa persona en `maintainers` (enmienda propuesta a ADR-MMA-009).

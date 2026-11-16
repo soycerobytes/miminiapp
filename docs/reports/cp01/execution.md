@@ -2,13 +2,13 @@
 
 **Fecha:** 2026-11-08. **Responsable de aceptación:** propietario de MiMiniApp.
 
-**Resultado:** identidad estática implementada, verificada técnicamente y **Aceptada expresamente por el propietario el 2026-11-08** (CP-AC06). CP-01 queda **`Aceptado`** por el propietario el 2026-11-08, tras aceptar también el resultado de Iteración 2. **Iteración 2 autorizada posteriormente y ejecutada; véase su sección de resultados.** El [ExecPlan](exec-plans/completed/CP-01-creative-playground.md) es la fuente canónica de estado y límites.
+**Resultado:** identidad estática implementada, verificada técnicamente y **Aceptada expresamente por el propietario el 2026-11-08** (CP-AC06). CP-01 queda **`Aceptado`** por el propietario el 2026-11-08, tras aceptar también el resultado de Iteración 2. **Iteración 2 autorizada posteriormente y ejecutada; véase su sección de resultados.** El [ExecPlan](../../exec-plans/completed/CP-01-creative-playground.md) es la fuente canónica de estado y límites.
 
 ## Procedencia y preservación
 
 * Base remota comprobada: `origin/staging` = `e2830fa0a5682da1660bbf5189daf62b9c90c98c`, merge del PR documental #5. Rama nueva `feature/cp01-identidad-visual` desde esa base; sin modificar directamente staging/main/master.
 * Preparación local guardada antes del cambio: 18 archivos de documentación/referencia, tar, patch y manifiesto SHA-256 en `.local/verification/cp01/preparation-backup/`. Ninguna eliminación de la exploración o de documentos sin commit.
-* Galerías `.local/creative-playground/` y `.local/creative-playground-v2/` intactas. El [manifiesto de aprobación](design-docs/assets/creative-playground-v2/reference-manifest.json) permite contrastar los originales y copias seleccionadas. No se alteraron los prototipos para hacerlos coincidir con el resultado.
+* Galerías `.local/creative-playground/` y `.local/creative-playground-v2/` intactas. El [manifiesto de aprobación](../../design-docs/assets/creative-playground-v2/reference-manifest.json) permite contrastar los originales y copias seleccionadas. No se alteraron los prototipos para hacerlos coincidir con el resultado.
 * Aprobación formal de ADR-MMA-018 y CP-01, autorización exclusiva de Iteración 1 y permiso para PR en borrador registrados en las fuentes canónicas. La flotación central está aprobada como dirección/contrato, pero su implementación e intensidad visual quedan para Iteración 2.
 
 ## Cambios implementados
@@ -42,16 +42,16 @@ Incidencia de preflight: el primer `npm run check` sin `ASTRO_TELEMETRY_DISABLED
 
 ## Capturas comparativas y revisión asistida
 
-Las capturas de implementación provienen del build ordinario servido solo en loopback. Las referencias se abren desde la galería original **sin modificarla**, con reduced-motion, y están rotuladas para distinguirlas del producto. Los [PNG seleccionados y su manifiesto](review/cp01-iteration-1/manifest.json) se conservan para revisión en el repositorio; no se sirven en el build público.
+Las capturas de implementación provienen del build ordinario servido solo en loopback. Las referencias se abren desde la galería original **sin modificarla**, con reduced-motion, y están rotuladas para distinguirlas del producto. Los [PNG seleccionados y su manifiesto](../../review/cp01-iteration-1/manifest.json) se conservan para revisión en el repositorio; no se sirven en el build público.
 
 | Vista | Aplicación real | Comparación con v2 |
 | --- | --- | --- |
-| Escritorio ES | [Captura](review/cp01-iteration-1/desktop-es.png) | [Lado a lado](review/cp01-iteration-1/comparison-desktop-es.png) |
-| Escritorio EN | [Captura](review/cp01-iteration-1/desktop-en.png) | [Lado a lado](review/cp01-iteration-1/comparison-desktop-en.png) |
-| Móvil ES | [Captura](review/cp01-iteration-1/mobile-es.png) | [Lado a lado](review/cp01-iteration-1/comparison-mobile-es.png) |
-| Móvil EN | [Captura](review/cp01-iteration-1/mobile-en.png) | [Lado a lado](review/cp01-iteration-1/comparison-mobile-en.png) |
-| Favicon 16/32/48 px | [Tamaños reales](review/cp01-iteration-1/favicon-sizes.png) | Mismas piezas del isotipo seleccionado |
-| Vertical 9:16 | [Portada](review/cp01-iteration-1/vertical-9x16-home.png), [catálogo tras scroll](review/cp01-iteration-1/vertical-9x16-catalogue.png) | Viewport móvil real 360 × 640 a DPR 3 → 1080 × 1920 |
+| Escritorio ES | [Captura](../../review/cp01-iteration-1/desktop-es.png) | [Lado a lado](../../review/cp01-iteration-1/comparison-desktop-es.png) |
+| Escritorio EN | [Captura](../../review/cp01-iteration-1/desktop-en.png) | [Lado a lado](../../review/cp01-iteration-1/comparison-desktop-en.png) |
+| Móvil ES | [Captura](../../review/cp01-iteration-1/mobile-es.png) | [Lado a lado](../../review/cp01-iteration-1/comparison-mobile-es.png) |
+| Móvil EN | [Captura](../../review/cp01-iteration-1/mobile-en.png) | [Lado a lado](../../review/cp01-iteration-1/comparison-mobile-en.png) |
+| Favicon 16/32/48 px | [Tamaños reales](../../review/cp01-iteration-1/favicon-sizes.png) | Mismas piezas del isotipo seleccionado |
+| Vertical 9:16 | [Portada](../../review/cp01-iteration-1/vertical-9x16-home.png), [catálogo tras scroll](../../review/cp01-iteration-1/vertical-9x16-catalogue.png) | Viewport móvil real 360 × 640 a DPR 3 → 1080 × 1920 |
 
 Revisión asistida realizada: M integrada y legible, sin hueco de isotipo separado; cabecera/pie coherentes; símbolo central idéntico en lenguaje y geometría; estados vacío y bilingüe conservados; favicon reconocible pequeño. Los PNG apoyan la revisión, no sustituyen la aceptación visual del propietario ni certifican WCAG completa.
 
@@ -132,23 +132,23 @@ Comparación en el mismo ejecutor con el commit aceptado `6f367e5`, reconstruido
 * **CLS observado 0 en ambos builds**, incluyendo carga y, en el actual, pausa/reanudación y cambio a reduced-motion. Cero tareas largas en las dos muestras locales; pausa/reanudación con cálculo de estilo: aproximadamente **1,8 ms** en esta ejecución.
 * Se conservan muestras/trazas locales y geometrías; no se atribuyen percentiles de campo, INP real ni una certificación de rendimiento a estas mediciones.
 
-[Presupuesto](review/cp01-iteration-2/resource-budget.json), [mediciones](review/cp01-iteration-2/performance.json) y [visibilidad/BFCache](review/cp01-iteration-2/native-visibility.json). Las trazas completas y el script de medición se incluyen en el paquete local de revisión, fuera del build y del commit.
+[Presupuesto](../../review/cp01-iteration-2/resource-budget.json), [mediciones](../../review/cp01-iteration-2/performance.json) y [visibilidad/BFCache](../../review/cp01-iteration-2/native-visibility.json). Las trazas completas y el script de medición se incluyen en el paquete local de revisión, fuera del build y del commit.
 
 ### Evidencia visual real de Iteración 2
 
 | Entrega | Evidencia |
 | --- | --- |
-| Escritorio con entrada, hover, ambiente y pausa | [Grabación real](review/cp01-iteration-2/desktop-motion.mp4) |
-| Detalle de M integrada | [Recorte ampliado de la grabación real](review/cp01-iteration-2/wordmark-detail.mp4); no es otro render de la marca |
-| Hero B + tarjeta/M en bucle | [Detalle de grabación real](review/cp01-iteration-2/hero-detail.mp4) |
-| Móvil vertical 9:16 | [Grabación real](review/cp01-iteration-2/mobile-9x16-motion.mp4): viewport 360×640, scroll auténtico, exportación a 1080×1920 por escalado; no un modo de grabación de la web |
-| Escritorio ES / EN con reducción | [ES](review/cp01-iteration-2/desktop-es.png), [EN](review/cp01-iteration-2/desktop-en.png) |
-| Móvil ES / EN con reducción | [ES](review/cp01-iteration-2/mobile-es.png), [EN](review/cp01-iteration-2/mobile-en.png) |
-| Comparaciones contra v2 intacto | [Escritorio ES](review/cp01-iteration-2/comparison-desktop-es.png), [EN](review/cp01-iteration-2/comparison-desktop-en.png); [móvil ES](review/cp01-iteration-2/comparison-mobile-es.png), [EN](review/cp01-iteration-2/comparison-mobile-en.png) |
-| Fotogramas con movimiento normal | [Escritorio](review/cp01-iteration-2/desktop-motion.png), [móvil tras scroll](review/cp01-iteration-2/mobile-9x16-motion.png) |
-| 9:16 estático completo / catálogo | [Portada](review/cp01-iteration-2/vertical-9x16-home.png), [catálogo](review/cp01-iteration-2/vertical-9x16-catalogue.png) |
+| Escritorio con entrada, hover, ambiente y pausa | [Grabación real](../../review/cp01-iteration-2/desktop-motion.mp4) |
+| Detalle de M integrada | [Recorte ampliado de la grabación real](../../review/cp01-iteration-2/wordmark-detail.mp4); no es otro render de la marca |
+| Hero B + tarjeta/M en bucle | [Detalle de grabación real](../../review/cp01-iteration-2/hero-detail.mp4) |
+| Móvil vertical 9:16 | [Grabación real](../../review/cp01-iteration-2/mobile-9x16-motion.mp4): viewport 360×640, scroll auténtico, exportación a 1080×1920 por escalado; no un modo de grabación de la web |
+| Escritorio ES / EN con reducción | [ES](../../review/cp01-iteration-2/desktop-es.png), [EN](../../review/cp01-iteration-2/desktop-en.png) |
+| Móvil ES / EN con reducción | [ES](../../review/cp01-iteration-2/mobile-es.png), [EN](../../review/cp01-iteration-2/mobile-en.png) |
+| Comparaciones contra v2 intacto | [Escritorio ES](../../review/cp01-iteration-2/comparison-desktop-es.png), [EN](../../review/cp01-iteration-2/comparison-desktop-en.png); [móvil ES](../../review/cp01-iteration-2/comparison-mobile-es.png), [EN](../../review/cp01-iteration-2/comparison-mobile-en.png) |
+| Fotogramas con movimiento normal | [Escritorio](../../review/cp01-iteration-2/desktop-motion.png), [móvil tras scroll](../../review/cp01-iteration-2/mobile-9x16-motion.png) |
+| 9:16 estático completo / catálogo | [Portada](../../review/cp01-iteration-2/vertical-9x16-home.png), [catálogo](../../review/cp01-iteration-2/vertical-9x16-catalogue.png) |
 
-[Manifiesto de ficheros y hashes](review/cp01-iteration-2/manifest.json). Referencias v2 y evidencia aceptada de Iteración 1 intactas. La revisión asistida aprecia movimiento independiente visible, M sólida tras encaje y navegación/titular estables. Diferencias explícitas frente a la galería: se conserva la composición del producto I-02, se incorpora el control accesible junto al hero y se añade la flotación central aprobada después de la exploración; las barras de laboratorio y variantes descartadas no están en la web. La intensidad final de esa flotación fue aceptada expresamente por el propietario el 2026-11-08.
+[Manifiesto de ficheros y hashes](../../review/cp01-iteration-2/manifest.json). Referencias v2 y evidencia aceptada de Iteración 1 intactas. La revisión asistida aprecia movimiento independiente visible, M sólida tras encaje y navegación/titular estables. Diferencias explícitas frente a la galería: se conserva la composición del producto I-02, se incorpora el control accesible junto al hero y se añade la flotación central aprobada después de la exploración; las barras de laboratorio y variantes descartadas no están en la web. La intensidad final de esa flotación fue aceptada expresamente por el propietario el 2026-11-08.
 
 ### Matriz final de CP-01
 

@@ -24,7 +24,7 @@ WebAssembly y Web Workers siguen siendo procesamiento cliente; si se proponen, d
 
 Para I-02 se formalizan las [decisiones modulares y de rutas](i02-catalogue-routing-proposal.md), aprobadas en ADR-MMA-011/016. Cada carpeta de miniapp separa `metadata.ts`, `entry.astro`, interfaz React cuando proceda, dominio, traducciones ES/EN y pruebas. Un registro explícito asocia los metadatos de las publicadas con un loader de su adaptador Astro; los borradores no declaran loader. El catálogo consume solo metadatos. La ruta común `pages/[locale]/apps/[slug].astro` genera publicadas × locales mediante getStaticPaths y resuelve su entrada durante prerender, sin serializar componentes o loaders en props.
 
-El alta ordinaria añade una carpeta y una inscripción; no modifica rutas, layouts, navegación o módulos existentes. I-02 demuestra este comportamiento con fixtures A+D → A+B+D en un build aislado, conservando el build entregable vacío y sin sus artefactos. La firma del adaptador y la exclusión de chunks se comprobaron con Astro fijado; el [informe de ejecución](../i02-execution-report.md) registra resultados y límites.
+El alta ordinaria añade una carpeta y una inscripción; no modifica rutas, layouts, navegación o módulos existentes. I-02 demuestra este comportamiento con fixtures A+D → A+B+D en un build aislado, conservando el build entregable vacío y sin sus artefactos. La firma del adaptador y la exclusión de chunks se comprobaron con Astro fijado; el [informe de ejecución](../reports/i02/execution.md) registra resultados y límites.
 
 Se aprueban `/es/` y `/en/`, español por defecto y slug estable; textos comunes separados de los de cada herramienta. `/` utiliza la entrada HTML estática aprobada, local de estado 200 con meta refresh/enlace a `/es/`; el propietario aprueba posteriormente para I-03 la raíz HTTP 301 a /es/, normalización de barras y 404 reales, aún pendientes de implementación y comprobación autorizadas. Las URL desconocidas requieren 404 real mediante un 404 estático bilingüe, sin fallback SPA. Barras finales, normalización del proveedor y canónicas/hreflang sin origen público se concretan en la propuesta, sin configurar Cloudflare.
 
@@ -32,7 +32,7 @@ Categorías, etiquetas, demo, fechas o dependencias específicas solo se añadir
 
 ## Entrega y validación
 
-Los dos destinos estáticos separados y el flujo `feature/* → staging → main` se desarrollan en [fiabilidad](../RELIABILITY.md). Cuenta/subdominio confirmados por el propietario: miminiapp-lab.workers.dev; Workers previstos miminiapp-staging/miminiapp, sin recursos creados ni URLs desplegadas. La aprobación del diseño no autoriza provisión. Main mantiene strict nativo hasta demostrar el gate; no rebajarlo sin evidencia. `miminiapp.com` continúa como candidato opcional, sin compra o DNS.
+Los dos destinos estáticos separados y el flujo `feature/* → staging → main` se desarrollan en [fiabilidad](../standards/RELIABILITY.md). Cuenta/subdominio confirmados por el propietario: miminiapp-lab.workers.dev; Workers previstos miminiapp-staging/miminiapp, sin recursos creados ni URLs desplegadas. La aprobación del diseño no autoriza provisión. Main mantiene strict nativo hasta demostrar el gate; no rebajarlo sin evidencia. `miminiapp.com` continúa como candidato opcional, sin compra o DNS.
 
 ## Límites y pendientes de ejecución
 
@@ -40,4 +40,4 @@ La definición, los siete ADR aplicables y el plan I-01 ya están aprobados. La 
 
 ## Autorización limitada posterior — 2026-11-06
 
-El propietario autoriza expresamente solo Fase A del ExecPlan I-03: preparación técnica y configuración segura, con commits/pushes técnicos sin publicaciones. Esta autorización posterior permite instalar las herramientas y preparar la infraestructura aprobada; no activa publicadores, crea Workers/tokens o autoriza Fase B. La [arquitectura actual](../../ARCHITECTURE.md) y el [informe](../i03-phase-a-report.md) distinguen archivos preparados y recursos remotos efectivos.
+El propietario autoriza expresamente solo Fase A del ExecPlan I-03: preparación técnica y configuración segura, con commits/pushes técnicos sin publicaciones. Esta autorización posterior permite instalar las herramientas y preparar la infraestructura aprobada; no activa publicadores, crea Workers/tokens o autoriza Fase B. La [arquitectura actual](../../ARCHITECTURE.md) y el [informe](../reports/i03/phase-a.md) distinguen archivos preparados y recursos remotos efectivos.
