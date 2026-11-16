@@ -55,3 +55,22 @@ Cubrir los criterios de aceptación automatizables de cada iteración y límites
 Una miniapp debe demostrar corrección de lógica, recorrido crítico por idioma cuando difieran textos/rutas, demo reproducible y reset, teclado y tamaños representativos, ausencia de solicitudes privadas inesperadas y revisión manual móvil. Aplicar las metas de [frontend](FRONTEND.md) distinguiendo objetivos de mediciones; las pruebas automáticas no certifican WCAG ni datos de campo.
 
 En el ExecPlan correspondiente registrar ejecución real, resultado, versión/herramientas, target y artefactos vigentes. Separar aprobado, fallido, omitido y no ejecutado. Hay scripts locales y pruebas reales ejecutadas, con su evidencia en el informe. El navegador fijado ya está instalado y verify pasa completo; I-01 está Aceptado por el propietario el 2026-11-05; no hay CI remota ni despliegues verificados y no se sustituyen por el diagnóstico del navegador del sistema.
+
+## Política de evidencias
+
+Propuesta el 2026-11-13, preparada por instrucción del propietario y pendiente de su ratificación con [MT-01](exec-plans/active/MT-01-mantenimiento-y-colaboracion.md). Se aplicaría al trabajo nuevo; la evidencia ya versionada de iteraciones anteriores se conserva como está.
+
+**Resultados de pruebas.** La evidencia de que una batería pasó es su ejecución en GitHub Actions: se cita el enlace al run y el commit. Un resultado obtenido solo en local se describe como tal, con comando, versión del runtime y del navegador, y recuentos.
+
+**Archivos locales.** `.local/` está ignorado por Git. Lo que hay ahí sirve a quien lo generó y a nadie más: no se enlaza desde la documentación ni se cita como evidencia consultable. Si un dato importa, se copia su resumen al informe.
+
+**Capturas y vídeo.** Se versionan solo cuando alguien las necesita para aprobar un cambio visual, bajo estas reglas:
+
+* en `docs/review/<iteración>/`, con un `manifest.json` o un README que diga qué muestra cada archivo;
+* las mínimas que permiten decidir: normalmente una por idioma, tamaño y apariencia que cambie de verdad, no la matriz completa;
+* PNG por debajo de 300 KB cada una; el vídeo solo cuando el movimiento es lo que se aprueba, y entonces un único clip corto;
+* nunca con datos personales, secretos o cabeceras de sesión.
+
+El resto de capturas se regenera con `npm run capture:review` o se adjunta al PR, donde GitHub las aloja sin engordar el repositorio.
+
+**Informes.** Un informe de ejecución recoge qué se ejecutó, con qué resultado y qué quedó sin comprobar. Separa lo aprobado, lo fallido, lo omitido y lo no ejecutado.

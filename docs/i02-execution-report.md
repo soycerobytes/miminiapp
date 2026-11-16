@@ -101,7 +101,7 @@ No fue necesario adoptar un cambio material de ADR, stack, contrato, dependencia
 
 ## Evidencias y reproducción
 
-Capturas del resultado público: [escritorio ES](../.local/verification/i02/visual/desktop-es.png), [móvil ES](../.local/verification/i02/visual/mobile-es.png), [escritorio EN](../.local/verification/i02/visual/desktop-en.png), [móvil EN](../.local/verification/i02/visual/mobile-en.png), [tablet ES](../.local/verification/i02/visual/tablet-es.png), [9:16 portada](../.local/verification/i02/visual/vertical-9x16-home.png), [9:16 catálogo](../.local/verification/i02/visual/vertical-9x16-catalogue.png), [zoom 200 %](../.local/verification/i02/visual/zoom-200-es.png).
+Capturas del resultado público, generadas en `.local/verification/i02/visual/`, carpeta ignorada por Git y por tanto no consultable desde el repositorio (nota añadida el 2026-11-13; antes eran enlaces rotos): escritorio ES (`desktop-es.png`), móvil ES (`mobile-es.png`), escritorio EN (`desktop-en.png`), móvil EN (`mobile-en.png`), tablet ES (`tablet-es.png`), 9:16 portada (`vertical-9x16-home.png`), 9:16 catálogo (`vertical-9x16-catalogue.png`), zoom 200 % (`zoom-200-es.png`).
 
 Paquete de revisión de esta sesión: `/workspace/shared/downloads/I02-evidencias.zip`; extraer y abrir `index.html`. Incluye capturas ES/EN, tablet, foco, zoom, 9:16, informe y manifiestos. Los catálogos sintéticos de integración se identifican expresamente como pruebas y no son el producto público.
 

@@ -15,9 +15,9 @@ Este registro conserva tareas pendientes; no equivale a un ExecPlan aprobado ni 
 
 | ID | Pendiente | Condición para retomarlo / fuente |
 | --- | --- | --- |
-| PEND-002 | Comprobar la carga y los escenarios de gobierno en Claude Code y Gemini CLI; limitación conocida aceptada expresamente por el propietario para I-00 el 2026-11-04, comprobación todavía no realizada | En una iteración posterior aprobada y autorizada, cuando estén disponibles los clientes; [auditoría](../onboarding-audit.md) y [bootstrap](../BOOTSTRAP.md#comprobar-instrucciones-por-herramienta) |
+| PEND-002 | Comprobar la carga y los escenarios de gobierno en Claude Code y Gemini CLI. **Claude Code, carga comprobada el 2026-11-13:** una sesión de Claude Code en la web recibió al iniciar el contenido de `CLAUDE.md` y, a través de su import, el de `AGENTS.md`. Los cinco escenarios de gobierno del bootstrap no se han ejecutado como prueba formal. **Gemini CLI:** sin comprobar | En una iteración posterior aprobada y autorizada, cuando estén disponibles los clientes; [auditoría](../onboarding-audit.md) y [bootstrap](../BOOTSTRAP.md#comprobar-instrucciones-por-herramienta) |
 | PEND-003 | Parcialmente resuelto el 2026-11-04: definición y ADR-001/002/003/005/006/008/015 aprobados; posteriormente aprobados ADR-011/016/017 para I-02. Las decisiones restantes permanecen pendientes para sus iteraciones | Aprobaciones en [producto](../product-specs/index.md) y [registro técnico](../design-docs/index.md); I-01 Aceptado y archivado el 2026-11-05; bloqueo PEND-006 resuelto |
-| PEND-004 | Contribución pública: licencia, guía y plantillas de PR/issues | Resolver licencia/titular y autorizar el alcance correspondiente; [roadmap](../roadmap.md) |
+| PEND-004 | Contribución pública: licencia y plantillas de issues. La guía [CONTRIBUTING.md](../../CONTRIBUTING.md) y la plantilla de PR se prepararon en MT-01 | Resolver licencia/titular y autorizar el alcance correspondiente; [roadmap](../roadmap.md) |
 | PEND-005 | Accesos e infraestructura de staging/producción | Preparar en las iteraciones correspondientes con permisos mínimos y valores seguros; [registro técnico](../design-docs/index.md) |
 
 La base local está implementada y verificada. Los registros siguientes conservan el bloqueo de navegador ya resuelto y el seguimiento vigente de riesgos de desarrollo; no se declara un defecto funcional sin evidencia.
@@ -44,3 +44,21 @@ La base local está implementada y verificada. Los registros siguientes conserva
 * **Accesibilidad y calidad:** respetar `prefers-reduced-motion`, suprimiendo movimiento decorativo y transiciones no esenciales cuando se solicite reducción; evitar cambios de layout, ocultación de información, interferencias con teclado/foco o pérdida de legibilidad en móvil, escritorio y vídeo.
 * **Condición para implementar movimiento:** ADR-MMA-018/CP-01 aprobados; Iteración 1 aceptada e Iteración 2 autorizada; resultado/intensidad visual aceptados expresamente; la mejora queda cerrada. La evolución visual de ADR-MMA-017 ya está aprobada para M integrada y hero B, con pausa y reduced-motion, según [la decisión](../design-docs/creative-playground.md). No amplía I-02 o I-03; el cierre se limita a CP-01.
 * **Criterios de cierre futuros:** comportamiento acordado, evidencia con movimiento normal/reducido, teclado, reflujo y rendimiento; revisión visual del propietario. El registro inicial no añadió movimiento; CP-01 implementa después la dirección aprobada sin dependencias nuevas, con su resultado aceptado expresamente el 2026-11-08.
+
+## PEND-009 — Pasos y decisiones del propietario tras MT-01
+
+Registrado el 2026-11-13. Son acciones que solo puede hacer el propietario o decisiones que le corresponden; [MT-01](active/MT-01-mantenimiento-y-colaboracion.md) no las ejecuta.
+
+| Asunto | Qué falta |
+| --- | --- |
+| Rama por defecto | GitHub sigue usando `master` como rama por defecto. El propietario pidió igualarla con `staging`, pero la sesión no tenía permiso de escritura. Opciones: avanzar `master` hasta `staging` y mantenerlas iguales, o cambiar la rama por defecto a `staging` en los ajustes del repositorio. |
+| Ramas fusionadas | Quedan en el remoto las ramas `feature/*`, `fix/*` y `docs/*` ya fusionadas o cerradas. Borrarlas y activar el borrado automático al fusionar. |
+| Ratificaciones | [H-003](../harness-decisions.md#h-003--colaboración-entre-varias-personas-y-documentos-vivos), las [enmiendas del 2026-11-13](../design-docs/index.md#enmiendas-propuestas-el-2026-11-13--mt-01), la convención de estilos y la política de evidencias están en `Propuesta`. |
+| Licencia | ADR-MMA-010 sigue en `Propuesta`. Sin licencia el repositorio no puede aceptar contribuciones externas. |
+| Dependencias | No hay actualización automática. Activar Dependabot o Renovate es una automatización y requiere aprobación expresa; PEND-007 sigue abierto. |
+| Nombres heredados de I-03 | El disparador `feature/i03*` de `ci.yml`, el prefijo `I03 CI v1` del nombre de ejecución y las variables `I03_*` siguen en uso. Renombrarlos exige cambiar a la vez el hash fijado de `ci.yml`, las variables del repositorio en GitHub y las pruebas; un error detiene la publicación de staging. No se tocan sin un plan propio. |
+| Segunda persona | Pasos en [CONTRIBUTING.md](../../CONTRIBUTING.md#incorporar-a-otra-persona). |
+
+## PEND-010 — Documentos que aún acumulan historia
+
+Registrado el 2026-11-13. MT-01 reescribió README, ARCHITECTURE y el roadmap como descripción del presente. Siguen mezclando estado actual e historia de iteraciones: [FRONTEND.md](../FRONTEND.md), [QUALITY_SCORE.md](../QUALITY_SCORE.md), [SECURITY.md](../SECURITY.md), [RELIABILITY.md](../RELIABILITY.md), la [definición del producto](../product-specs/index.md), la [arquitectura objetivo](../design-docs/architecture-target.md) y las secciones narrativas del [registro técnico](../design-docs/index.md). Además, `docs/` contiene unos 19 MB de capturas y vídeo de iteraciones cerradas. Reescribirlos o moverlos toca fuentes canónicas y evidencia aceptada: requiere un plan propio.

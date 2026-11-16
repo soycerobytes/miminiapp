@@ -3,6 +3,7 @@ import {
   findPublished,
   getMiniappPaths,
   getPublishedMetadata,
+  miniappCategories,
   validateRegistry,
   type MiniappDescriptor,
   type MiniappRegistration,
@@ -23,6 +24,8 @@ function published(id: string): PublishedMiniappRegistration {
       id,
       slug: `fixture-${id}`,
       status: 'published',
+      category: 'calculator',
+      publishedAt: '2026-11-05',
       copy: {
         es: { title: `Prueba ${id}`, description: `Descripción ${id}` },
         en: { title: `Test ${id}`, description: `Description ${id}` },
@@ -186,6 +189,71 @@ describe('explicit miniapp registry', () => {
         malformed({ ...a, descriptor: { ...a.descriptor, status: 'hidden' } }),
       ),
     ).toThrow('status');
+  });
+
+  it('accepts every category named by the product definition and no other', () => {
+    const a = published('a');
+    expect(miniappCategories).toEqual([
+      'calculator',
+      'productivity',
+      'everyday',
+      'science',
+      'game',
+      'experience',
+    ]);
+    for (const category of miniappCategories)
+      expect(() =>
+        validateRegistry([{ ...a, descriptor: { ...a.descriptor, category } }]),
+      ).not.toThrow();
+    for (const category of [undefined, '', 'Calculadora', 'tools', 7])
+      expect(() =>
+        validateRegistry(
+          malformed({ ...a, descriptor: { ...a.descriptor, category } }),
+        ),
+      ).toThrow('Invalid category');
+  });
+
+  it('requires a real calendar publication date once a tool is published', () => {
+    const a = published('a');
+    for (const publishedAt of [
+      undefined,
+      '',
+      '2026-13-01',
+      '2026-02-30',
+      '05/11/2026',
+      '2026-11-05T10:00:00Z',
+      20261105,
+    ])
+      expect(() =>
+        validateRegistry(
+          malformed({ ...a, descriptor: { ...a.descriptor, publishedAt } }),
+        ),
+      ).toThrow('Invalid publication date');
+    const { publishedAt: _unused, ...undated } = draft().descriptor;
+    expect(_unused).toBe('2026-11-05');
+    expect(validateRegistry([{ descriptor: undated }])).toHaveLength(1);
+    expect(() =>
+      validateRegistry([{ descriptor: { ...undated, publishedAt: 'pronto' } }]),
+    ).toThrow('Invalid publication date');
+  });
+
+  it('keeps optional tags as unique stable keywords', () => {
+    const a = published('a');
+    const withTags = (tags: unknown) =>
+      malformed({ ...a, descriptor: { ...a.descriptor, tags } });
+    expect(() => validateRegistry(withTags([]))).not.toThrow();
+    expect(() =>
+      validateRegistry(withTags(['finanzas', 'interes-compuesto'])),
+    ).not.toThrow();
+    for (const tags of [
+      'finanzas',
+      ['Finanzas'],
+      ['con espacio'],
+      [''],
+      [3],
+      ['repetida', 'repetida'],
+    ])
+      expect(() => validateRegistry(withTags(tags))).toThrow('Invalid tags');
   });
 
   it('requires a loader only for published entries', () => {

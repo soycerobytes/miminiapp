@@ -9,6 +9,25 @@ La definición aprobada exige mobile-first con escritorio cuidado. Catálogo, mi
 
 La UI debe explicar brevemente para qué sirve cada herramienta y cómo usarla. Ejemplos reales y restablecimiento rápido permiten probar y grabar su funcionamiento; no se simula una capacidad para el vídeo. La legibilidad vertical 9:16 es un criterio de demostración y no limita la experiencia de escritorio.
 
+## Convención de estilos
+
+Propuesta el 2026-11-13 como concreción de ADR-MMA-003, preparada por instrucción del propietario y pendiente de su ratificación con [MT-01](exec-plans/active/MT-01-mantenimiento-y-colaboracion.md). Describe la práctica ya existente y propone dónde va el código nuevo.
+
+| Capa | Dónde | Cómo |
+| --- | --- | --- |
+| Tokens | `@theme` en `src/styles/global.css`; sus valores oscuros en `appearance.css` | Colores, tipografías y radios se definen una vez. El resto del código los usa por nombre. |
+| Plataforma | `@layer components` en `src/styles/` | Clases semánticas (`site-header`, `catalogue-card`) para cabecera, portada, catálogo, apariencia y movimiento. |
+| Miniapps | Dentro de `src/miniapps/<slug>/` | Utilidades de Tailwind en el marcado o un bloque `<style>` del propio componente. |
+
+Reglas:
+
+* Una miniapp no añade reglas a `src/styles/`. Esos archivos son compartidos y cada línea nueva es un conflicto potencial entre ramas.
+* Se usan las utilidades derivadas de los tokens (`bg-surface`, `text-ink`, `text-muted`, `bg-brand`, `rounded-card`, `font-heading`), no la paleta fija de Tailwind ni colores literales. Solo así un componente respeta la apariencia clara y oscura.
+* Un patrón que se repite en dos o más herramientas se promueve a la capa de plataforma en un PR propio.
+* Añadir o cambiar un token es un cambio compartido: se revisa como tal.
+
+La fixture técnica de I-01 usa la paleta fija de Tailwind porque es anterior al tema oscuro. No es un modelo para código nuevo.
+
 ## Idiomas y rutas
 
 Español e inglés completos desde lanzamiento: contenido visible, formularios, errores, etiquetas accesibles y metadatos. El selector mantiene la miniapp equivalente. `/es/` y `/en/`, español predeterminado, slugs estables y separación/validación de traducciones están aprobados en ADR-MMA-016. Canónicas/hreflang absolutos y la comprobación del alojamiento siguen diferidos; Cloudflare se verificará en I-03.
