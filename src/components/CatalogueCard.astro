@@ -1,0 +1,28 @@
+---
+import type { MiniappDescriptor } from '../lib/miniapp-registry';
+import { miniappPath, type Locale } from '../lib/locales';
+import { getCommon } from '../i18n/common';
+
+interface Props {
+  locale: Locale;
+  app: MiniappDescriptor;
+}
+const { locale, app } = Astro.props;
+const copy = getCommon(locale);
+const metadata = app.copy[locale];
+---
+
+<article class="catalogue-card">
+  <div class="card-symbol" aria-hidden="true">
+    ↗
+  </div>
+  <h3>{metadata.title}</h3>
+  <p>{metadata.description}</p>
+  <a class="card-link" href={miniappPath(locale, app.slug)}>
+    <span>
+      {copy.catalogue.open}
+      <span class="sr-only">: {metadata.title}</span>
+    </span>
+    <span aria-hidden="true">↗</span>
+  </a>
+</article>

@@ -1,0 +1,50 @@
+name: Production checks
+
+on:
+  pull_request:
+    branches: [main, selective-rehearsal]
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out protected verification controls
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: control
+          persist-credentials: false
+      - name: Check out the merge candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: candidate
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: control/.node-version
+          package-manager-cache: false
+      - run: npm install --global npm@11.19.1
+      - name: Verify release proof and merge tree
+        run: node control/scripts/release/check.mjs control candidate
+      - name: Compile the verified candidate
+        working-directory: candidate
+        env:
+          ASTRO_TELEMETRY_DISABLED: "1"
+        run: |
+          npm ci --ignore-scripts > "$RUNNER_TEMP/release-install.log" 2>&1 || {
+            echo 'Dependency installation failed.'
+            exit 1
+          }
+          npm run build > "$RUNNER_TEMP/release-build.log" 2>&1 || {
+            echo 'Production build failed.'
+            exit 1
+          }
+      - name: Check the production catalogue
+        run: node control/scripts/release/check-build.mjs candidate/dist candidate/.release/catalogue.json

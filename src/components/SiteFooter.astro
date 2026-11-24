@@ -1,0 +1,18 @@
+---
+import Wordmark from './Wordmark.astro';
+import { getCommon } from '../i18n/common';
+import { homePath, type Locale } from '../lib/locales';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = getCommon(locale);
+---
+
+<footer class="site-footer" id="proyecto">
+  <a class="brand" href={homePath(locale)} aria-label="MiMiniApp">
+    <Wordmark />
+  </a>
+  <p>{copy.footer.description}</p>
+</footer>

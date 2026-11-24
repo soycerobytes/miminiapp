@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+import { getCommon } from '../i18n/common';
+
+const copy = getCommon('es');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0;url=/es/" />
+    <meta name="description" content={copy.meta.description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>MiMiniApp</title>
+  </head>
+  <body>
+    <main class="redirect-page">
+      <h1>MiMiniApp</h1>
+      <p>
+        <a class="primary-action" href="/es/">
+          {copy.navigation.spanish}
+        </a>
+      </p>
+    </main>
+  </body>
+</html>
+
+<style>
+  .redirect-page {
+    max-width: 40rem;
+    margin: 5rem auto;
+    padding: 1.25rem;
+  }
+</style>

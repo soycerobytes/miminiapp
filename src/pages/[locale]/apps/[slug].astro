@@ -1,0 +1,56 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { isLocale } from '../../../lib/locales';
+import { getMiniappPaths, findPublished } from '../../../lib/miniapp-registry';
+import { miniappRegistry } from '../../../miniapps/registry';
+
+export function getStaticPaths() {
+  return getMiniappPaths(miniappRegistry);
+}
+
+interface Props {
+  id: string;
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) throw new Error('Unsupported miniapp locale.');
+const registration = findPublished(miniappRegistry, Astro.props.id);
+const { descriptor } = registration;
+const copy = descriptor.copy[locale];
+const { default: Entry } = await registration.loadEntry();
+---
+
+<SiteLayout
+  locale={locale}
+  title={`${copy.title} · MiMiniApp`}
+  description={copy.description}
+  appSlug={descriptor.slug}
+>
+  <section class="miniapp-page" aria-labelledby="miniapp-title">
+    <header class="miniapp-heading">
+      <h1 id="miniapp-title">{copy.title}</h1>
+      <p>{copy.description}</p>
+    </header>
+    <Entry locale={locale} />
+  </section>
+</SiteLayout>
+
+<style>
+  .miniapp-page {
+    padding-block: 3rem 4rem;
+  }
+  .miniapp-heading {
+    max-width: 48rem;
+    margin-bottom: 2rem;
+  }
+  h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+  }
+  p {
+    margin-top: 1rem;
+    color: var(--color-muted);
+    font-size: 1.125rem;
+  }
+</style>

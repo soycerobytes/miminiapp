@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 2,
+  "mode": "selective",
+  "destinationRepositoryId": "1470909606",
+  "writerLogin": "miminiapp-release-soycerobytes[bot]",
+  "writerEmail": "360686134+miminiapp-release-soycerobytes[bot]@users.noreply.github.com",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA6lLIcswa8Le40zuWBKxUefFVYcLlhH+y9zv45orSyeg=\n-----END PUBLIC KEY-----\n",
+  "baseBranch": "main"
+}

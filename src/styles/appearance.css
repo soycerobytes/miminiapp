@@ -1,0 +1,234 @@
+/* Same palette for the no-script CSS fallback and the explicit runtime mode. */
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      color-scheme: dark;
+      --color-canvas: #171421;
+      --color-surface: #242033;
+      --color-ink: #f7f3ff;
+      --color-muted: #c0b7d0;
+      --color-brand: #a68aff;
+      --color-brand-hover: #bba5ff;
+      --color-brand-pressed: #9474ed;
+      --color-link: #bba5ff;
+      --color-control-border: #9385aa;
+      --color-decorative-line: #494057;
+      --color-success-ink: #b9f65a;
+      --color-error-ink: #ffad91;
+      --color-action-ink: #171421;
+      --color-panel: #242033;
+      --color-tint: #352b4b;
+      --color-tint-ink: #bba5ff;
+      --color-panel-border: #494057;
+      --color-underline: #445326;
+      --color-focus: #b9f65a;
+      --color-illustration-line: #c0b7d0;
+      --color-selection: #a68aff;
+      --color-selection-ink: #171421;
+      --color-shadow: rgb(0 0 0 / 24%);
+    }
+  }
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --color-canvas: #171421;
+    --color-surface: #242033;
+    --color-ink: #f7f3ff;
+    --color-muted: #c0b7d0;
+    --color-brand: #a68aff;
+    --color-brand-hover: #bba5ff;
+    --color-brand-pressed: #9474ed;
+    --color-link: #bba5ff;
+    --color-control-border: #9385aa;
+    --color-decorative-line: #494057;
+    --color-success-ink: #b9f65a;
+    --color-error-ink: #ffad91;
+    --color-action-ink: #171421;
+    --color-panel: #242033;
+    --color-tint: #352b4b;
+    --color-tint-ink: #bba5ff;
+    --color-panel-border: #494057;
+    --color-underline: #445326;
+    --color-focus: #b9f65a;
+    --color-illustration-line: #c0b7d0;
+    --color-selection: #a68aff;
+    --color-selection-ink: #171421;
+    --color-shadow: rgb(0 0 0 / 24%);
+  }
+}
+@layer components {
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+  }
+  .site-header .locale-navigation {
+    gap: 0.125rem;
+    font-size: 0.8125rem;
+  }
+  .site-header .locale-navigation a {
+    padding: 0;
+    text-underline-offset: 0.1875rem;
+    text-decoration-thickness: 1px;
+  }
+  .appearance-control {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+    flex-shrink: 0;
+    visibility: hidden;
+  }
+  .appearance-ready .appearance-control {
+    visibility: visible;
+  }
+  .appearance-trigger {
+    position: relative;
+    anchor-name: --appearance-trigger;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: var(--color-link);
+    background: transparent;
+  }
+  .appearance-trigger::before {
+    position: absolute;
+    inset: 9px;
+    border-radius: 50%;
+    background: transparent;
+    content: '';
+  }
+  .appearance-trigger:hover::before,
+  .appearance-control:has(.appearance-options:popover-open)
+    .appearance-trigger::before {
+    background: var(--color-tint);
+  }
+  .appearance-trigger svg {
+    position: relative;
+    width: 1.125rem;
+    height: 1.125rem;
+    display: none;
+  }
+  :root[data-appearance='light']
+    .appearance-trigger
+    [data-appearance-icon='light'],
+  :root[data-appearance='dark']
+    .appearance-trigger
+    [data-appearance-icon='dark'],
+  :root[data-appearance='system']
+    .appearance-trigger
+    [data-appearance-icon='system'] {
+    display: block;
+  }
+  .appearance-options {
+    position: fixed;
+    inset: auto;
+    position-anchor: --appearance-trigger;
+    top: calc(anchor(bottom) + 0.375rem);
+    left: calc(anchor(center) - 1.375rem);
+    margin: 0;
+    width: 2.75rem;
+    box-sizing: border-box;
+    padding: 0;
+    border: 1px solid var(--color-decorative-line);
+    border-radius: 1.125rem;
+    overflow: visible;
+    background: var(--color-appearance-panel);
+    backdrop-filter: blur(12px);
+    color: var(--color-ink);
+    box-shadow: 0 3px 12px var(--color-shadow);
+  }
+  .appearance-options:popover-open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .appearance-option {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 0;
+    border-radius: 50%;
+    padding: 0;
+    background: transparent;
+    color: var(--color-muted);
+  }
+  .appearance-option::before {
+    position: absolute;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: transparent;
+    content: '';
+  }
+  .appearance-option:hover,
+  .appearance-option[aria-pressed='true'] {
+    color: var(--color-link);
+  }
+  .appearance-option:hover::before,
+  .appearance-option[aria-pressed='true']::before {
+    background: var(--color-tint);
+  }
+  .appearance-indicator {
+    position: absolute;
+    left: 0.3125rem;
+    top: 50%;
+    translate: 0 -50%;
+    width: 2px;
+    height: 8px;
+    border-radius: 2px;
+    background: currentColor;
+    visibility: hidden;
+  }
+  .appearance-option[aria-pressed='true'] .appearance-indicator {
+    visibility: visible;
+  }
+  .appearance-option svg {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    transform-origin: center;
+  }
+  .appearance-option:focus-visible {
+    outline-offset: 2px;
+    z-index: 1;
+  }
+}
+/* Keep the compact gap above the original unlayered desktop breakpoint. */
+.site-header .locale-navigation {
+  gap: 0.125rem;
+}
+/* Keep mark, language and links at their existing sizes, reserving the control. */
+@media (max-width: 65.6874rem) {
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 0.75rem;
+    padding-block: 0.625rem 0.5rem;
+  }
+  .site-header .primary-navigation {
+    grid-column: 1;
+    grid-row: 2;
+    margin-left: 0;
+    gap: 1rem;
+  }
+  .site-header .locale-navigation {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+}
+@media (forced-colors: active) {
+  .appearance-option[aria-pressed='true'] {
+    outline: 2px solid Highlight;
+    outline-offset: -4px;
+  }
+}
